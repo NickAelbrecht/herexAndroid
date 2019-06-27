@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        switchFragment(HomeFragment.newInstance("test1", "test2"))
     }
 
     override fun onFragmentInteraction(uri: Uri) {
@@ -42,8 +43,9 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
     private fun switchFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
-            .addToBackStack(null)
             .replace(R.id.fragment, fragment)
+            .addToBackStack(null)
+            .setTransition(1)
             .commit()
 
     }
