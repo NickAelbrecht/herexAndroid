@@ -14,14 +14,14 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                switchFragment(HomeFragment.newInstance("test1", "test2"))
+                switchFragment(HomeFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_oefeningen -> {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_login -> {
-                switchFragment(LoginFragment.newInstance("test1", "test2"))
+                switchFragment(LoginFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        switchFragment(HomeFragment.newInstance("test1", "test2"))
+        switchFragment(HomeFragment.newInstance())
     }
 
     override fun onFragmentInteraction(uri: Uri) {
