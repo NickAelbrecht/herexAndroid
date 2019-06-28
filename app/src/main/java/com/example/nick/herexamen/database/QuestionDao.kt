@@ -15,6 +15,9 @@ interface QuestionDao {
     @Query("DELETE from question_table")
     fun deleteAll()
 
-    //@Query("SELECT * from question_table ORDER BY question asc")
-    //fun getAllQuestions() : LiveData<List<Question>>
+    @Query("SELECT * from question_table ORDER BY title asc")
+    fun getAllQuestions() : LiveData<List<Question>>
+
+    @Query("SELECT * FROM question_table WHERE title LIKE :title")
+    fun findByTitle(title: String): LiveData<List<Question>>
 }

@@ -4,11 +4,15 @@ import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import android.content.Context
+import com.example.nick.herexamen.database.converter.Converter
+import com.example.nick.herexamen.model.Question
 
-//@Database(entities = [Word::class], version = 1)
+@Database(entities = [Question::class], version = 1)
+@TypeConverters(Converter::class)
 abstract class QuizDatabase : RoomDatabase() {
-    //abstract fun wordDao(): WordDao
+    abstract fun questionDao(): QuestionDao
 
     companion object {
         @Volatile
