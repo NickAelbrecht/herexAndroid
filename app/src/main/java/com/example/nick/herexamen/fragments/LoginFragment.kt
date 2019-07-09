@@ -39,7 +39,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
+        super.onCreateView(inflater, container, savedInstanceState)
         val view: View = inflater.inflate(R.layout.fragment_login, container, false)
         view.btn_login.setOnClickListener { showLogin() }
         view.btn_register.setOnClickListener { showRegister() }
