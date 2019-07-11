@@ -1,24 +1,27 @@
 package com.example.nick.herexamen
 
+import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import com.example.nick.herexamen.fragments.HomeFragment
+import com.example.nick.herexamen.fragments.LoginFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                message.setText(R.string.title_home)
+                switchFragment(HomeFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_dashboard -> {
-                message.setText(R.string.title_dashboard)
+            R.id.navigation_oefeningen -> {
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_notifications -> {
-                message.setText(R.string.title_notifications)
+            R.id.navigation_login -> {
+                switchFragment(LoginFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -30,5 +33,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        switchFragment(HomeFragment.newInstance())
     }
+
+    override fun onFragmentInteraction(uri: Uri) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
+    private fun switchFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment, fragment)
+            .addToBackStack(null)
+            .setTransition(1)
+            .commit()
+
+    }
+
+
 }
