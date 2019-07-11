@@ -1,39 +1,40 @@
 package com.example.nick.herexamen.fragments
 
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
-import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_login.view.*
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [LoginFragment.OnFragmentInteractionListener] interface
+ * [RegisterFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [LoginFragment.newInstance] factory method to
+ * Use the [RegisterFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class LoginFragment : Fragment() {
-
+class RegisterFragment : Fragment() {
+    // TODO: Rename and change types of parameters
+    private var param1: String? = null
+    private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
-    private var TAG = "LOGINFRAGMENT"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
         }
     }
 
@@ -42,11 +43,12 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        super.onCreateView(inflater, container, savedInstanceState)
-        val view: View = inflater.inflate(R.layout.fragment_login, container, false)
-        view.btn_login.setOnClickListener { showLogin() }
-        view.btn_register.setOnClickListener { showRegister() }
-        return view
+        return inflater.inflate(R.layout.fragment_register, container, false)
+    }
+
+    // TODO: Rename method, update argument and hook method into UI event
+    fun onButtonPressed(uri: Uri) {
+        listener?.onFragmentInteraction(uri)
     }
 
     override fun onAttach(context: Context) {
@@ -61,15 +63,6 @@ class LoginFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         listener = null
-    }
-
-    fun showLogin() {
-        Log.d(TAG, "login clicked")
-    }
-
-    fun showRegister() {
-        Log.d(TAG, "register clicked")
-        (activity as MainActivity).showRegister()
     }
 
     /**
@@ -95,13 +88,15 @@ class LoginFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
+         * @return A new instance of fragment RegisterFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
-            LoginFragment().apply {
+        fun newInstance(param1: String, param2: String) =
+            RegisterFragment().apply {
                 arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
                 }
             }
     }

@@ -7,9 +7,10 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.example.nick.herexamen.fragments.HomeFragment
 import com.example.nick.herexamen.fragments.LoginFragment
+import com.example.nick.herexamen.fragments.RegisterFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -48,6 +49,10 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
             .setTransition(1)
             .commit()
 
+    }
+
+    fun showRegister() {
+        switchFragment(RegisterFragment.newInstance("str1", "str2"))
     }
 
 
