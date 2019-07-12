@@ -8,10 +8,19 @@
 
 
     <TextView
-            android:text="Welkom! Vul de gegevens in om te registreren"
+            android:text="Vul de gegevens in om te registreren"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/register_textWelcome" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="76dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2" android:fontFamily="monospace"
+            android:adjustViewBounds="true" android:textAlignment="center" app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="Welkom!"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/register_textWelcome2" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp" android:layout_marginTop="24dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Body2" android:fontFamily="monospace"
