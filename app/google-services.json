@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "153370850256",
+    "firebase_url": "https://androidherexamen.firebaseio.com",
+    "project_id": "androidherexamen",
+    "storage_bucket": "androidherexamen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:153370850256:android:691251a21d3f07ca",
+        "android_client_info": {
+          "package_name": "com.example.nick.herexamen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "153370850256-aqknv884quqh72dsj7qlr3qc1hai3dei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.nick.herexamen",
+            "certificate_hash": "8da65a670db7ee87b26dc9154d4af2b3e67633ef"
+          }
+        },
+        {
+          "client_id": "153370850256-t16kq7hvvb8d0omq3001k8bjd1c792db.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC80qqTJNA14gamKHhZqKh-xDuUTNrja3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "153370850256-t16kq7hvvb8d0omq3001k8bjd1c792db.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
