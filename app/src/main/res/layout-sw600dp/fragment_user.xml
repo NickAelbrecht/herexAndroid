@@ -4,7 +4,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".fragments.LoginFragment"
+                                             tools:context=".fragments.UserFragment"
                                              android:orientation="vertical">
 
     <ImageView
@@ -19,7 +19,9 @@
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
             tools:srcCompat="@tools:sample/avatars[5]" app:layout_constraintHorizontal_bias="0.054"
             app:layout_constraintVertical_bias="0.0"
-            android:contentDescription="User pic"/>
+            android:contentDescription="User pic"
+            android:background="?android:windowBackground"
+    />
     <Button
             android:text="Login"
             android:layout_width="0dp"

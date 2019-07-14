@@ -5,13 +5,14 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import com.example.nick.herexamen.fragments.HomeFragment
 import com.example.nick.herexamen.fragments.LoginFragment
+import com.example.nick.herexamen.fragments.UserFragment
 import com.example.nick.herexamen.fragments.RegisterFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
+    UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_login -> {
-                switchFragment(LoginFragment.newInstance())
+                switchFragment(UserFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -35,7 +36,9 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        switchFragment(HomeFragment.newInstance())
+        /*if(savedInstanceState != null) {
+            supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment.newInstance())
+        }*/
     }
 
     override fun onFragmentInteraction(uri: Uri) {
@@ -48,8 +51,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
 
         supportFragmentManager.beginTransaction()
-            .remove(old_frag!!)
-            .add(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .setTransition(1)
             .commit()
@@ -58,6 +60,10 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
     fun showRegister() {
         switchFragment(RegisterFragment.newInstance("str1", "str2"))
+    }
+
+    fun showLogin() {
+        switchFragment(LoginFragment.newInstance("str1", "str2"))
     }
 
 
