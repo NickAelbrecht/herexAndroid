@@ -1,27 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
-                                             xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context=".fragments.HomeFragment" android:id="@+id/constraintLayout"
-                                             android:background="@color/colorPrimary">
+                                             android:id="@+id/constraintLayout"
+>
 
     <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="home fragment"
+            android:text="ertertertertert"
             android:id="@+id/textView" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" android:background="#009E2424"/>
-    <Button
-            android:text="Button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintWidth_default="spread"
-            android:id="@+id/button" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView" android:layout_marginTop="52dp"
-            app:layout_constraintHorizontal_bias="0.498"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:background="@color/colorPrimaryDark"
+            android:layout_marginStart="8dp" android:layout_marginEnd="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

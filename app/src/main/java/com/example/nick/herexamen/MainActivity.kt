@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import com.example.nick.herexamen.fragments.HomeFragment
 import com.example.nick.herexamen.fragments.LoginFragment
 import com.example.nick.herexamen.fragments.RegisterFragment
@@ -43,8 +44,12 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
 
     private fun switchFragment(fragment: Fragment) {
+        val old_frag: Fragment? = supportFragmentManager.findFragmentById(R.id.fragment_container)
+
+
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment, fragment)
+            .remove(old_frag!!)
+            .add(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .setTransition(1)
             .commit()
