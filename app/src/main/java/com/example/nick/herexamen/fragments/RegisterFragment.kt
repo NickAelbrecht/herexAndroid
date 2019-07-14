@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
+import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
 
@@ -58,6 +61,13 @@ class RegisterFragment : Fragment() {
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
+    }
+
+
+    fun registerUser() {
+        var email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
+        var paswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
+        (activity as MainActivity).registerUser(email, paswoord)
     }
 
     override fun onDetach() {
