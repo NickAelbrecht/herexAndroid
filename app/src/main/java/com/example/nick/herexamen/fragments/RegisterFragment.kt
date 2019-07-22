@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
+import kotlinx.android.synthetic.main.fragment_register.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,7 +47,9 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false)
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
+        view.button_register_complete.setOnClickListener { registerUser() }
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event

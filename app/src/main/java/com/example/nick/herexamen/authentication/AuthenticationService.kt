@@ -1,6 +1,5 @@
 package com.example.nick.herexamen.authentication
 
-import android.provider.ContactsContract
 import android.util.Log
 import android.widget.Toast
 import com.example.nick.herexamen.MainActivity
@@ -8,12 +7,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
 class AuthenticationService {
-    private var auth: FirebaseAuth
+    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var activity: MainActivity
     var TAG = "AuthenticationService"
 
     constructor(activity: MainActivity) {
-        auth = FirebaseAuth.getInstance()
         this.activity = activity
     }
 

@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
     fun showRegister() {
+        Log.d("TEST", "register")
         switchFragment(RegisterFragment.newInstance("str1", "str2"))
     }
 
@@ -72,9 +73,12 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
     fun registerUser(email: String, paswoord: String) {
+        Log.d("TEST", "$email : $paswoord")
+
         var user = authenticationService.createUser(email, paswoord)
+
         Toast.makeText(baseContext, "Registered", Toast.LENGTH_LONG).show()
-        Log.d("ACTI_REG", user.toString())
+        Log.d("ACTI_REG", user.toString() + "user?")
     }
 
 
