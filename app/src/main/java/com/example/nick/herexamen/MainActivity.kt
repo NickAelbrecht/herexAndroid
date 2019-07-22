@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import com.example.nick.herexamen.authentication.AuthenticationService
@@ -12,11 +13,12 @@ import com.example.nick.herexamen.fragments.HomeFragment
 import com.example.nick.herexamen.fragments.LoginFragment
 import com.example.nick.herexamen.fragments.UserFragment
 import com.example.nick.herexamen.fragments.RegisterFragment
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
     UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
-
+    private var TAG: String =  "MainActivityTag"
     private lateinit var authenticationService:AuthenticationService
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -64,7 +66,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
     fun showRegister() {
-        Log.d("TEST", "register")
+        Log.d(TAG, "register")
         switchFragment(RegisterFragment.newInstance("str1", "str2"))
     }
 
@@ -72,14 +74,28 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         switchFragment(LoginFragment.newInstance("str1", "str2"))
     }
 
-    fun registerUser(email: String, paswoord: String) {
-        Log.d("TEST", "$email : $paswoord")
-
-        var user = authenticationService.createUser(email, paswoord)
-
+    fun registerUser(email: String, paswoord: String, confirmPaswoord: String) {
+        authenticationService.createUser(email, paswoord, confirmPaswoord)
         Toast.makeText(baseContext, "Registered", Toast.LENGTH_LONG).show()
-        Log.d("ACTI_REG", user.toString() + "user?")
     }
+
+    fun logUserIn(email:String, paswoord:String) {
+        authenticationService.logUserIn(email, paswoord)
+        Toast.makeText(baseContext, "Registered", Toast.LENGTH_LONG).show()
+    }
+
+
+    fun updateUi(user: FirebaseUser?) {
+        if(user != null) {
+            Log.d(TAG, "user registered: " + user.email)
+
+        } else {
+            Log.d(TAG, "user null?")
+
+        }
+    }
+
+
 
 
 }

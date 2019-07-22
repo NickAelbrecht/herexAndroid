@@ -69,8 +69,9 @@ class RegisterFragment : Fragment() {
 
     fun registerUser() {
         var email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
-        var paswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
-        (activity as MainActivity).registerUser(email, paswoord)
+        var paswoord:String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
+        var confirmPaswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
+        (activity as MainActivity).registerUser(email, paswoord, confirmPaswoord)
     }
 
     override fun onDetach() {
