@@ -1,7 +1,9 @@
 package com.example.nick.herexamen.authentication
 
+import android.support.annotation.LayoutRes
 import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -12,7 +14,7 @@ import com.google.firebase.auth.FirebaseUser
 
 class AuthenticationService(private var activity: MainActivity) {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    var TAG = "AuthenticationService"
+    private var TAG = "AuthenticationService"
 
     fun checkSignedIn(): Boolean {
         return auth.currentUser != null
@@ -67,51 +69,65 @@ class AuthenticationService(private var activity: MainActivity) {
             }
     }
 
+    fun logUserOut() {
+        auth.signOut()
+    }
+
 
     private fun validateForm(email: String, paswoord: String, confirmPaswoord: String?, case: Int): Boolean {
         var valid = true
-        var fieldEmail: TextView
-        var fieldPassword: TextView
+        val fieldEmail: TextView
+        val fieldPassword: TextView
         var fieldConfirmPasword: TextView? = null
 
 
         if (case == 2) {
-            activity.setContentView(R.layout.fragment_login)
             fieldEmail = activity.findViewById<EditText>(R.id.login_email)!!
             fieldPassword = activity.findViewById<EditText>(R.id.login_paswoord)!!
             Log.d(TAG, "emailfield: $fieldEmail, paswfield:$fieldPassword")
         } else {
-            activity.setContentView(R.layout.fragment_register)
             fieldEmail = activity.findViewById<EditText>(R.id.register_email)!!
             fieldPassword = activity.findViewById<EditText>(R.id.register_password)
             fieldConfirmPasword = activity.findViewById<EditText>(R.id.register_password_confirm)
-            Log.d(TAG, "emailfield: $fieldEmail, paswfield:$fieldPassword, confpasfield:$fieldConfirmPasword")
+            //Log.d(TAG, "emailfield: $fieldEmail, paswfield:$fieldPassword, confpasfield:$fieldConfirmPasword")
 
         }
+        when {
+            TextUtils.isEmpty(email) -> {
+                fieldEmail.error = "Vereist."
+                valid = false
+            }
 
-        if (TextUtils.isEmpty(email)) {
-            fieldEmail.error = "Required."
-            valid = false
-        } else {
-            fieldEmail.error = null
+            !Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
+                fieldEmail.error = "Geen geldig emailformaat."
+                valid = false
+            }
+
+            else -> fieldEmail.error = null
+
         }
 
         if (TextUtils.isEmpty(paswoord)) {
-            fieldPassword.error = "Required."
+            fieldPassword.error = "Vereist."
             valid = false
         } else {
             fieldPassword.error = null
         }
 
         if (confirmPaswoord != null) {
-            if (TextUtils.isEmpty(confirmPaswoord)) {
-                fieldConfirmPasword?.error = "Required."
-                valid = false
-            } else {
-                fieldConfirmPasword?.error = null
+            when {
+                TextUtils.isEmpty(confirmPaswoord) -> {
+                    fieldConfirmPasword?.error = "Vereist."
+                    valid = false
+                }
+                confirmPaswoord != paswoord -> {
+                    fieldConfirmPasword?.error = "Beide wachtwoorden moeten dezelfde zijn."
+                    valid = false
+                }
+                else -> fieldConfirmPasword?.error = null
             }
         }
-
+        Log.d(TAG, "$valid")
         return valid
     }
 

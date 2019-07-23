@@ -12,6 +12,7 @@ import android.widget.TextView
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
+import com.example.nick.herexamen.authentication.AuthenticationService
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,12 +30,16 @@ private const val ARG_PARAM2 = "param2"
  *
  */
 class RegisterFragment : Fragment() {
-   private var listener: OnFragmentInteractionListener? = null
+    private var listener: OnFragmentInteractionListener? = null
+    private lateinit var authenticationService: AuthenticationService
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
+        authenticationService = AuthenticationService(activity as MainActivity)
+
     }
 
     override fun onCreateView(
@@ -64,9 +69,9 @@ class RegisterFragment : Fragment() {
 
     fun registerUser() {
         var email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
-        var paswoord:String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
+        var paswoord: String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
         var confirmPaswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
-        (activity as MainActivity).registerUser(email, paswoord, confirmPaswoord)
+        authenticationService.createUser(email, paswoord, confirmPaswoord)
     }
 
     override fun onDetach() {

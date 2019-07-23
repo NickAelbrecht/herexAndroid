@@ -6,19 +6,17 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.widget.Toast
 import com.example.nick.herexamen.authentication.AuthenticationService
-import com.example.nick.herexamen.fragments.HomeFragment
-import com.example.nick.herexamen.fragments.LoginFragment
-import com.example.nick.herexamen.fragments.UserFragment
-import com.example.nick.herexamen.fragments.RegisterFragment
+import com.example.nick.herexamen.fragments.*
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
-    UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener {
+    UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
+
     private var TAG: String =  "MainActivityTag"
     private lateinit var authenticationService:AuthenticationService
+
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -29,7 +27,13 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_account -> {
-                switchFragment(UserFragment.newInstance())
+                if(authenticationService.checkSignedIn()) {
+                    Log.d(TAG, "user logged in ${authenticationService.getAuth().currentUser}")
+                    switchFragment(ProfileFragment.newInstance())
+                } else {
+                    Log.d(TAG, "user NOT logged in")
+                    switchFragment(UserFragment.newInstance())
+                }
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -41,9 +45,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         setContentView(R.layout.activity_main)
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        /*if(savedInstanceState != null) {
-            supportFragmentManager.beginTransaction().add(R.id.fragment_container, HomeFragment.newInstance())
-        }*/
+
         authenticationService = AuthenticationService(this)
     }
 
@@ -68,20 +70,15 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         switchFragment(LoginFragment.newInstance())
     }
 
-    fun registerUser(email: String, paswoord: String, confirmPaswoord: String) {
-        authenticationService.createUser(email, paswoord, confirmPaswoord)
-        Toast.makeText(baseContext, "Registered", Toast.LENGTH_LONG).show()
-    }
-
-    fun logUserIn(email:String, paswoord:String) {
-        authenticationService.logUserIn(email, paswoord)
-        Toast.makeText(baseContext, "Logged in", Toast.LENGTH_LONG).show()
+    fun showHome() {
+        switchFragment(HomeFragment.newInstance())
     }
 
 
     fun updateUi(user: FirebaseUser?) {
         if(user != null) {
-            Log.d(TAG, "user registered: " + user.email)
+            Log.d(TAG, "user: " + user.email)
+            switchFragment(ProfileFragment.newInstance())
         } else {
             Log.d(TAG, "user null?")
         }
