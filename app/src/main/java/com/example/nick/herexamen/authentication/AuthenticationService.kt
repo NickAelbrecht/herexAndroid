@@ -1,6 +1,5 @@
 package com.example.nick.herexamen.authentication
 
-import android.nfc.Tag
 import android.text.TextUtils
 import android.util.Log
 import android.widget.EditText
@@ -46,10 +45,9 @@ class AuthenticationService(private var activity: MainActivity) {
         return gebruiker
     }
 
-    fun logUserIn(email: String, paswoord: String): FirebaseUser? {
-        var gebruiker: FirebaseUser? = null
+    fun logUserIn(email: String, paswoord: String) {
         if (!validateForm(email, paswoord, null, 2)) {
-            return null
+            return
         }
         auth.signInWithEmailAndPassword(email, paswoord)
             .addOnCompleteListener(activity) { task ->
@@ -57,7 +55,7 @@ class AuthenticationService(private var activity: MainActivity) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
-                    gebruiker = user
+                    activity.updateUi(user)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
@@ -67,18 +65,17 @@ class AuthenticationService(private var activity: MainActivity) {
                     ).show()
                 }
             }
-        return gebruiker
     }
 
 
-    private fun validateForm(email:String, paswoord: String, confirmPaswoord:String?, case: Int): Boolean {
+    private fun validateForm(email: String, paswoord: String, confirmPaswoord: String?, case: Int): Boolean {
         var valid = true
         var fieldEmail: TextView
         var fieldPassword: TextView
         var fieldConfirmPasword: TextView? = null
 
 
-        if(case == 2) {
+        if (case == 2) {
             activity.setContentView(R.layout.fragment_login)
             fieldEmail = activity.findViewById<EditText>(R.id.login_email)!!
             fieldPassword = activity.findViewById<EditText>(R.id.login_paswoord)!!
@@ -106,7 +103,7 @@ class AuthenticationService(private var activity: MainActivity) {
             fieldPassword.error = null
         }
 
-        if(confirmPaswoord != null) {
+        if (confirmPaswoord != null) {
             if (TextUtils.isEmpty(confirmPaswoord)) {
                 fieldConfirmPasword?.error = "Required."
                 valid = false
@@ -116,6 +113,10 @@ class AuthenticationService(private var activity: MainActivity) {
         }
 
         return valid
+    }
+
+    fun getAuth(): FirebaseAuth {
+        return auth
     }
 
 }

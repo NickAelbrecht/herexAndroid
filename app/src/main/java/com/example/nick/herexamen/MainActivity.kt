@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
-import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import com.example.nick.herexamen.authentication.AuthenticationService
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
             R.id.navigation_oefeningen -> {
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_login -> {
+            R.id.navigation_account -> {
                 switchFragment(UserFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
@@ -54,24 +53,19 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
 
     private fun switchFragment(fragment: Fragment) {
-        //val old_frag: Fragment? = supportFragmentManager.findFragmentById(R.id.fragment_container)
-
-
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .setTransition(1)
             .commit()
-
     }
 
     fun showRegister() {
-        Log.d(TAG, "register")
-        switchFragment(RegisterFragment.newInstance("str1", "str2"))
+        switchFragment(RegisterFragment.newInstance())
     }
 
     fun showLogin() {
-        switchFragment(LoginFragment.newInstance("str1", "str2"))
+        switchFragment(LoginFragment.newInstance())
     }
 
     fun registerUser(email: String, paswoord: String, confirmPaswoord: String) {
@@ -81,17 +75,15 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
     fun logUserIn(email:String, paswoord:String) {
         authenticationService.logUserIn(email, paswoord)
-        Toast.makeText(baseContext, "Registered", Toast.LENGTH_LONG).show()
+        Toast.makeText(baseContext, "Logged in", Toast.LENGTH_LONG).show()
     }
 
 
     fun updateUi(user: FirebaseUser?) {
         if(user != null) {
             Log.d(TAG, "user registered: " + user.email)
-
         } else {
             Log.d(TAG, "user null?")
-
         }
     }
 
