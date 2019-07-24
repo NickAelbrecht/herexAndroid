@@ -8,11 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.TextView
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.authentication.AuthenticationService
-import kotlinx.android.synthetic.main.fragment_login.view.*
+import kotlinx.android.synthetic.main.fragment_register.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,13 +23,13 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [LoginFragment.OnFragmentInteractionListener] interface
+ * [RegisterFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [LoginFragment.newInstance] factory method to
+ * Use the [RegisterFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class LoginFragment : Fragment() {
+class RegisterFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var authenticationService: AuthenticationService
 
@@ -38,6 +39,7 @@ class LoginFragment : Fragment() {
         arguments?.let {
         }
         authenticationService = AuthenticationService(activity as MainActivity)
+
     }
 
     override fun onCreateView(
@@ -45,21 +47,14 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
-        view.button_login.setOnClickListener { logUserIn() }
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
+        view.button_register_complete.setOnClickListener { registerUser() }
         return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
-    }
-
-    fun logUserIn() {
-        val email = view!!.findViewById<EditText>(R.id.login_email).text.toString()
-        val paswoord = view!!.findViewById<EditText>(R.id.login_paswoord).text.toString()
-        authenticationService.logUserIn(email, paswoord)
-
     }
 
     override fun onAttach(context: Context) {
@@ -69,6 +64,14 @@ class LoginFragment : Fragment() {
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
+    }
+
+
+    fun registerUser() {
+        var email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
+        var paswoord: String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
+        var confirmPaswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
+        authenticationService.createUser(email, paswoord, confirmPaswoord)
     }
 
     override fun onDetach() {
@@ -99,12 +102,12 @@ class LoginFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment LoginFragment.
+         * @return A new instance of fragment RegisterFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance() =
-            LoginFragment().apply {
+            RegisterFragment().apply {
                 arguments = Bundle().apply {
                 }
             }
