@@ -1,6 +1,5 @@
 package com.example.nick.herexamen.authentication
 
-import android.support.annotation.LayoutRes
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
