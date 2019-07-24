@@ -1,24 +1,23 @@
 package com.example.nick.herexamen.database
 
-import android.arch.persistence.db.SupportSQLiteDatabase
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import com.example.nick.herexamen.database.converter.Converter
-import com.example.nick.herexamen.model.Question
+import com.example.nick.herexamen.model.Recipe
 
-@Database(entities = [Question::class], version = 1)
+@Database(entities = [Recipe::class], version = 1)
 @TypeConverters(Converter::class)
-abstract class QuizDatabase : RoomDatabase() {
-    abstract fun questionDao(): QuestionDao
+abstract class ShoppingAppDatabase : RoomDatabase() {
+    abstract fun recipenDao(): RecipeDao
 
     companion object {
         @Volatile
-        private var INSTANCE: QuizDatabase? = null
+        private var INSTANCE: ShoppingAppDatabase? = null
 
-        fun getDatabase(context: Context): QuizDatabase {
+        fun getDatabase(context: Context): ShoppingAppDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -26,7 +25,7 @@ abstract class QuizDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    QuizDatabase::class.java,
+                    ShoppingAppDatabase::class.java,
                     "Quiz_database"
                 ).build()
                 INSTANCE = instance

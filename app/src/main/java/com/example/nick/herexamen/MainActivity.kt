@@ -12,7 +12,8 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
-    UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener {
+    UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
+    ShoppingCartFragment.OnFragmentInteractionListener{
 
     private var TAG: String =  "MainActivityTag"
     private lateinit var authenticationService:AuthenticationService
@@ -23,7 +24,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
                 switchFragment(HomeFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
-            R.id.navigation_oefeningen -> {
+            R.id.navigation_recepten -> {
+                switchFragment(ShoppingCartFragment.newInstance())
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_account -> {
