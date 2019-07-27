@@ -77,7 +77,7 @@ class AuthenticationService(private var activity: MainActivity) {
         var valid = true
         val fieldEmail: TextView
         val fieldPassword: TextView
-        var fieldConfirmPasword: TextView? = null
+        var fieldConfirmPassword: TextView? = null
 
 
         if (case == 2) {
@@ -87,7 +87,7 @@ class AuthenticationService(private var activity: MainActivity) {
         } else {
             fieldEmail = activity.findViewById<EditText>(R.id.register_email)!!
             fieldPassword = activity.findViewById<EditText>(R.id.register_password)
-            fieldConfirmPasword = activity.findViewById<EditText>(R.id.register_password_confirm)
+            fieldConfirmPassword = activity.findViewById<EditText>(R.id.register_password_confirm)
             //Log.d(TAG, "emailfield: $fieldEmail, paswfield:$fieldPassword, confpasfield:$fieldConfirmPasword")
 
         }
@@ -116,14 +116,14 @@ class AuthenticationService(private var activity: MainActivity) {
         if (confirmPaswoord != null) {
             when {
                 TextUtils.isEmpty(confirmPaswoord) -> {
-                    fieldConfirmPasword?.error = "Vereist."
+                    fieldConfirmPassword?.error = "Vereist."
                     valid = false
                 }
                 confirmPaswoord != paswoord -> {
-                    fieldConfirmPasword?.error = "Beide wachtwoorden moeten dezelfde zijn."
+                    fieldConfirmPassword?.error = "Beide wachtwoorden moeten dezelfde zijn."
                     valid = false
                 }
-                else -> fieldConfirmPasword?.error = null
+                else -> fieldConfirmPassword?.error = null
             }
         }
         Log.d(TAG, "$valid")

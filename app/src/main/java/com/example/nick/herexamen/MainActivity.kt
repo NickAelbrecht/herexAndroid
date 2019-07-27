@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
     UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
-    ShoppingCartFragment.OnFragmentInteractionListener{
+    ShoppingCartFragment.OnFragmentInteractionListener, NewRecipeFragment.OnFragmentInteractionListener{
 
     private var TAG: String =  "MainActivityTag"
     private lateinit var authenticationService:AuthenticationService
@@ -74,6 +74,10 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
     fun showHome() {
         switchFragment(HomeFragment.newInstance())
+    }
+
+    fun showAddNewRecipe() {
+        switchFragment(NewRecipeFragment.newInstance())
     }
 
 

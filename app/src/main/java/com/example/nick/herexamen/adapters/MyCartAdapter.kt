@@ -10,7 +10,7 @@ import com.example.nick.herexamen.fragments.ShoppingCartFragment
 import com.example.nick.herexamen.model.Recipe
 import kotlinx.android.synthetic.main.cart_item.view.*
 
-class MyCartAdapter(private val recepten: List<Recipe>) :
+class MyCartAdapter(private var recepten: List<Recipe>) :
     RecyclerView.Adapter<MyCartAdapter.ViewHolder>() {
 
 
@@ -24,6 +24,12 @@ class MyCartAdapter(private val recepten: List<Recipe>) :
         val item = recepten[position]
         holder.naam.text = item.title
         holder.aantalBenodigdheden.text = item.products.size.toString()
+    }
+
+    internal fun setRecipes(recipes:List<Recipe>?) {
+        if(!recipes.isNullOrEmpty()){
+            this.recepten = recipes
+        }
     }
 
 

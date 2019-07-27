@@ -11,7 +11,7 @@ import com.example.nick.herexamen.model.Recipe
 @Database(entities = [Recipe::class], version = 1)
 @TypeConverters(Converter::class)
 abstract class ShoppingAppDatabase : RoomDatabase() {
-    abstract fun recipenDao(): RecipeDao
+    abstract fun recipeDao(): RecipeDao
 
     companion object {
         @Volatile
@@ -26,7 +26,7 @@ abstract class ShoppingAppDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ShoppingAppDatabase::class.java,
-                    "Quiz_database"
+                    "Shoppingcart_database"
                 ).build()
                 INSTANCE = instance
                 return instance

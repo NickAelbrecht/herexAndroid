@@ -7,11 +7,9 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = "recipe_table")
 data class Recipe(
 
-    @PrimaryKey(autoGenerate = true)
-    var id: Int,
-
-    @ColumnInfo(name = "title") var title: String,
-    @ColumnInfo(name = "products") var products: List<String>,
-    @ColumnInfo(name = "allergies") var allergies: List<String>,
-    @ColumnInfo(name = "kind") var kind: String
+    @PrimaryKey
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "products") val products: List<String>,
+    @ColumnInfo(name = "allergies") val allergies: List<String>,
+    @ColumnInfo(name = "kind") val kind: String
 ) {}

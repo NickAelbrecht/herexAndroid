@@ -1,49 +1,49 @@
 package com.example.nick.herexamen.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
-import com.example.nick.herexamen.adapters.MyCartAdapter
+import com.example.nick.herexamen.database.services.AddRecipeService
 import com.example.nick.herexamen.model.Recipe
-import kotlinx.android.synthetic.main.fragment_shopping_cart.*
+import com.example.nick.herexamen.viewmodels.RecipeViewModel
 
 
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [ShoppingCartFragment.OnFragmentInteractionListener] interface
+ * [NewRecipeFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [ShoppingCartFragment.newInstance] factory method to
+ * Use the [NewRecipeFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class ShoppingCartFragment : Fragment() {
+class NewRecipeFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
-    private lateinit var recyclerAdapter: MyCartAdapter
+    private lateinit var recipeViewModel: RecipeViewModel
+    private lateinit var addRecipeService: AddRecipeService
 
-    private val recipes = listOf(
-        Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"),"Brood" ),
-        Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"),"Brood" )
-    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
-        recyclerAdapter = MyCartAdapter(recipes)
-
-
+        recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        recipeViewModel.allRecipes.observe(this, Observer { recipes ->
+            ShoppingCartFragment.newInstance().updateRecipes(recipes)
+        })
+        addRecipeService = AddRecipeService(activity as MainActivity)
     }
 
     override fun onCreateView(
@@ -51,17 +51,12 @@ class ShoppingCartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
-        view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
-        var recycler = view.findViewById<RecyclerView>(R.id.cart_recycler)
-        recycler.apply {
-            adapter = recyclerAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
-
+        val view = inflater.inflate(R.layout.fragment_new_recipe, container, false)
+        view.findViewById<Button>(R.id.newrecipe_btn_add).setOnClickListener { addRecipe() }
         return view
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -75,13 +70,20 @@ class ShoppingCartFragment : Fragment() {
         }
     }
 
+    private fun addRecipe() {
+        val recipeTitle = view!!.findViewById<EditText>(R.id.newrecipe_title).text.toString()
+        val producten = view!!.findViewById<EditText>(R.id.newrecipe_producten).text.toString()
+        val allergieen = view!!.findViewById<EditText>(R.id.newrecipe_allergieen).text.toString()
+        val recipeSoort = view!!.findViewById<EditText>(R.id.newrecipe_soort).text.toString()
 
-    fun updateRecipes(recipes:List<Recipe>?) {
-        recipes?.let { recyclerAdapter.setRecipes(it) }
+        if (addRecipeService.validateForm(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort)) {
+            recipeViewModel.insert(Recipe(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort))
+        }
+
     }
 
-    fun addNewRecipe() {
-        (activity as MainActivity).showAddNewRecipe()
+    private fun addEdittext() {
+
     }
 
     override fun onDetach() {
@@ -101,14 +103,19 @@ class ShoppingCartFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @return A new instance of fragment NewRecipeFragment.
+         */
         @JvmStatic
         fun newInstance() =
-            ShoppingCartFragment().apply {
+            NewRecipeFragment().apply {
                 arguments = Bundle().apply {
                 }
             }
