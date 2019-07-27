@@ -50,9 +50,11 @@ class ShoppingCartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         var view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
-        adapter = MyCartAdapter(recipes, this)
-        cart_recycler.adapter = adapter
-        cart_recycler.layoutManager = LinearLayoutManager(context)
+        var recycler = view.findViewById<RecyclerView>(R.id.cart_recycler)
+        recycler.apply {
+            adapter = MyCartAdapter(recipes)
+            layoutManager = LinearLayoutManager(activity)
+        }
 
         return view
     }
