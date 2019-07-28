@@ -2,22 +2,28 @@
   <dictionary name="Nick">
     <words>
       <w>aantal</w>
+      <w>allergie</w>
       <w>allergieen</w>
       <w>benodigdheden</w>
       <w>croques</w>
       <w>hesp</w>
       <w>kaas</w>
       <w>naam</w>
+      <w>newrecipe</w>
+      <w>nieuw</w>
       <w>paswoord</w>
       <w>pasword</w>
       <w>producten</w>
+      <w>recept</w>
       <w>recepten</w>
       <w>shoppingcart</w>
       <w>smos</w>
       <w>soort</w>
       <w>titel</w>
+      <w>toevoegen</w>
       <w>tomaten</w>
       <w>vereist</w>
+      <w>voeg</w>
       <w>wortels</w>
     </words>
   </dictionary>

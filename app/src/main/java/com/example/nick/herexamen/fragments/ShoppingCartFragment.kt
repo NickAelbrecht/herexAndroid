@@ -30,19 +30,19 @@ import kotlinx.android.synthetic.main.fragment_shopping_cart.*
 class ShoppingCartFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
-    private lateinit var recyclerAdapter: MyCartAdapter
 
     private val recipes = listOf(
-        Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"),"Brood" ),
-        Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"),"Brood" )
+        Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"), "Brood"),
+        Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood")
     )
+
+    private var recyclerAdapter: MyCartAdapter = MyCartAdapter(recipes)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
         }
-        recyclerAdapter = MyCartAdapter(recipes)
-
 
     }
 
@@ -76,11 +76,11 @@ class ShoppingCartFragment : Fragment() {
     }
 
 
-    fun updateRecipes(recipes:List<Recipe>?) {
-        recipes?.let { recyclerAdapter.setRecipes(it) }
+    fun updateRecipes(recipes: List<Recipe>?) {
+        recipes?.let { recyclerAdapter.setRecipes(it); recyclerAdapter.notifyDataSetChanged() }
     }
 
-    fun addNewRecipe() {
+    private fun addNewRecipe() {
         (activity as MainActivity).showAddNewRecipe()
     }
 

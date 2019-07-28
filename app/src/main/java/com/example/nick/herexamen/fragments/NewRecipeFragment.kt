@@ -17,6 +17,11 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.database.services.AddRecipeService
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 
 
 /**
@@ -28,11 +33,16 @@ import com.example.nick.herexamen.viewmodels.RecipeViewModel
  * create an instance of this fragment.
  *
  */
-class NewRecipeFragment : Fragment() {
+class NewRecipeFragment : Fragment(), CoroutineScope {
 
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var addRecipeService: AddRecipeService
+
+    private var job: Job = Job()
+
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main + job
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +51,8 @@ class NewRecipeFragment : Fragment() {
         }
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         recipeViewModel.allRecipes.observe(this, Observer { recipes ->
-            ShoppingCartFragment.newInstance().updateRecipes(recipes)
+            val cartFragment = ShoppingCartFragment.newInstance()
+            cartFragment.updateRecipes(recipes)
         })
         addRecipeService = AddRecipeService(activity as MainActivity)
     }
@@ -77,18 +88,21 @@ class NewRecipeFragment : Fragment() {
         val recipeSoort = view!!.findViewById<EditText>(R.id.newrecipe_soort).text.toString()
 
         if (addRecipeService.validateForm(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort)) {
-            recipeViewModel.insert(Recipe(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort))
+            launch {
+                recipeViewModel.insert(Recipe(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort))
+            }
         }
 
     }
 
-    private fun addEdittext() {
+    /*private fun addEdittext() {
 
-    }
+    }*/
 
     override fun onDetach() {
         super.onDetach()
         listener = null
+        job.cancel()
     }
 
     /**

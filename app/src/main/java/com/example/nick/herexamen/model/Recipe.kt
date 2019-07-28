@@ -12,4 +12,4 @@ data class Recipe(
     @ColumnInfo(name = "products") val products: List<String>,
     @ColumnInfo(name = "allergies") val allergies: List<String>,
     @ColumnInfo(name = "kind") val kind: String
-) {}
+)

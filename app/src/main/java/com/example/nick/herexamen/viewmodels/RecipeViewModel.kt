@@ -7,7 +7,9 @@ import com.example.nick.herexamen.database.RecipeRepository
 import com.example.nick.herexamen.database.ShoppingAppDatabase
 import com.example.nick.herexamen.model.Recipe
 
+
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
+
     // @Inject
     private val recipeRepository: RecipeRepository
     val allRecipes: LiveData<List<Recipe>>
@@ -19,7 +21,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun insert(recipe: Recipe) {
-        recipeRepository.insert(recipe)
+       recipeRepository.insert(recipe)
     }
 
 }
