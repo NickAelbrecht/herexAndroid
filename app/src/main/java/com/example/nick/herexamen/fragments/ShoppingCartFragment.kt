@@ -16,7 +16,6 @@ import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.adapters.MyCartAdapter
 import com.example.nick.herexamen.model.Recipe
-import kotlinx.android.synthetic.main.fragment_shopping_cart.*
 
 
 /**
@@ -31,21 +30,22 @@ import kotlinx.android.synthetic.main.fragment_shopping_cart.*
 class ShoppingCartFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
+    private val TAG ="ShoppingCartFragment"
+
 
     private val recipes = listOf(
         Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"), "Brood"),
         Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
         Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
         Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood")
-
-
     )
 
-    private var recyclerAdapter: MyCartAdapter = MyCartAdapter(recipes)
+    private  var recyclerAdapter: MyCartAdapter = MyCartAdapter(this, recipes)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "OnCreate")
         arguments?.let {
         }
 
@@ -57,6 +57,7 @@ class ShoppingCartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
+
         view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
         val recycler = view.findViewById<RecyclerView>(R.id.cart_recycler)
         recycler.apply {

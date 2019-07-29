@@ -17,7 +17,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/aantal_benodigdheden"
-                android:layout_marginEnd="143dp"/>
+                android:layout_marginEnd="143dp" android:textSize="18sp"/>
         <TextView
                 android:text="TextView"
                 android:layout_width="wrap_content"

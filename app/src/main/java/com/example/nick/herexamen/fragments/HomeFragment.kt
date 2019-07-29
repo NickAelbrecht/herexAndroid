@@ -4,12 +4,12 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.example.nick.herexamen.R
-
 
 
 /**
@@ -22,10 +22,12 @@ import com.example.nick.herexamen.R
  *
  */
 class HomeFragment : Fragment() {
-        private var listener: OnFragmentInteractionListener? = null
+    private var listener: OnFragmentInteractionListener? = null
+    private val TAG = "HomeFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "OnCreate")
         arguments?.let {
 
         }

@@ -21,20 +21,20 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                switchFragment(HomeFragment.newInstance())
+                switchFragment(HomeFragment.newInstance(), "HomeFragment")
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_recepten -> {
-                switchFragment(ShoppingCartFragment.newInstance())
+                switchFragment(ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_account -> {
                 if(authenticationService.checkSignedIn()) {
                     Log.d(TAG, "user logged in ${authenticationService.getAuth().currentUser}")
-                    switchFragment(ProfileFragment.newInstance())
+                    switchFragment(ProfileFragment.newInstance(), "ProfileFragment")
                 } else {
                     Log.d(TAG, "user NOT logged in")
-                    switchFragment(UserFragment.newInstance())
+                    switchFragment(UserFragment.newInstance(), "UserFragment")
                 }
                 return@OnNavigationItemSelectedListener true
             }
@@ -56,39 +56,52 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
 
-    private fun switchFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .setTransition(1)
-            .commit()
+    private fun switchFragment(fragment: Fragment, tag:String) {
+        if(checkBackStack(tag)) {
+            Log.d("SWITCH", "NEW CREATED: $tag")
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment, tag)
+                .addToBackStack(tag)
+                .setTransition(1)
+                .commit()
+        } else {
+            Log.d("SWITCH", "REUSE SHOW: $tag")
+            supportFragmentManager.beginTransaction()
+                .show(supportFragmentManager.findFragmentByTag(tag)!!)
+                .commit()
+        }
     }
 
+    private fun checkBackStack(tag:String): Boolean {
+        return supportFragmentManager.findFragmentByTag(tag) == null
+    }
+
+
     fun showRegister() {
-        switchFragment(RegisterFragment.newInstance())
+        switchFragment(RegisterFragment.newInstance(), "RegisterFragment")
     }
 
     fun showLogin() {
-        switchFragment(LoginFragment.newInstance())
+        switchFragment(LoginFragment.newInstance(), "LoginFragment")
     }
 
     fun showHome() {
-        switchFragment(HomeFragment.newInstance())
+        switchFragment(HomeFragment.newInstance(), "HomeFragment")
     }
 
     fun showAddNewRecipe() {
-        switchFragment(NewRecipeFragment.newInstance())
+        switchFragment(NewRecipeFragment.newInstance(), "NewRecipeFragment")
     }
 
     fun showCart() {
-        switchFragment(ShoppingCartFragment.newInstance())
+        switchFragment(ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
     }
 
 
     fun updateUi(user: FirebaseUser?) {
         if(user != null) {
             Log.d(TAG, "user: " + user.email)
-            switchFragment(ProfileFragment.newInstance())
+            switchFragment(ProfileFragment.newInstance(), "ProfileFragment")
         } else {
             Log.d(TAG, "user null?")
         }

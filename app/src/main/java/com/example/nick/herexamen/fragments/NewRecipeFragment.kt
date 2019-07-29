@@ -92,6 +92,8 @@ class NewRecipeFragment : Fragment(), CoroutineScope {
             launch {
                 val query = async(Dispatchers.IO) {
                     recipeViewModel.insert(newRecipe)
+                    Log.d("RECIPES1VWM", recipeViewModel.allRecipes.value.toString())
+
                 }
                 val recipe = query.await()
                 ShoppingCartFragment.newInstance().updateRecipes(recipeViewModel.allRecipes.value)
