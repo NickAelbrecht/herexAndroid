@@ -6,6 +6,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +18,7 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.database.services.AddRecipeService
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 
@@ -88,16 +86,21 @@ class NewRecipeFragment : Fragment(), CoroutineScope {
         val recipeSoort = view!!.findViewById<EditText>(R.id.newrecipe_soort).text.toString()
 
         if (addRecipeService.validateForm(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort)) {
+            val newRecipe = Recipe(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort)
+
+            Log.d("RECIPES1", newRecipe.toString())
             launch {
-                recipeViewModel.insert(Recipe(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort))
+                val query = async(Dispatchers.IO) {
+                    recipeViewModel.insert(newRecipe)
+                }
+                val recipe = query.await()
+                ShoppingCartFragment.newInstance().updateRecipes(recipeViewModel.allRecipes.value)
+                (activity as MainActivity).showCart()
             }
         }
 
     }
 
-    /*private fun addEdittext() {
-
-    }*/
 
     override fun onDetach() {
         super.onDetach()

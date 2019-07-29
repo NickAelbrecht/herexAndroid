@@ -1,6 +1,7 @@
 package com.example.nick.herexamen.adapters
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,7 @@ import com.example.nick.herexamen.fragments.ShoppingCartFragment
 import com.example.nick.herexamen.model.Recipe
 import kotlinx.android.synthetic.main.cart_item.view.*
 
-class MyCartAdapter(private var recepten: List<Recipe>) :
-    RecyclerView.Adapter<MyCartAdapter.ViewHolder>() {
+class MyCartAdapter(private var recepten: List<Recipe>):RecyclerView.Adapter<MyCartAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -28,6 +28,7 @@ class MyCartAdapter(private var recepten: List<Recipe>) :
 
     internal fun setRecipes(recipes:List<Recipe>?) {
         if(!recipes.isNullOrEmpty()){
+            Log.d("RECIPES3", recipes.toString())
             this.recepten = recipes
         }
     }

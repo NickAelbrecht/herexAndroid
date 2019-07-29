@@ -80,6 +80,10 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         switchFragment(NewRecipeFragment.newInstance())
     }
 
+    fun showCart() {
+        switchFragment(ShoppingCartFragment.newInstance())
+    }
+
 
     fun updateUi(user: FirebaseUser?) {
         if(user != null) {

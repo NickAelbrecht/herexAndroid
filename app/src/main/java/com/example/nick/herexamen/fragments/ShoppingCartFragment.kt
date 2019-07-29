@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,7 +34,11 @@ class ShoppingCartFragment : Fragment() {
 
     private val recipes = listOf(
         Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"), "Brood"),
+        Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
+        Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
         Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood")
+
+
     )
 
     private var recyclerAdapter: MyCartAdapter = MyCartAdapter(recipes)
@@ -51,9 +56,9 @@ class ShoppingCartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
+        val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
         view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
-        var recycler = view.findViewById<RecyclerView>(R.id.cart_recycler)
+        val recycler = view.findViewById<RecyclerView>(R.id.cart_recycler)
         recycler.apply {
             adapter = recyclerAdapter
             layoutManager = LinearLayoutManager(context)
@@ -77,6 +82,8 @@ class ShoppingCartFragment : Fragment() {
 
 
     fun updateRecipes(recipes: List<Recipe>?) {
+        Log.d("RECIPES2", recipes.toString())
+
         recipes?.let { recyclerAdapter.setRecipes(it); recyclerAdapter.notifyDataSetChanged() }
     }
 
