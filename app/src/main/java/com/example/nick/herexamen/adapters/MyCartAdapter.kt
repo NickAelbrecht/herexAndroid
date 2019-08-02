@@ -28,7 +28,6 @@ class MyCartAdapter(private val parentFrag: Fragment, private var recepten: List
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        //Log.d("ADAPTER", "recepten: $recepten")
         if (checkDatabase()) {
             this.recepten = recipeViewModel.allRecipes.value!!
             Log.d("ADAPTER", "recepten NA db check: $recepten")

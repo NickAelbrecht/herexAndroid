@@ -48,10 +48,6 @@ class NewRecipeFragment : Fragment(), CoroutineScope {
         arguments?.let {
         }
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-        recipeViewModel.allRecipes.observe(this, Observer { recipes ->
-            val cartFragment = ShoppingCartFragment.newInstance()
-            cartFragment.updateRecipes(recipes)
-        })
         addRecipeService = AddRecipeService(activity as MainActivity)
     }
 
@@ -90,13 +86,11 @@ class NewRecipeFragment : Fragment(), CoroutineScope {
 
             Log.d("RECIPES1", newRecipe.toString())
             launch {
-                val query = async(Dispatchers.IO) {
+                async(Dispatchers.IO) {
                     recipeViewModel.insert(newRecipe)
                     Log.d("RECIPES1VWM", recipeViewModel.allRecipes.value.toString())
 
                 }
-                val recipe = query.await()
-                ShoppingCartFragment.newInstance().updateRecipes(recipeViewModel.allRecipes.value)
                 (activity as MainActivity).showCart()
             }
         }

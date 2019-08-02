@@ -16,6 +16,7 @@ import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.adapters.MyCartAdapter
 import com.example.nick.herexamen.model.Recipe
+import kotlinx.android.synthetic.main.fragment_shopping_cart.*
 
 
 /**
@@ -33,14 +34,7 @@ class ShoppingCartFragment : Fragment() {
     private val TAG ="ShoppingCartFragment"
 
 
-    private val recipes = listOf(
-        Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"), "Brood"),
-        Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
-        Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
-        Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood")
-    )
-
-    private  var recyclerAdapter: MyCartAdapter = MyCartAdapter(this, recipes)
+    private var recipes: List<Recipe>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +42,7 @@ class ShoppingCartFragment : Fragment() {
         Log.d(TAG, "OnCreate")
         arguments?.let {
         }
+
 
     }
 
@@ -59,13 +54,15 @@ class ShoppingCartFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
 
         view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
-        val recycler = view.findViewById<RecyclerView>(R.id.cart_recycler)
-        recycler.apply {
-            adapter = recyclerAdapter
-            layoutManager = LinearLayoutManager(context)
-        }
 
         return view
+    }
+
+    override fun onStart() {
+        super.onStart()
+        recipes = getRecipes()
+        cart_recycler.adapter = MyCartAdapter(this,recipes!! )
+        cart_recycler.layoutManager = LinearLayoutManager(context)
     }
 
     fun onButtonPressed(uri: Uri) {
@@ -81,12 +78,16 @@ class ShoppingCartFragment : Fragment() {
         }
     }
 
-
-    fun updateRecipes(recipes: List<Recipe>?) {
-        Log.d("RECIPES2", recipes.toString())
-
-        recipes?.let { recyclerAdapter.setRecipes(it); recyclerAdapter.notifyDataSetChanged() }
+    private fun getRecipes(): List<Recipe> {
+        return listOf(
+            Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"), "Brood"),
+            Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
+            Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
+            Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood")
+        )
     }
+
+
 
     private fun addNewRecipe() {
         (activity as MainActivity).showAddNewRecipe()
