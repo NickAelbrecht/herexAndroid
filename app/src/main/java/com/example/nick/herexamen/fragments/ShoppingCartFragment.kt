@@ -1,5 +1,7 @@
 package com.example.nick.herexamen.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -16,7 +18,9 @@ import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.adapters.MyCartAdapter
 import com.example.nick.herexamen.model.Recipe
+import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_shopping_cart.*
+import kotlinx.android.synthetic.main.fragment_shopping_cart.view.*
 
 
 /**
@@ -31,7 +35,9 @@ import kotlinx.android.synthetic.main.fragment_shopping_cart.*
 class ShoppingCartFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
-    private val TAG ="ShoppingCartFragment"
+    private val TAG = "ShoppingCartFragment"
+    private lateinit var recipeViewModel: RecipeViewModel
+    private lateinit var myCartAdapter: MyCartAdapter
 
 
     private var recipes: List<Recipe>? = null
@@ -42,7 +48,7 @@ class ShoppingCartFragment : Fragment() {
         Log.d(TAG, "OnCreate")
         arguments?.let {
         }
-
+        recipeViewModel = ViewModelProviders.of(activity!!).get(RecipeViewModel::class.java)
 
     }
 
@@ -53,16 +59,20 @@ class ShoppingCartFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
 
+        myCartAdapter = MyCartAdapter(requireContext())
         view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
+        view.cart_recycler.adapter = myCartAdapter
+        view.cart_recycler.layoutManager = LinearLayoutManager(requireContext())
 
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        recipes = getRecipes()
-        cart_recycler.adapter = MyCartAdapter(this,recipes!! )
-        cart_recycler.layoutManager = LinearLayoutManager(context)
+        recipeViewModel.allRecipes.observe(this, Observer { recepten ->
+            recepten?.let { myCartAdapter.setRecipes(it) }
+        })
+
     }
 
     fun onButtonPressed(uri: Uri) {
@@ -78,15 +88,14 @@ class ShoppingCartFragment : Fragment() {
         }
     }
 
-    private fun getRecipes(): List<Recipe> {
+    /*private fun getRecipes(): List<Recipe> {
         return listOf(
             Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"), "Brood"),
             Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
             Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
             Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood")
         )
-    }
-
+    }*/
 
 
     private fun addNewRecipe() {

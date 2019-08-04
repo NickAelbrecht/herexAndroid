@@ -1,25 +1,23 @@
 package com.example.nick.herexamen.viewmodels
 
-import android.app.Application
-import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import android.util.Log
-import com.example.nick.herexamen.database.RecipeRepository
-import com.example.nick.herexamen.database.ShoppingAppDatabase
+import android.arch.lifecycle.ViewModel
+import com.example.nick.herexamen.database.App
+import com.example.nick.herexamen.model.RecipeRepository
 import com.example.nick.herexamen.model.Recipe
+import javax.inject.Inject
 
 
-class RecipeViewModel(application: Application) : AndroidViewModel(application) {
+class RecipeViewModel : ViewModel(){
 
-    // @Inject
-    private val recipeRepository: RecipeRepository
-    val allRecipes: LiveData<List<Recipe>>
+    @Inject
+    lateinit var recipeRepository: RecipeRepository
+
 
     init {
-        val recipeDao = ShoppingAppDatabase.getDatabase(application).recipeDao()
-        recipeRepository = RecipeRepository(recipeDao)
-        allRecipes = recipeRepository.allRecipes
+        App.component.inject(this)
     }
+    val allRecipes: LiveData<List<Recipe>> = recipeRepository.allRecipes
 
     fun insert(recipe: Recipe) {
        recipeRepository.insert(recipe)

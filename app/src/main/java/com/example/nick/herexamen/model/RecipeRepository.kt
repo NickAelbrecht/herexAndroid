@@ -1,8 +1,10 @@
-package com.example.nick.herexamen.database
+package com.example.nick.herexamen.model
 
 import android.arch.lifecycle.LiveData
 import android.support.annotation.WorkerThread
-import com.example.nick.herexamen.model.Recipe
+import com.example.nick.herexamen.database.RecipeDao
+import org.jetbrains.anko.doAsync
+
 
 class
  RecipeRepository(private val recipeDao: RecipeDao) {
@@ -11,6 +13,8 @@ class
 
     @WorkerThread
     fun insert(recipe: Recipe) {
-        recipeDao.insert(recipe)
+        doAsync {
+            recipeDao.insert(recipe)
+        }
     }
 }
