@@ -31,22 +31,15 @@ import kotlin.coroutines.CoroutineContext
  * create an instance of this fragment.
  *
  */
-class NewRecipeFragment : Fragment(), CoroutineScope {
-
+class NewRecipeFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var addRecipeService: AddRecipeService
 
-    private var job: Job = Job()
-
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
         addRecipeService = AddRecipeService(activity as MainActivity)
     }
@@ -85,24 +78,14 @@ class NewRecipeFragment : Fragment(), CoroutineScope {
             val newRecipe = Recipe(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort)
 
             Log.d("RECIPES1", newRecipe.toString())
-            launch {
-                async(Dispatchers.IO) {
-                    recipeViewModel.insert(newRecipe)
-                    Log.d("RECIPES1VWM", recipeViewModel.allRecipes.value.toString())
 
-                }
-                (activity as MainActivity).showCart()
-            }
+            recipeViewModel.insert(newRecipe)
+            Log.d("RECIPES1VWM", recipeViewModel.allRecipes.value.toString())
+            (activity as MainActivity).showCart()
         }
 
     }
 
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-        job.cancel()
-    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -128,9 +111,6 @@ class NewRecipeFragment : Fragment(), CoroutineScope {
          */
         @JvmStatic
         fun newInstance() =
-            NewRecipeFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+            NewRecipeFragment()
     }
 }

@@ -8,7 +8,7 @@ import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import com.example.nick.herexamen.database.converter.Converter
 import com.example.nick.herexamen.model.Recipe
-import org.jetbrains.anko.doAsync
+//import org.jetbrains.anko.doAsync
 
 @Database(entities = [Recipe::class], version = 1)
 @TypeConverters(Converter::class)
@@ -32,9 +32,9 @@ abstract class ShoppingAppDatabase : RoomDatabase() {
                 ).addCallback(object : RoomDatabase.Callback() {
                     override fun onOpen(db: SupportSQLiteDatabase) {
                         super.onOpen(db)
-                        doAsync {
-                            populateDatabase(INSTANCE!!.recipeDao())
-                        }
+                       // doAsync {
+                         //   populateDatabase(INSTANCE!!.recipeDao())
+                       // }
                     }
                 })
 
