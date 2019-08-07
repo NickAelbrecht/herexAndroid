@@ -15,10 +15,6 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.authentication.AuthenticationService
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -36,8 +32,6 @@ class RegisterFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
         authenticationService = AuthenticationService(activity as MainActivity)
 
     }
@@ -62,16 +56,16 @@ class RegisterFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 
 
-    fun registerUser() {
-        var email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
-        var paswoord: String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
-        var confirmPaswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
-        authenticationService.createUser(email, paswoord, confirmPaswoord)
+    private fun registerUser() {
+        val email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
+        val paswoord: String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
+        val confirmPaswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
+        authenticationService.createUser(email, paswoord, confirmPaswoord, this)
     }
 
     override fun onDetach() {
@@ -99,17 +93,9 @@ class RegisterFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment RegisterFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
-            RegisterFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = RegisterFragment()
     }
 }

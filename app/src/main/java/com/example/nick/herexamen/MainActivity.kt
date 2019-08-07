@@ -12,11 +12,13 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
-    UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener, LoginFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
-    ShoppingCartFragment.OnFragmentInteractionListener, NewRecipeFragment.OnFragmentInteractionListener{
+    UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
+    LoginFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
+    ShoppingCartFragment.OnFragmentInteractionListener, NewRecipeFragment.OnFragmentInteractionListener {
 
-    private var TAG: String =  "MainActivityTag"
-    private lateinit var authenticationService:AuthenticationService
+    private var TAG: String = "MainActivityTag"
+    private lateinit var authenticationService: AuthenticationService
+
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_account -> {
-                if(authenticationService.checkSignedIn()) {
+                if (authenticationService.checkSignedIn()) {
                     Log.d(TAG, "user logged in ${authenticationService.getAuth().currentUser}")
                     switchFragment(ProfileFragment.newInstance(), "ProfileFragment")
                 } else {
@@ -56,8 +58,14 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
 
-    private fun switchFragment(fragment: Fragment, tag:String) {
-        if(checkBackStack(tag)) {
+    private fun switchFragment(fragment: Fragment, tag: String) {
+        val fragTransaction = supportFragmentManager.beginTransaction()
+        val currentFrag = supportFragmentManager.primaryNavigationFragment
+        if (currentFrag != null) {
+            fragTransaction.hide(currentFrag).commit()
+        }
+
+        if (checkBackStack(tag)) {
             Log.d("SWITCH", "NEW CREATED: $tag")
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment, tag)
@@ -67,12 +75,12 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         } else {
             Log.d("SWITCH", "REUSE SHOW: $tag")
             supportFragmentManager.beginTransaction()
-                .show(supportFragmentManager.findFragmentByTag(tag)!!)
+                .replace(R.id.fragment_container,supportFragmentManager.findFragmentByTag(tag)!!, tag)
                 .commit()
         }
     }
 
-    private fun checkBackStack(tag:String): Boolean {
+    private fun checkBackStack(tag: String): Boolean {
         return supportFragmentManager.findFragmentByTag(tag) == null
     }
 
@@ -97,17 +105,21 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         switchFragment(ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
     }
 
+    private fun detachFragment(fragment: Fragment) {
+        val fragTransaction = supportFragmentManager.beginTransaction()
+        fragTransaction.detach(fragment).commit()
+    }
 
-    fun updateUi(user: FirebaseUser?) {
-        if(user != null) {
+
+    fun updateUi(user: FirebaseUser?, fragment: Fragment) {
+        if (user != null) {
             Log.d(TAG, "user: " + user.email)
+            detachFragment(fragment)
             switchFragment(ProfileFragment.newInstance(), "ProfileFragment")
         } else {
             Log.d(TAG, "user null?")
         }
     }
-
-
 
 
 }
