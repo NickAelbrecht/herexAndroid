@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +16,7 @@ import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.adapters.MyCartAdapter
-import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
-import kotlinx.android.synthetic.main.fragment_shopping_cart.*
 import kotlinx.android.synthetic.main.fragment_shopping_cart.view.*
 
 
@@ -40,7 +37,7 @@ class ShoppingCartFragment : Fragment() {
     private lateinit var myCartAdapter: MyCartAdapter
 
 
-    private var recipes: List<Recipe>? = null
+    //private var recipes: List<Recipe>? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

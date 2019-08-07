@@ -76,6 +76,8 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
             Log.d("SWITCH", "REUSE SHOW: $tag")
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container,supportFragmentManager.findFragmentByTag(tag)!!, tag)
+                .addToBackStack(tag)
+                .setTransition(1)
                 .commit()
         }
     }
