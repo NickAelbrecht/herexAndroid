@@ -1,51 +1,33 @@
 package com.example.nick.herexamen.fragments
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
-import com.example.nick.herexamen.adapters.MyCartAdapter
-import com.example.nick.herexamen.viewmodels.RecipeViewModel
-import kotlinx.android.synthetic.main.fragment_shopping_cart.view.*
+import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
+import java.util.ArrayList
 
 
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [ShoppingCartFragment.OnFragmentInteractionListener] interface
+ * [RecipeDetailFragment.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [ShoppingCartFragment.newInstance] factory method to
+ * Use the [RecipeDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class ShoppingCartFragment : Fragment() {
+class RecipeDetailFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
-    private val TAG = "ShoppingCartFragment"
-    private lateinit var recipeViewModel: RecipeViewModel
-    private lateinit var myCartAdapter: MyCartAdapter
-
-
-    //private var recipes: List<Recipe>? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "OnCreate")
-        arguments?.let {
-        }
-        recipeViewModel = ViewModelProviders.of(activity!!).get(RecipeViewModel::class.java)
 
     }
 
@@ -54,24 +36,13 @@ class ShoppingCartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
-
-        myCartAdapter = MyCartAdapter(requireContext(), this)
-        view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
-        view.cart_recycler.adapter = myCartAdapter
-        view.cart_recycler.layoutManager = LinearLayoutManager(requireContext())
-
+        var view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
+        view.recipe_detail_title.text = arguments!!.getString("title")
+        view.recipe_detail_soort.text = arguments!!.getString("soort")
         return view
     }
 
-    override fun onStart() {
-        super.onStart()
-        recipeViewModel.allRecipes.observe(this, Observer { recepten ->
-            recepten?.let { myCartAdapter.setRecipes(it) }
-        })
-
-    }
-
+    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -83,11 +54,6 @@ class ShoppingCartFragment : Fragment() {
         } else {
             throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
-    }
-
-
-    private fun addNewRecipe() {
-        (activity as MainActivity).showAddNewRecipe()
     }
 
     override fun onDetach() {
@@ -112,11 +78,27 @@ class ShoppingCartFragment : Fragment() {
     }
 
     companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+
+         * @return A new instance of fragment RecipeDetailFragment.
+         */
         @JvmStatic
-        fun newInstance() =
-            ShoppingCartFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance(
+            title: String,
+            producten: List<String>,
+            allergieen: List<String>,
+            soort: String
+        ): RecipeDetailFragment {
+            val frag = RecipeDetailFragment()
+            val args = Bundle()
+            args.putString("title", title)
+            args.putString("soort", soort)
+            args.putStringArrayList("producten", producten.map { product -> product } as ArrayList<String>)
+            args.putStringArrayList("allergieen", allergieen.map { allergie -> allergie } as ArrayList<String>)
+            frag.arguments = args
+            return frag
+        }
     }
 }
