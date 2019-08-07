@@ -82,6 +82,9 @@ class NewRecipeFragment : Fragment() {
         val recipeSoort = view!!.findViewById<EditText>(R.id.newrecipe_soort).text.toString()
 
         if (addRecipeService.validateForm(recipeTitle, producten, allergieen, recipeSoort)) {
+            if(allergieen.isEmpty()) {
+                allergieen.add("Geen")
+            }
             val newRecipe = Recipe(recipeTitle, producten, allergieen, recipeSoort)
 
             //Log.d("RECIPES1", newRecipe.toString())

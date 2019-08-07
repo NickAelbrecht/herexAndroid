@@ -27,7 +27,7 @@ class AddRecipeService(private var activity: MainActivity) {
             fieldTitel.error = null
         }
 
-        if (TextUtils.isEmpty(producten[0])) {
+        if (producten.isEmpty()) {
             fieldProducten.error = "Vereist."
             valid = false
         } else {

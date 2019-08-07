@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 
 import com.example.nick.herexamen.R
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
@@ -39,6 +41,8 @@ class RecipeDetailFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
         view.recipe_detail_title.text = arguments!!.getString("title")
         view.recipe_detail_soort.text = arguments!!.getString("soort")
+        addProducts(view)
+        addAllergies(view)
         return view
     }
 
@@ -54,6 +58,35 @@ class RecipeDetailFragment : Fragment() {
         } else {
             throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
+    }
+
+    private fun addAllergies(view:View) {
+        val allergieen = arguments!!.getStringArrayList("allergieen")
+
+        for (product in allergieen) {
+            val textView = TextView(requireContext())
+            textView.setPadding(16, 8, 8, 8)
+            textView.textSize = 18f
+            val allerLayout = view.findViewById<LinearLayout>(R.id.recipe_detail_aller_layout)
+
+            textView.text = product
+            allerLayout.addView(textView)
+        }
+    }
+
+    private fun addProducts(view:View) {
+        val producten = arguments!!.getStringArrayList("producten")
+
+        for (product in producten) {
+            val textView = TextView(requireContext())
+            textView.setPadding(16, 8, 8, 8)
+            textView.textSize = 18f
+            val prodLayout = view.findViewById<LinearLayout>(R.id.recipe_detail_prod_layout)
+
+            textView.text = product
+            prodLayout.addView(textView)
+        }
+
     }
 
     override fun onDetach() {
