@@ -55,10 +55,10 @@ class LoginFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
-    fun logUserIn() {
+    private fun logUserIn() {
         val email = view!!.findViewById<EditText>(R.id.login_email).text.toString()
         val paswoord = view!!.findViewById<EditText>(R.id.login_paswoord).text.toString()
-        authenticationService.logUserIn(email, paswoord)
+        authenticationService.logUserIn(email, paswoord, this)
 
     }
 
@@ -67,7 +67,7 @@ class LoginFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 
@@ -97,16 +97,9 @@ class LoginFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment LoginFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
-            LoginFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = LoginFragment()
     }
 }

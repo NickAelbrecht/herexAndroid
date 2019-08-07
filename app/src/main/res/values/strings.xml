@@ -8,4 +8,18 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="recepten">Recepten</string>
+    <string name="nieuw_recept_titel">Voeg nieuw recept toe</string>
+    <string name="toevoegen">Toevoegen</string>
+    <string name="producten">Producten</string>
+    <string name="allergieen">Allergieën</string>
+    <string name="soort">Soort</string>
+    <string name="titel">Titel</string>
+    <string name="naam">Naam</string>
+    <string name="profiel">Profiel</string>
+    <string name="profielafbeelding">Profielafbeelding</string>
+    <string name="email">Email</string>
+    <string name="uitloggen">Uitloggen</string>
+    <string name="naam_dp">Naam:</string>
+    <string name="email_dp">Email:</string>
+    <string name="voeg_iets_toe_aan_de_lijst">Voeg iets toe aan de lijst</string>
 </resources>

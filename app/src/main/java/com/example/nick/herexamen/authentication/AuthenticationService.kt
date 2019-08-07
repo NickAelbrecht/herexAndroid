@@ -1,5 +1,6 @@
 package com.example.nick.herexamen.authentication
 
+import android.support.v4.app.Fragment
 import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
@@ -8,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
+import com.example.nick.herexamen.fragments.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -19,7 +21,7 @@ class AuthenticationService(private var activity: MainActivity) {
         return auth.currentUser != null
     }
 
-    fun createUser(email: String, paswoord: String, confirmPaswoord: String): FirebaseUser? {
+    fun createUser(email: String, paswoord: String, confirmPaswoord: String, fragment: Fragment): FirebaseUser? {
         var gebruiker: FirebaseUser? = null
         if (!validateForm(email, paswoord, confirmPaswoord, 1)) {
             return null
@@ -30,7 +32,7 @@ class AuthenticationService(private var activity: MainActivity) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
-                    activity.updateUi(user)
+                    activity.updateUi(user, fragment)
                     gebruiker = user
                 } else {
                     // If sign in fails, display a message to the user.
@@ -46,7 +48,7 @@ class AuthenticationService(private var activity: MainActivity) {
         return gebruiker
     }
 
-    fun logUserIn(email: String, paswoord: String) {
+    fun logUserIn(email: String, paswoord: String, fragment: Fragment) {
         if (!validateForm(email, paswoord, null, 2)) {
             return
         }
@@ -56,7 +58,7 @@ class AuthenticationService(private var activity: MainActivity) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
-                    activity.updateUi(user)
+                    activity.updateUi(user, fragment)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)

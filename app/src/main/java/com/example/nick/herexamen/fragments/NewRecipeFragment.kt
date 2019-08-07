@@ -77,13 +77,17 @@ class NewRecipeFragment : Fragment() {
         if (addRecipeService.validateForm(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort)) {
             val newRecipe = Recipe(recipeTitle, listOf(producten), listOf(allergieen), recipeSoort)
 
-            Log.d("RECIPES1", newRecipe.toString())
+            //Log.d("RECIPES1", newRecipe.toString())
 
             recipeViewModel.insert(newRecipe)
-            Log.d("RECIPES1VWM", recipeViewModel.allRecipes.value.toString())
-            (activity as MainActivity).showCart()
+            //Log.d("RECIPES1VWM", recipeViewModel.allRecipes.value.toString())
+            showShoppingCart()
         }
 
+    }
+
+    private fun showShoppingCart() {
+        (activity as MainActivity).showCart()
     }
 
 
