@@ -23,4 +23,16 @@ class RecipeViewModel : ViewModel(){
        recipeRepository.insert(recipe)
     }
 
+    fun deleteByTitle(title:String) {
+        recipeRepository.deleteByTitle(title)
+    }
+
+    fun findByTitle(title: String):LiveData<Recipe> {
+        return recipeRepository.findByTitle(title)
+    }
+
+    fun updateRecipe(recipe: Recipe) {
+        recipeRepository.updateRecipe(recipe)
+    }
+
 }

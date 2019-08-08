@@ -1,18 +1,25 @@
 package com.example.nick.herexamen.fragments
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 
 import com.example.nick.herexamen.R
+import com.example.nick.herexamen.model.Recipe
+import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
+import java.lang.NullPointerException
 import java.util.ArrayList
 
 
@@ -28,9 +35,13 @@ import java.util.ArrayList
 class RecipeDetailFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
+    private lateinit var recipeViewModel: RecipeViewModel
+    private lateinit var recipeLiveData: LiveData<Recipe>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
 
     }
 
@@ -117,10 +128,46 @@ class RecipeDetailFragment : Fragment() {
 
             deleteButton.setOnClickListener {
                 prodLayout.removeView(tableRow)
+                deleteProductFromRecipe(tableRow, producten)
+
             }
         }
+    }
+
+    private fun deleteProductFromRecipe(tableRow: TableRow, producten: ArrayList<String>) {
+        val title = (tableRow.getChildAt(0) as TextView).text
+        producten.remove(title)
+
+        val receptTitle = arguments!!.getString("title")
+        arguments!!.putStringArrayList("producten", producten)
+        recipeLiveData = recipeViewModel.findByTitle(receptTitle)
+        recipeLiveData.observe(this, getObserver())
+    }
+
+
+    private fun updateRecipeByTitle(recipe: Recipe) {
+        recipeLiveData.removeObserver(getObserver())
+        val producten = arguments!!.getStringArrayList("producten")
+        val prodList: List<String> = producten.toList()
+        Log.d("DELETE", "recept:$recipe : producten:$prodList")
+        recipeViewModel.updateRecipe(recipe)
+        // Log.d("DELETE", "$recipe")
 
     }
+
+
+    private fun getObserver():Observer<Recipe> {
+        return Observer {recept ->
+            Log.d("DELETE", "recipe: $recept")
+            try {
+                updateRecipeByTitle(recept!!)
+            } catch (ex: NullPointerException) {
+                Log.d("NULLPOINTER", "Recept is null!")
+            }
+
+        }
+    }
+
 
     override fun onDetach() {
         super.onDetach()
