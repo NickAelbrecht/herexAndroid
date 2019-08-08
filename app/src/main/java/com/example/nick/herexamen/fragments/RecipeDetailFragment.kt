@@ -1,14 +1,15 @@
 package com.example.nick.herexamen.fragments
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 
 import com.example.nick.herexamen.R
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
@@ -38,7 +39,7 @@ class RecipeDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
+        val view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
         view.recipe_detail_title.text = arguments!!.getString("title")
         view.recipe_detail_soort.text = arguments!!.getString("soort")
         addProducts(view)
@@ -60,31 +61,63 @@ class RecipeDetailFragment : Fragment() {
         }
     }
 
-    private fun addAllergies(view:View) {
+    private fun addAllergies(view: View) {
         val allergieen = arguments!!.getStringArrayList("allergieen")
 
-        for (product in allergieen) {
+        for (allergie in allergieen) {
+            val allerLayout = view.findViewById<TableLayout>(R.id.recipe_detail_aller_layout)
+
+            val tableRow = TableRow(requireContext())
+
             val textView = TextView(requireContext())
             textView.setPadding(16, 8, 8, 8)
             textView.textSize = 18f
-            val allerLayout = view.findViewById<LinearLayout>(R.id.recipe_detail_aller_layout)
+            textView.text = allergie
 
-            textView.text = product
-            allerLayout.addView(textView)
+            val deleteButton = Button(requireContext())
+            val gradDrawable = GradientDrawable()
+            gradDrawable.cornerRadius = 50F
+            gradDrawable.setColor(Color.RED)
+            deleteButton.background = gradDrawable
+            deleteButton.text = "-"
+
+            tableRow.addView(textView)
+            tableRow.addView(deleteButton)
+            allerLayout.addView(tableRow)
+
+            deleteButton.setOnClickListener {
+                allerLayout.removeView(tableRow)
+            }
         }
     }
 
-    private fun addProducts(view:View) {
+    private fun addProducts(view: View) {
         val producten = arguments!!.getStringArrayList("producten")
 
         for (product in producten) {
+            val prodLayout = view.findViewById<LinearLayout>(R.id.recipe_detail_prod_layout)
+
+            val tableRow = TableRow(requireContext())
+
             val textView = TextView(requireContext())
             textView.setPadding(16, 8, 8, 8)
             textView.textSize = 18f
-            val prodLayout = view.findViewById<LinearLayout>(R.id.recipe_detail_prod_layout)
-
             textView.text = product
-            prodLayout.addView(textView)
+
+            val deleteButton = Button(requireContext())
+            val gradDrawable = GradientDrawable()
+            gradDrawable.cornerRadius = 50F
+            gradDrawable.setColor(Color.RED)
+            deleteButton.background = gradDrawable
+            deleteButton.text = "-"
+
+            tableRow.addView(textView)
+            tableRow.addView(deleteButton)
+            prodLayout.addView(tableRow)
+
+            deleteButton.setOnClickListener {
+                prodLayout.removeView(tableRow)
+            }
         }
 
     }
