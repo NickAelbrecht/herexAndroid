@@ -27,7 +27,7 @@ class RecipeViewModel : ViewModel(){
         recipeRepository.deleteByTitle(title)
     }
 
-    fun findByTitle(title: String):LiveData<Recipe> {
+    fun findByTitle(title: String):Recipe {
         return recipeRepository.findByTitle(title)
     }
 

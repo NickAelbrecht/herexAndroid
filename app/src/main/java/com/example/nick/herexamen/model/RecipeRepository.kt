@@ -28,7 +28,7 @@ RecipeRepository(private val recipeDao: RecipeDao) {
     }
 
     @WorkerThread
-    fun findByTitle(title: String): LiveData<Recipe> {
+    fun findByTitle(title: String): Recipe {
         return doAsyncResult {
             recipeDao.findByTitle(title)
         }.get()

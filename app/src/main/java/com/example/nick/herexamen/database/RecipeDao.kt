@@ -16,13 +16,13 @@ interface RecipeDao {
     @Query("SELECT * from recipe_table ORDER BY title asc")
     fun getAllRecipes(): LiveData<List<Recipe>>
 
-    @Query("SELECT * FROM recipe_table WHERE title LIKE :title")
-    fun findByTitle(title: String): LiveData<Recipe>
+    @Query("SELECT * FROM recipe_table WHERE title = :title")
+    fun findByTitle(title: String): Recipe
 
     @Query("DELETE from recipe_table WHERE title LIKE :title")
     fun deleteByTitle(title: String)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun updateRecipe(recipe: Recipe)
 
 }

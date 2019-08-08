@@ -36,7 +36,7 @@ class RecipeDetailFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var recipeViewModel: RecipeViewModel
-    private lateinit var recipeLiveData: LiveData<Recipe>
+    private lateinit var recipeByTitle: Recipe
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,7 +129,6 @@ class RecipeDetailFragment : Fragment() {
             deleteButton.setOnClickListener {
                 prodLayout.removeView(tableRow)
                 deleteProductFromRecipe(tableRow, producten)
-
             }
         }
     }
@@ -137,35 +136,21 @@ class RecipeDetailFragment : Fragment() {
     private fun deleteProductFromRecipe(tableRow: TableRow, producten: ArrayList<String>) {
         val title = (tableRow.getChildAt(0) as TextView).text
         producten.remove(title)
+        arguments!!.putStringArrayList("producten", producten)
 
         val receptTitle = arguments!!.getString("title")
-        arguments!!.putStringArrayList("producten", producten)
-        recipeLiveData = recipeViewModel.findByTitle(receptTitle)
-        recipeLiveData.observe(this, getObserver())
+        recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+        updateRecipe(recipeByTitle)
     }
 
 
-    private fun updateRecipeByTitle(recipe: Recipe) {
-        recipeLiveData.removeObserver(getObserver())
+    private fun updateRecipe(recipe: Recipe) {
         val producten = arguments!!.getStringArrayList("producten")
-        val prodList: List<String> = producten.toList()
-        Log.d("DELETE", "recept:$recipe : producten:$prodList")
+        //Log.d("DELETE", "voor update: $recipe ")
+        recipe.products = producten
         recipeViewModel.updateRecipe(recipe)
-        // Log.d("DELETE", "$recipe")
+        //Log.d("DELETE", "after update: ${recipeViewModel.findByTitle(recipe.title)}")
 
-    }
-
-
-    private fun getObserver():Observer<Recipe> {
-        return Observer {recept ->
-            Log.d("DELETE", "recipe: $recept")
-            try {
-                updateRecipeByTitle(recept!!)
-            } catch (ex: NullPointerException) {
-                Log.d("NULLPOINTER", "Recept is null!")
-            }
-
-        }
     }
 
 
