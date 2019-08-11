@@ -1,7 +1,5 @@
 package com.example.nick.herexamen.fragments
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.graphics.Color
@@ -19,7 +17,6 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
-import java.lang.NullPointerException
 import java.util.ArrayList
 
 
@@ -85,12 +82,13 @@ class RecipeDetailFragment : Fragment() {
             textView.textSize = 18f
             textView.text = allergie
 
-            val deleteButton = Button(requireContext())
+            val deleteButton = ImageButton(requireContext())
             val gradDrawable = GradientDrawable()
-            gradDrawable.cornerRadius = 50F
-            gradDrawable.setColor(Color.RED)
+            gradDrawable.cornerRadius = 75F
             deleteButton.background = gradDrawable
-            deleteButton.text = "-"
+            deleteButton.adjustViewBounds = true
+            deleteButton.setImageResource(R.mipmap.vuilbak)
+
 
             tableRow.addView(textView)
             tableRow.addView(deleteButton)
@@ -115,12 +113,12 @@ class RecipeDetailFragment : Fragment() {
             textView.textSize = 18f
             textView.text = product
 
-            val deleteButton = Button(requireContext())
+            val deleteButton = ImageButton(requireContext())
             val gradDrawable = GradientDrawable()
-            gradDrawable.cornerRadius = 50F
-            gradDrawable.setColor(Color.RED)
+            gradDrawable.cornerRadius = 75F
             deleteButton.background = gradDrawable
-            deleteButton.text = "-"
+            deleteButton.adjustViewBounds = true
+            deleteButton.setImageResource(R.mipmap.vuilbak)
 
             tableRow.addView(textView)
             tableRow.addView(deleteButton)
