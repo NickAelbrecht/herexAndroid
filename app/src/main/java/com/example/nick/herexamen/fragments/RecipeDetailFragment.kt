@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +18,7 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
+import org.w3c.dom.Text
 import java.util.ArrayList
 
 
@@ -55,7 +57,6 @@ class RecipeDetailFragment : Fragment() {
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -77,18 +78,8 @@ class RecipeDetailFragment : Fragment() {
 
             val tableRow = TableRow(requireContext())
 
-            val textView = TextView(requireContext())
-            textView.setPadding(16, 8, 8, 8)
-            textView.textSize = 18f
-            textView.text = allergie
-
-            val deleteButton = ImageButton(requireContext())
-            val gradDrawable = GradientDrawable()
-            gradDrawable.cornerRadius = 75F
-            deleteButton.background = gradDrawable
-            deleteButton.adjustViewBounds = true
-            deleteButton.setImageResource(R.mipmap.vuilbak)
-
+            val textView = createTextView(allergie)
+            val deleteButton = createButton()
 
             tableRow.addView(textView)
             tableRow.addView(deleteButton)
@@ -104,21 +95,12 @@ class RecipeDetailFragment : Fragment() {
         val producten = arguments!!.getStringArrayList("producten")
 
         for (product in producten) {
-            val prodLayout = view.findViewById<LinearLayout>(R.id.recipe_detail_prod_layout)
+            val prodLayout = view.findViewById<TableLayout>(R.id.recipe_detail_prod_layout)
 
             val tableRow = TableRow(requireContext())
 
-            val textView = TextView(requireContext())
-            textView.setPadding(16, 8, 8, 8)
-            textView.textSize = 18f
-            textView.text = product
-
-            val deleteButton = ImageButton(requireContext())
-            val gradDrawable = GradientDrawable()
-            gradDrawable.cornerRadius = 75F
-            deleteButton.background = gradDrawable
-            deleteButton.adjustViewBounds = true
-            deleteButton.setImageResource(R.mipmap.vuilbak)
+            val textView = createTextView(product)
+            val deleteButton = createButton()
 
             tableRow.addView(textView)
             tableRow.addView(deleteButton)
@@ -144,11 +126,27 @@ class RecipeDetailFragment : Fragment() {
 
     private fun updateRecipe(recipe: Recipe) {
         val producten = arguments!!.getStringArrayList("producten")
-        //Log.d("DELETE", "voor update: $recipe ")
         recipe.products = producten
         recipeViewModel.updateRecipe(recipe)
-        //Log.d("DELETE", "after update: ${recipeViewModel.findByTitle(recipe.title)}")
+    }
 
+    private fun createTextView(text: String): TextView {
+        val textView = TextView(requireContext())
+        textView.setPadding(16, 8, 8, 8)
+        textView.textSize = 18f
+        textView.text = text
+        return textView
+    }
+
+    private fun createButton(): Button {
+        val deleteButton = Button(requireContext())
+        deleteButton.layoutParams = TableRow.LayoutParams(48, 48)
+        val gradDrawable = GradientDrawable()
+        gradDrawable.cornerRadius = 75F
+        deleteButton.background = gradDrawable
+        deleteButton.setPadding(8, 0, 0, 8)
+        deleteButton.setBackgroundResource(R.mipmap.vuilbak)
+        return deleteButton
     }
 
 
@@ -169,7 +167,6 @@ class RecipeDetailFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
