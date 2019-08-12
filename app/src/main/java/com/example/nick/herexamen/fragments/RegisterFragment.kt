@@ -40,18 +40,13 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        try {
-            super.onCreateView(inflater, container, savedInstanceState)
-            retainInstance = true
-            // Inflate the layout for this fragment
-            val view = inflater.inflate(R.layout.fragment_register, container, false)
-            view.button_register_complete.setOnClickListener { registerUser() }
-            return view
-        }catch (exec:IllegalStateException) {
-            Log.e("RegisterFragment", "error oncreateview: ${exec.message}", exec)
-            throw exec
-        }
+        // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
+        val view = inflater.inflate(R.layout.fragment_register, container, false)
+        view.button_register_complete.setOnClickListener { registerUser() }
 
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -70,11 +65,11 @@ class RegisterFragment : Fragment() {
 
 
     private fun registerUser() {
-        val naam:String = view!!.findViewById<EditText>(R.id.register_naam).text.toString()
+        val naam: String = view!!.findViewById<EditText>(R.id.register_naam).text.toString()
         val email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
         val paswoord: String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
         val confirmPaswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
-        authenticationService.createUser(naam,email, paswoord, confirmPaswoord, this)
+        authenticationService.createUser(naam, email, paswoord, confirmPaswoord, this)
     }
 
     override fun onDetach() {

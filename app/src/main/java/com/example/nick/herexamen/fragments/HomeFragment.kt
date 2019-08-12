@@ -35,16 +35,10 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        try {
-            super.onCreateView(inflater, container, savedInstanceState)
-            retainInstance = true
-
-            // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.fragment_home, container, false)
-        } catch (exec:Exception) {
-            Log.e(TAG, "error oncreateview: ${exec.message}", exec)
-            throw exec
-        }
+        // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     fun onButtonPressed(uri: Uri) {

@@ -51,24 +51,17 @@ class ShoppingCartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        try {
-            super.onCreateView(inflater, container, savedInstanceState)
-            retainInstance = true
+        // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
+        val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
 
-            // Inflate the layout for this fragment
-            val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
+        myCartAdapter = MyCartAdapter(requireContext(), this)
+        view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
+        view.cart_recycler.adapter = myCartAdapter
+        view.cart_recycler.layoutManager = LinearLayoutManager(requireContext())
 
-            myCartAdapter = MyCartAdapter(requireContext(), this)
-            view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
-            view.cart_recycler.adapter = myCartAdapter
-            view.cart_recycler.layoutManager = LinearLayoutManager(requireContext())
-
-            return view
-        }catch (exec:IllegalStateException) {
-            Log.e(TAG, "error oncreateview: ${exec.message}", exec)
-            throw exec
-        }
-
+        return view
     }
 
     override fun onStart() {

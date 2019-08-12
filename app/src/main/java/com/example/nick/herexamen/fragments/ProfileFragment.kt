@@ -45,20 +45,13 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        try {
-
-            super.onCreateView(inflater, container, savedInstanceState)
-            retainInstance = true
-
-            // Inflate the layout for this fragment
-            val view = inflater.inflate(R.layout.fragment_profile, container, false)
-            view.profiel_btn_logout.setOnClickListener { logUserOut() }
-            updateUi(view)
-            return view
-        } catch (exec: IllegalStateException) {
-            Log.e("ProfileFragment", "error oncreateview: ${exec.message}", exec)
-            throw exec
-        }
+        // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        view.profiel_btn_logout.setOnClickListener { logUserOut() }
+        updateUi(view)
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event

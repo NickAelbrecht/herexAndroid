@@ -39,18 +39,13 @@ class UserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        try {
-            super.onCreateView(inflater, container, savedInstanceState)
-            retainInstance = true
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
 
-            val view: View = inflater.inflate(R.layout.fragment_user, container, false)
-            view.btn_login.setOnClickListener { showLogin() }
-            view.btn_register.setOnClickListener { showRegister() }
-            return view
-        } catch (exec: IllegalStateException) {
-            Log.e(TAG, "error oncreateview: ${exec.message}", exec)
-            throw exec
-        }
+        val view: View = inflater.inflate(R.layout.fragment_user, container, false)
+        view.btn_login.setOnClickListener { showLogin() }
+        view.btn_register.setOnClickListener { showRegister() }
+        return view
     }
 
     override fun onAttach(context: Context) {

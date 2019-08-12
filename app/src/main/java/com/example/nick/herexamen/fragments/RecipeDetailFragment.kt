@@ -46,25 +46,22 @@ class RecipeDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        try {
+        // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
+        val view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
+        view.recipe_detail_title.text = arguments!!.getString("title")
+        view.recipe_detail_soort.text = arguments!!.getString("soort")
 
-            super.onCreateView(inflater, container, savedInstanceState)
-            retainInstance = true
-            // Inflate the layout for this fragment
-            val view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
-            view.recipe_detail_title.text = arguments!!.getString("title")
-            view.recipe_detail_soort.text = arguments!!.getString("soort")
-            createRowService = CreateRowService(requireContext())
-            addProducts(view)
-            addAllergies(view)
-            val receptTitle = arguments!!.getString("title")
-            recipeByTitle = recipeViewModel.findByTitle(receptTitle)
-            view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
-            return view
-        }catch (exec:IllegalStateException) {
-            Log.e("RecipeDetailFragment", "error oncreateview: ${exec.message}", exec)
-            throw exec
-        }
+        createRowService = CreateRowService(requireContext())
+
+        addProducts(view)
+        addAllergies(view)
+        val receptTitle = arguments!!.getString("title")
+        recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+        view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
+
+        return view
     }
 
     fun onButtonPressed(uri: Uri) {

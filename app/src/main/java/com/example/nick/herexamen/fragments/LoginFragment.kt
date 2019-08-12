@@ -15,11 +15,6 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.services.AuthenticationService
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
@@ -43,17 +38,12 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        try {
-
-            super.onCreateView(inflater, container, savedInstanceState)
-            // Inflate the layout for this fragment
-            val view = inflater.inflate(R.layout.fragment_login, container, false)
-            view.button_login.setOnClickListener { logUserIn() }
-            return view
-        }catch (exec:IllegalStateException) {
-            Log.e("LoginFragment", "error oncreateview: ${exec.message}", exec)
-            throw exec
-        }
+        // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
+        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        view.button_login.setOnClickListener { logUserIn() }
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -94,7 +84,6 @@ class LoginFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
