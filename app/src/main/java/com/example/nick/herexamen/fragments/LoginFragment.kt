@@ -11,7 +11,7 @@ import android.widget.EditText
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
-import com.example.nick.herexamen.authentication.AuthenticationService
+import com.example.nick.herexamen.services.AuthenticationService
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
 // TODO: Rename parameter arguments, choose names that match

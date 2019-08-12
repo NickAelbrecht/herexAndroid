@@ -8,11 +8,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
-import com.example.nick.herexamen.authentication.AuthenticationService
+import com.example.nick.herexamen.services.AuthenticationService
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 

@@ -2,11 +2,9 @@ package com.example.nick.herexamen.fragments
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +13,9 @@ import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.model.Recipe
+import com.example.nick.herexamen.services.CreateRowService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
-import java.lang.Exception
 import java.util.ArrayList
 
 
@@ -35,12 +33,12 @@ class RecipeDetailFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var recipeByTitle: Recipe
+    private lateinit var createRowService: CreateRowService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
-
     }
 
     override fun onCreateView(
@@ -51,10 +49,10 @@ class RecipeDetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
         view.recipe_detail_title.text = arguments!!.getString("title")
         view.recipe_detail_soort.text = arguments!!.getString("soort")
+        createRowService = CreateRowService(requireContext())
         addProducts(view)
         addAllergies(view)
         val receptTitle = arguments!!.getString("title")
-        //Log.d("DETAIL", "titel: $receptTitle")
         recipeByTitle = recipeViewModel.findByTitle(receptTitle)
         view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
         return view
@@ -79,13 +77,8 @@ class RecipeDetailFragment : Fragment() {
         for (allergie in allergieen) {
             val allerLayout = view.findViewById<TableLayout>(R.id.recipe_detail_aller_layout)
 
-            val tableRow = TableRow(requireContext())
-
-            val textView = createTextView(allergie)
-            val deleteButton = createButton()
-
-            tableRow.addView(textView)
-            tableRow.addView(deleteButton)
+            val tableRow = createRowService.createRow(allergie)
+            val deleteButton = tableRow.getChildAt(1)
             allerLayout.addView(tableRow)
 
             deleteButton.setOnClickListener {
@@ -100,13 +93,8 @@ class RecipeDetailFragment : Fragment() {
         for (product in producten) {
             val prodLayout = view.findViewById<TableLayout>(R.id.recipe_detail_prod_layout)
 
-            val tableRow = TableRow(requireContext())
-
-            val textView = createTextView(product)
-            val deleteButton = createButton()
-
-            tableRow.addView(textView)
-            tableRow.addView(deleteButton)
+            val tableRow = createRowService.createRow(product)
+            val deleteButton = tableRow.getChildAt(1)
             prodLayout.addView(tableRow)
 
             deleteButton.setOnClickListener {
@@ -130,25 +118,6 @@ class RecipeDetailFragment : Fragment() {
         val producten = arguments!!.getStringArrayList("producten")
         recipe.products = producten
         recipeViewModel.updateRecipe(recipe)
-    }
-
-    private fun createTextView(text: String): TextView {
-        val textView = TextView(requireContext())
-        textView.setPadding(16, 8, 8, 8)
-        textView.textSize = 18f
-        textView.text = text
-        return textView
-    }
-
-    private fun createButton(): Button {
-        val deleteButton = Button(requireContext())
-        deleteButton.layoutParams = TableRow.LayoutParams(48, 48)
-        val gradDrawable = GradientDrawable()
-        gradDrawable.cornerRadius = 75F
-        deleteButton.background = gradDrawable
-        deleteButton.setPadding(8, 0, 0, 8)
-        deleteButton.setBackgroundResource(R.mipmap.vuilbak)
-        return deleteButton
     }
 
     private fun deleteRecipe(title: String) {

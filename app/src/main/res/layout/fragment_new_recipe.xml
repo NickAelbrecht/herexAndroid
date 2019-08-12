@@ -106,7 +106,7 @@
                                                 android:layout_marginEnd="8dp" android:layout_marginStart="8dp"
                                                 android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
                                                 android:id="@+id/nestedScrollView">
-        <LinearLayout
+        <TableLayout
                 android:id="@+id/newrecipe_producten_linear"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/newrecipe_allergieen"
                 app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
                 app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp">
-        </LinearLayout>
+        </TableLayout>
 
     </android.support.v4.widget.NestedScrollView>
     <android.support.v4.widget.NestedScrollView android:layout_width="0dp"
@@ -127,7 +127,7 @@
                                                 android:layout_marginTop="8dp"
                                                 app:layout_constraintTop_toBottomOf="@+id/newrecipe_allergieen"
                                                 android:layout_marginBottom="8dp">
-        <LinearLayout
+        <TableLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -136,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/newrecipe_allergieen" android:layout_marginBottom="8dp"
                 app:layout_constraintBottom_toTopOf="@+id/newrecipe_soort"
                 android:id="@+id/newrecipe_allergieen_linear">
-        </LinearLayout>
+        </TableLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

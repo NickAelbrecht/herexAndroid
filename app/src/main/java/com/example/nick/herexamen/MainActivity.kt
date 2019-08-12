@@ -6,7 +6,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.example.nick.herexamen.authentication.AuthenticationService
+import com.example.nick.herexamen.services.AuthenticationService
 import com.example.nick.herexamen.fragments.*
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
