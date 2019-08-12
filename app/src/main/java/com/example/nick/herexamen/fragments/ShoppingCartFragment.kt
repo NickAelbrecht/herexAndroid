@@ -43,8 +43,6 @@ class ShoppingCartFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "OnCreate")
-        arguments?.let {
-        }
         recipeViewModel = ViewModelProviders.of(activity!!).get(RecipeViewModel::class.java)
 
     }
@@ -53,15 +51,24 @@ class ShoppingCartFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
+        try {
+            super.onCreateView(inflater, container, savedInstanceState)
+            retainInstance = true
 
-        myCartAdapter = MyCartAdapter(requireContext(), this)
-        view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
-        view.cart_recycler.adapter = myCartAdapter
-        view.cart_recycler.layoutManager = LinearLayoutManager(requireContext())
+            // Inflate the layout for this fragment
+            val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
 
-        return view
+            myCartAdapter = MyCartAdapter(requireContext(), this)
+            view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
+            view.cart_recycler.adapter = myCartAdapter
+            view.cart_recycler.layoutManager = LinearLayoutManager(requireContext())
+
+            return view
+        }catch (exec:IllegalStateException) {
+            Log.e(TAG, "error oncreateview: ${exec.message}", exec)
+            throw exec
+        }
+
     }
 
     override fun onStart() {
@@ -95,6 +102,10 @@ class ShoppingCartFragment : Fragment() {
         listener = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -113,10 +124,6 @@ class ShoppingCartFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            ShoppingCartFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = ShoppingCartFragment()
     }
 }

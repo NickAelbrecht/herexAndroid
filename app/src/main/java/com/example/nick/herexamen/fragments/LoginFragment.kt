@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,8 +36,6 @@ class LoginFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
         authenticationService = AuthenticationService(activity as MainActivity)
     }
 
@@ -44,10 +43,17 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
-        view.button_login.setOnClickListener { logUserIn() }
-        return view
+        try {
+
+            super.onCreateView(inflater, container, savedInstanceState)
+            // Inflate the layout for this fragment
+            val view = inflater.inflate(R.layout.fragment_login, container, false)
+            view.button_login.setOnClickListener { logUserIn() }
+            return view
+        }catch (exec:IllegalStateException) {
+            Log.e("LoginFragment", "error oncreateview: ${exec.message}", exec)
+            throw exec
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

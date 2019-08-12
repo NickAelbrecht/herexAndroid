@@ -26,7 +26,7 @@ import kotlinx.android.synthetic.main.fragment_user.view.*
 class UserFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
-    private var TAG = "LOGINFRAGMENT"
+    private var TAG = "LoginFragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +39,18 @@ class UserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        super.onCreateView(inflater, container, savedInstanceState)
-        val view: View = inflater.inflate(R.layout.fragment_user, container, false)
-        view.btn_login.setOnClickListener { showLogin() }
-        view.btn_register.setOnClickListener { showRegister() }
-        return view
+        try {
+            super.onCreateView(inflater, container, savedInstanceState)
+            retainInstance = true
+
+            val view: View = inflater.inflate(R.layout.fragment_user, container, false)
+            view.btn_login.setOnClickListener { showLogin() }
+            view.btn_register.setOnClickListener { showRegister() }
+            return view
+        } catch (exec: IllegalStateException) {
+            Log.e(TAG, "error oncreateview: ${exec.message}", exec)
+            throw exec
+        }
     }
 
     override fun onAttach(context: Context) {

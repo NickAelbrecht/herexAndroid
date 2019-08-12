@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,10 +40,18 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_register, container, false)
-        view.button_register_complete.setOnClickListener { registerUser() }
-        return view
+        try {
+            super.onCreateView(inflater, container, savedInstanceState)
+            retainInstance = true
+            // Inflate the layout for this fragment
+            val view = inflater.inflate(R.layout.fragment_register, container, false)
+            view.button_register_complete.setOnClickListener { registerUser() }
+            return view
+        }catch (exec:IllegalStateException) {
+            Log.e("RegisterFragment", "error oncreateview: ${exec.message}", exec)
+            throw exec
+        }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -45,12 +45,21 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        try {
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+            super.onCreate(savedInstanceState)
 
-        authenticationService = AuthenticationService(this)
+            if (savedInstanceState == null) {
+                showHome()
+            }
+            setContentView(R.layout.activity_main)
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+            authenticationService = AuthenticationService(this)
+        }catch (exec:Exception) {
+            Log.e(TAG, "error oncreate: ${exec.message}", exec)
+            throw exec
+        }
     }
 
     override fun onFragmentInteraction(uri: Uri) {

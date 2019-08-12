@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.nick.herexamen.R
+import java.lang.Exception
 
 
 /**
@@ -28,21 +29,24 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "OnCreate")
-        arguments?.let {
-
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        try {
+            super.onCreateView(inflater, container, savedInstanceState)
+            retainInstance = true
+
+            // Inflate the layout for this fragment
+            return inflater.inflate(R.layout.fragment_home, container, false)
+        } catch (exec:Exception) {
+            Log.e(TAG, "error oncreateview: ${exec.message}", exec)
+            throw exec
+        }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -52,7 +56,7 @@ class HomeFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 
@@ -73,7 +77,6 @@ class HomeFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
@@ -81,17 +84,9 @@ class HomeFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment HomeFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = HomeFragment()
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,17 +46,25 @@ class RecipeDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
-        view.recipe_detail_title.text = arguments!!.getString("title")
-        view.recipe_detail_soort.text = arguments!!.getString("soort")
-        createRowService = CreateRowService(requireContext())
-        addProducts(view)
-        addAllergies(view)
-        val receptTitle = arguments!!.getString("title")
-        recipeByTitle = recipeViewModel.findByTitle(receptTitle)
-        view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
-        return view
+        try {
+
+            super.onCreateView(inflater, container, savedInstanceState)
+            retainInstance = true
+            // Inflate the layout for this fragment
+            val view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
+            view.recipe_detail_title.text = arguments!!.getString("title")
+            view.recipe_detail_soort.text = arguments!!.getString("soort")
+            createRowService = CreateRowService(requireContext())
+            addProducts(view)
+            addAllergies(view)
+            val receptTitle = arguments!!.getString("title")
+            recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+            view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
+            return view
+        }catch (exec:IllegalStateException) {
+            Log.e("RecipeDetailFragment", "error oncreateview: ${exec.message}", exec)
+            throw exec
+        }
     }
 
     fun onButtonPressed(uri: Uri) {
