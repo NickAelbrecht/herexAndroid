@@ -9,10 +9,9 @@ buildscript {
             'picasso':'2.5.2' ,
             'architecture':'1.1.1' ,
             'dokka':'0.9.17' ,
-            'kotlin':'1.2.71' ,
             'suport':'28.0.0' ,
             "okHttp":'3.11.0' ,
-            'gradle':'3.2.0' ,
+            'gradle':'3.2.1' ,
             'buildTools':'27.0.3' ,
             'dagger':"2.16",
             'rx':"2.2.3",
@@ -23,7 +22,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.2.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$versions.dokka"
 

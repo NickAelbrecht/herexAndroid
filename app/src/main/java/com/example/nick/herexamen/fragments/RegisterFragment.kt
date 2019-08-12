@@ -62,10 +62,11 @@ class RegisterFragment : Fragment() {
 
 
     private fun registerUser() {
+        val naam:String = view!!.findViewById<EditText>(R.id.register_naam).text.toString()
         val email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
         val paswoord: String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
         val confirmPaswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
-        authenticationService.createUser(email, paswoord, confirmPaswoord, this)
+        authenticationService.createUser(naam,email, paswoord, confirmPaswoord, this)
     }
 
     override fun onDetach() {

@@ -56,7 +56,7 @@ class ShoppingCartFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
 
-        myCartAdapter = MyCartAdapter(requireContext())
+        myCartAdapter = MyCartAdapter(requireContext(), this)
         view.findViewById<Button>(R.id.cart_button_add).setOnClickListener { addNewRecipe() }
         view.cart_recycler.adapter = myCartAdapter
         view.cart_recycler.layoutManager = LinearLayoutManager(requireContext())
@@ -84,15 +84,6 @@ class ShoppingCartFragment : Fragment() {
             throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
-
-    /*private fun getRecipes(): List<Recipe> {
-        return listOf(
-            Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"), "Brood"),
-            Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
-            Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood"),
-            Recipe("Smos", listOf("Kaas", "Hesp", "Brood", "Tomaten", "Wortels"), listOf("Gluten"), "Brood")
-        )
-    }*/
 
 
     private fun addNewRecipe() {

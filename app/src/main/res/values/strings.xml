@@ -22,4 +22,8 @@
     <string name="naam_dp">Naam:</string>
     <string name="email_dp">Email:</string>
     <string name="voeg_iets_toe_aan_de_lijst">Voeg iets toe aan de lijst</string>
+    <string name="recept_dp">Recept :</string>
+    <string name="producten_dp">Producten :</string>
+    <string name="allergieen_dp">Allergieën :</string>
+    <string name="soort_dp">Soort :</string>
 </resources>

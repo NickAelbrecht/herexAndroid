@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionListener,
     UserFragment.OnFragmentInteractionListener, RegisterFragment.OnFragmentInteractionListener,
     LoginFragment.OnFragmentInteractionListener, ProfileFragment.OnFragmentInteractionListener,
-    ShoppingCartFragment.OnFragmentInteractionListener, NewRecipeFragment.OnFragmentInteractionListener {
+    ShoppingCartFragment.OnFragmentInteractionListener, NewRecipeFragment.OnFragmentInteractionListener, RecipeDetailFragment.OnFragmentInteractionListener {
 
     private var TAG: String = "MainActivityTag"
     private lateinit var authenticationService: AuthenticationService
@@ -105,6 +105,15 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
 
     fun showCart() {
         switchFragment(ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
+    }
+
+    fun showRecipeDetailFragment(fragment:RecipeDetailFragment) {
+        //Enkel voor detail verplicht nieuw fragment gebruiken, anders worden de variabelen daar niet aangepast door de newInstance
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment, "RecipeDetailFragment")
+            .addToBackStack("RecipeDetailFragment")
+            .setTransition(1)
+            .commit()
     }
 
     private fun detachFragment(fragment: Fragment) {

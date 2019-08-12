@@ -51,7 +51,7 @@ class UserFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 
@@ -60,12 +60,12 @@ class UserFragment : Fragment() {
         listener = null
     }
 
-    fun showLogin() {
+    private fun showLogin() {
         Log.d(TAG, "login clicked")
         (activity as MainActivity).showLogin()
     }
 
-    fun showRegister() {
+    private fun showRegister() {
         Log.d(TAG, "register clicked")
         (activity as MainActivity).showRegister()
     }

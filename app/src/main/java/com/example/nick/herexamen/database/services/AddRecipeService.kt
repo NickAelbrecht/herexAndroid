@@ -7,12 +7,6 @@ import com.example.nick.herexamen.R
 
 class AddRecipeService(private var activity: MainActivity) {
 
-    /*fun addRecipe(titel: String, producten: List<String>, allergieen: List<String>?, soort: String) {
-        if (!validateForm(titel, producten, allergieen, soort)) {
-            return
-        }
-    }*/
-
     fun validateForm(titel: String, producten: List<String>, allergieen: List<String>?, soort: String): Boolean {
         var valid = true
         val fieldTitel: TextView = activity.findViewById(R.id.newrecipe_title)
@@ -27,7 +21,7 @@ class AddRecipeService(private var activity: MainActivity) {
             fieldTitel.error = null
         }
 
-        if (TextUtils.isEmpty(producten[0])) {
+        if (producten.isEmpty()) {
             fieldProducten.error = "Vereist."
             valid = false
         } else {
