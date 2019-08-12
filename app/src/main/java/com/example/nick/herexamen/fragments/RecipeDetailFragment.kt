@@ -17,6 +17,7 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
+import java.lang.Exception
 import java.util.ArrayList
 
 
@@ -53,6 +54,7 @@ class RecipeDetailFragment : Fragment() {
         addProducts(view)
         addAllergies(view)
         val receptTitle = arguments!!.getString("title")
+        //Log.d("DETAIL", "titel: $receptTitle")
         recipeByTitle = recipeViewModel.findByTitle(receptTitle)
         view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
         return view

@@ -108,7 +108,12 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
     fun showRecipeDetailFragment(fragment:RecipeDetailFragment) {
-        switchFragment(fragment, "RecipeDetailFragment")
+        //Enkel voor detail verplicht nieuw fragment gebruiken, anders worden de variabelen daar niet aangepast door de newInstance
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment, "RecipeDetailFragment")
+            .addToBackStack("RecipeDetailFragment")
+            .setTransition(1)
+            .commit()
     }
 
     private fun detachFragment(fragment: Fragment) {

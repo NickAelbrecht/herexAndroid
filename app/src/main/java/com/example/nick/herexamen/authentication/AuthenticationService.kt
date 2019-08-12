@@ -12,6 +12,7 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.fragments.LoginFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 
 class AuthenticationService(private var activity: MainActivity) {
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -21,9 +22,15 @@ class AuthenticationService(private var activity: MainActivity) {
         return auth.currentUser != null
     }
 
-    fun createUser(email: String, paswoord: String, confirmPaswoord: String, fragment: Fragment): FirebaseUser? {
+    fun createUser(
+        naam: String,
+        email: String,
+        paswoord: String,
+        confirmPaswoord: String,
+        fragment: Fragment
+    ): FirebaseUser? {
         var gebruiker: FirebaseUser? = null
-        if (!validateForm(email, paswoord, confirmPaswoord, 1)) {
+        if (!validateForm(email, paswoord, confirmPaswoord, naam, 1)) {
             return null
         }
         auth.createUserWithEmailAndPassword(email, paswoord)
@@ -32,13 +39,24 @@ class AuthenticationService(private var activity: MainActivity) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
                     val user = auth.currentUser
+
+                    val profileUpdates = UserProfileChangeRequest.Builder()
+                        .setDisplayName(naam)
+                        .build()
+
+                    user?.updateProfile(profileUpdates)
+                        ?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d(TAG, "User profile updated.")
+                            }
+                        }
                     activity.updateUi(user, fragment)
                     gebruiker = user
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     Toast.makeText(
-                        this.activity.baseContext, "Authentication failed.",
+                        this.activity.baseContext, "Authentication failed: ${task.exception}",
                         Toast.LENGTH_SHORT
                     ).show()
                     gebruiker = null
@@ -49,7 +67,7 @@ class AuthenticationService(private var activity: MainActivity) {
     }
 
     fun logUserIn(email: String, paswoord: String, fragment: Fragment) {
-        if (!validateForm(email, paswoord, null, 2)) {
+        if (!validateForm(email, paswoord, null, null, 2)) {
             return
         }
         auth.signInWithEmailAndPassword(email, paswoord)
@@ -75,11 +93,18 @@ class AuthenticationService(private var activity: MainActivity) {
     }
 
 
-    private fun validateForm(email: String, paswoord: String, confirmPaswoord: String?, case: Int): Boolean {
+    private fun validateForm(
+        email: String,
+        paswoord: String,
+        confirmPaswoord: String?,
+        naam: String?,
+        case: Int
+    ): Boolean {
         var valid = true
         val fieldEmail: TextView
         val fieldPassword: TextView
         var fieldConfirmPassword: TextView? = null
+        var fieldNaam: TextView? = null
 
 
         if (case == 2) {
@@ -90,6 +115,7 @@ class AuthenticationService(private var activity: MainActivity) {
             fieldEmail = activity.findViewById<EditText>(R.id.register_email)!!
             fieldPassword = activity.findViewById<EditText>(R.id.register_password)
             fieldConfirmPassword = activity.findViewById<EditText>(R.id.register_password_confirm)
+            fieldNaam = activity.findViewById<EditText>(R.id.register_naam)
             //Log.d(TAG, "emailfield: $fieldEmail, paswfield:$fieldPassword, confpasfield:$fieldConfirmPasword")
 
         }
@@ -113,6 +139,13 @@ class AuthenticationService(private var activity: MainActivity) {
             valid = false
         } else {
             fieldPassword.error = null
+        }
+
+        if (TextUtils.isEmpty(naam)) {
+            fieldNaam?.error = "Vereist."
+            valid = false
+        } else {
+            fieldNaam?.error = null
         }
 
         if (confirmPaswoord != null) {
