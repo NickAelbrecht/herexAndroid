@@ -2,23 +2,21 @@ package com.example.nick.herexamen.fragments
 
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
-import org.w3c.dom.Text
 import java.util.ArrayList
 
 
@@ -54,6 +52,9 @@ class RecipeDetailFragment : Fragment() {
         view.recipe_detail_soort.text = arguments!!.getString("soort")
         addProducts(view)
         addAllergies(view)
+        val receptTitle = arguments!!.getString("title")
+        recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+        view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
         return view
     }
 
@@ -118,8 +119,7 @@ class RecipeDetailFragment : Fragment() {
         producten.remove(title)
         arguments!!.putStringArrayList("producten", producten)
 
-        val receptTitle = arguments!!.getString("title")
-        recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+
         updateRecipe(recipeByTitle)
     }
 
@@ -147,6 +147,11 @@ class RecipeDetailFragment : Fragment() {
         deleteButton.setPadding(8, 0, 0, 8)
         deleteButton.setBackgroundResource(R.mipmap.vuilbak)
         return deleteButton
+    }
+
+    private fun deleteRecipe(title: String) {
+        recipeViewModel.deleteByTitle(title)
+        (activity as MainActivity).showCart()
     }
 
 

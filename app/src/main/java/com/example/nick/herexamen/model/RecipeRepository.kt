@@ -5,7 +5,6 @@ import android.support.annotation.WorkerThread
 import com.example.nick.herexamen.database.RecipeDao
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.doAsyncResult
-import org.jetbrains.anko.uiThread
 
 
 class
