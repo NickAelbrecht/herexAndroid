@@ -107,8 +107,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Nick\Documents\school\Unif\2018-2019\herex\app\src\main\vuilbak.png" />
-                                      <entry key="outputName" value="vuilbak" />
+                                      <entry key="iconShape" value="NONE" />
+                                      <entry key="imageAsset" value="C:\Users\Nick\Documents\school\Unif\2018-2019\herex\app\src\main\groceries.png" />
+                                      <entry key="outputName" value="boodschappen" />
                                     </map>
                                   </option>
                                 </PersistentState>

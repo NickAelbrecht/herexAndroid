@@ -50,7 +50,10 @@ class ProfileFragment : Fragment() {
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         view.profiel_btn_logout.setOnClickListener { logUserOut() }
-        updateUi(view)
+
+        view.findViewById<TextView>(R.id.profiel_email).text = authenticationService.getAuth().currentUser?.email
+        view.findViewById<TextView>(R.id.profiel_naam).text = authenticationService.getAuth().currentUser?.displayName
+
         return view
     }
 
@@ -74,8 +77,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateUi(view: View) {
-        view.findViewById<TextView>(R.id.profiel_email).text = authenticationService.getAuth().currentUser?.email
-        view.findViewById<TextView>(R.id.profiel_naam).text = authenticationService.getAuth().currentUser?.displayName
 
     }
 

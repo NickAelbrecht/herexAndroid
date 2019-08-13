@@ -75,6 +75,7 @@ class AuthenticationService(private var activity: MainActivity) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
+                    Log.d(TAG, "naam: ${user!!.displayName}")
                     activity.updateUi(user, fragment)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -139,12 +140,13 @@ class AuthenticationService(private var activity: MainActivity) {
         } else {
             fieldPassword.error = null
         }
-
-        if (TextUtils.isEmpty(naam)) {
-            fieldNaam?.error = "Vereist."
-            valid = false
-        } else {
-            fieldNaam?.error = null
+        if (naam != null) {
+            if (TextUtils.isEmpty(naam)) {
+                fieldNaam?.error = "Vereist."
+                valid = false
+            } else {
+                fieldNaam?.error = null
+            }
         }
 
         if (confirmPaswoord != null) {
