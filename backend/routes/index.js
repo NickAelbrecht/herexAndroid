@@ -8,33 +8,31 @@ let Recipe = mongoose.model("Recipe");
 
 
 
+/* GET home page. */
+router.get("/", function(req, res, next) {
+  res.json({ test: "server works" });
+});
+
 router.get("/recipes", function(req, res) {
+  console.log("werkt")
   res.json({ recipes: "Bla bla recepten" });
 });
 
-/* GET home page. */
-router.get("/", function(req, res, next) {
-  res.json({test:"server works"});
-});
-
-router.post("/API/recipes/", function(req, res, next) {
-  Recipe.create(function(err) {
+router.post("/recipes", function(req, res, next) {
+  console.log(req.body)
+  let recipe = new Recipe({
+    title: req.body.title,
+    products: req.body.products,
+    allergies: req.body.allergies,
+    kind: req.body.kind
+  });
+  recipe.save(function(err) {
     if (err) {
+      console.log("error!!!");
       return next(err);
     }
-    let recipe = new Recipe({
-      title: req.body.title,
-      products: req.body.products,
-      allergies: req.body.allergies,
-      kind: req.body.kind
-    });
-    recipe.save(function(err, rec) {
-      if (err) {
-        console.log("error!!!");
-        return next(err);
-      }
-      res.json(club);
-    });
+    res.json(recipe);
   });
 });
 
+module.exports = router;
