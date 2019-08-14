@@ -17,16 +17,20 @@ router.get("/recipes", function(req, res) {
     if (err) {
       return next(err);
     }
-    res.json({recipes});
+    res.json(recipes);
   });
 });
 
 router.get("/recipes/:title", function(req, res) {
-  Recipe.findOne({title:req.params.title},function(err, recipes) {
+  console.log(req.query)
+  let query = Recipe.find({title : req.query.title})
+  query.exec(function(err, recept) {
     if (err) {
+      console.log(err, "+", req.query)
+
       return next(err);
     }
-    res.json({recipes});
+    res.json(recept);
   });
 });
 
@@ -43,7 +47,7 @@ router.post("/recipes", function(req, res, next) {
       console.log("error!!!");
       return next(err);
     }
-    res.json({recipe});
+    res.json(recipe);
   });
 });
 
@@ -54,7 +58,7 @@ router.delete("/recipes/:title", function(req, res, next){
     if(err){
       return next(err);
     }
-    res.json({text:"Deleted"})
+    res.json("Deleted")
   })
 })
 

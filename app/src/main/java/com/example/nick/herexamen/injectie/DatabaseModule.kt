@@ -5,15 +5,23 @@ import android.content.Context
 import com.example.nick.herexamen.database.RecipeDao
 import com.example.nick.herexamen.model.RecipeRepository
 import com.example.nick.herexamen.database.ShoppingAppDatabase
+import com.example.nick.herexamen.netwerk.RecipeApi
 import dagger.Module
 import dagger.Provides
+import io.reactivex.schedulers.Schedulers
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
 class DatabaseModule(private val application: Application) {
 
+    val BASE_URL = "http://localhost:3000/"
 
-    /*@Provides
+    @Provides
     internal fun provideRetrofitInterface(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -21,13 +29,26 @@ class DatabaseModule(private val application: Application) {
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
             .build()
-    }*/
+    }
 
-    /*@Provides
-    internal fun provideRecipeApi(retrofit: Retrofit): RecipeApi{
+    @Provides
+    internal fun provideRecipeApi(retrofit: Retrofit): RecipeApi {
         return retrofit.create(RecipeApi::class.java)
-    }*/
+    }
 
+    /**
+     * Returns the OkHttpClient
+     */
+    @Provides
+    internal fun provideOkHttpClient(): OkHttpClient {
+        //To debug Retrofit/OkHttp we can intercept the calls and log them.
+        val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+            this.level = HttpLoggingInterceptor.Level.BODY
+        }
+        return OkHttpClient.Builder().apply {
+            addInterceptor(interceptor)
+        }.build()
+    }
 
 
     @Provides

@@ -1,33 +1,63 @@
 package com.example.nick.herexamen.viewmodels
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import android.util.Log
 import com.example.nick.herexamen.database.App
 import com.example.nick.herexamen.model.RecipeRepository
 import com.example.nick.herexamen.model.Recipe
+import com.example.nick.herexamen.netwerk.RecipeApi
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class RecipeViewModel : ViewModel(){
+class RecipeViewModel : ViewModel() {
+
+    private val recipesFromApi = MutableLiveData<List<Recipe>>()
 
     @Inject
     lateinit var recipeRepository: RecipeRepository
 
+    @Inject
+    lateinit var recipeApi: RecipeApi
+    private val loadingVisibility: MutableLiveData<Boolean> = MutableLiveData()
+
+    /**
+     * Represents a disposable resources
+     */
+    private var subscription: Disposable
+
 
     init {
         App.component.inject(this)
+
+        subscription = recipeApi.getAllRecipes()
+            //we tell it to fetch the data on background by
+            .subscribeOn(Schedulers.io())
+            //we like the fetched data to be displayed on the MainTread (UI)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onRetrieveRecipesStart() }
+            .doOnTerminate { onRetrieveRecipesFinish() }
+            .subscribe(
+                { result -> onRetrieveRecipesSucces(result) },
+                { error -> onRetrieveRecipesError(error) }
+            )
     }
+
     val allRecipes: LiveData<List<Recipe>> = recipeRepository.allRecipes
 
     fun insert(recipe: Recipe) {
-       recipeRepository.insert(recipe)
+        recipeRepository.insert(recipe)
     }
 
-    fun deleteByTitle(title:String) {
+    fun deleteByTitle(title: String) {
         recipeRepository.deleteByTitle(title)
     }
 
-    fun findByTitle(title: String):Recipe {
+    fun findByTitle(title: String): Recipe {
         return recipeRepository.findByTitle(title)
     }
 
@@ -35,4 +65,31 @@ class RecipeViewModel : ViewModel(){
         recipeRepository.updateRecipe(recipe)
     }
 
+    private fun onRetrieveRecipesStart() {
+        Log.i("VIEWMODEL", "Start retrieving")
+        loadingVisibility.value = true
+    }
+
+    private fun onRetrieveRecipesFinish() {
+        Log.i("VIEWMODEL", "finish retrieving")
+        loadingVisibility.value = false
+    }
+
+    private fun onRetrieveRecipesSucces(result: List<Recipe>) {
+        Log.d("VIEWMODEL", result.toString())
+        recipesFromApi.value = result
+    }
+
+    private fun onRetrieveRecipesError(error: Throwable) {
+        Log.e("VIEWMODEL", error.message!!)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        subscription.dispose()
+    }
+
+    fun getRecipesFromApi(): MutableLiveData<List<Recipe>> {
+        return recipesFromApi
+    }
 }
