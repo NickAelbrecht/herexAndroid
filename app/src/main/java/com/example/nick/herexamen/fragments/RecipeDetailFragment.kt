@@ -58,8 +58,10 @@ class RecipeDetailFragment : Fragment() {
         addProducts(view)
         addAllergies(view)
         val receptTitle = arguments!!.getString("title")
-        recipeByTitle = recipeViewModel.findByTitle(receptTitle)
-        view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
+        if (!receptTitle.isNullOrEmpty()) {
+            recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+            view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
+        }
 
         return view
     }
@@ -79,33 +81,35 @@ class RecipeDetailFragment : Fragment() {
 
     private fun addAllergies(view: View) {
         val allergieen = arguments!!.getStringArrayList("allergieen")
+        if (!allergieen.isNullOrEmpty()) {
+            for (allergie in allergieen) {
+                val allerLayout = view.findViewById<TableLayout>(R.id.recipe_detail_aller_layout)
 
-        for (allergie in allergieen) {
-            val allerLayout = view.findViewById<TableLayout>(R.id.recipe_detail_aller_layout)
+                val tableRow = createRowService.createRow(allergie)
+                val deleteButton = tableRow.getChildAt(1)
+                allerLayout.addView(tableRow)
 
-            val tableRow = createRowService.createRow(allergie)
-            val deleteButton = tableRow.getChildAt(1)
-            allerLayout.addView(tableRow)
-
-            deleteButton.setOnClickListener {
-                allerLayout.removeView(tableRow)
+                deleteButton.setOnClickListener {
+                    allerLayout.removeView(tableRow)
+                }
             }
         }
     }
 
     private fun addProducts(view: View) {
         val producten = arguments!!.getStringArrayList("producten")
+        if (!producten.isNullOrEmpty()) {
+            for (product in producten) {
+                val prodLayout = view.findViewById<TableLayout>(R.id.recipe_detail_prod_layout)
 
-        for (product in producten) {
-            val prodLayout = view.findViewById<TableLayout>(R.id.recipe_detail_prod_layout)
+                val tableRow = createRowService.createRow(product)
+                val deleteButton = tableRow.getChildAt(1)
+                prodLayout.addView(tableRow)
 
-            val tableRow = createRowService.createRow(product)
-            val deleteButton = tableRow.getChildAt(1)
-            prodLayout.addView(tableRow)
-
-            deleteButton.setOnClickListener {
-                prodLayout.removeView(tableRow)
-                deleteProductFromRecipe(tableRow, producten)
+                deleteButton.setOnClickListener {
+                    prodLayout.removeView(tableRow)
+                    deleteProductFromRecipe(tableRow, producten)
+                }
             }
         }
     }
@@ -122,8 +126,10 @@ class RecipeDetailFragment : Fragment() {
 
     private fun updateRecipe(recipe: Recipe) {
         val producten = arguments!!.getStringArrayList("producten")
-        recipe.products = producten
-        recipeViewModel.updateRecipe(recipe)
+        if (!producten.isNullOrEmpty()) {
+            recipe.products = producten
+            recipeViewModel.updateRecipe(recipe)
+        }
     }
 
     private fun deleteRecipe(title: String) {

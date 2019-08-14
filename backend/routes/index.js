@@ -22,15 +22,12 @@ router.get("/recipes", function(req, res) {
 });
 
 router.get("/recipes/:title", function(req, res) {
-  console.log(req.query)
-  let query = Recipe.find()
-  query.exec(function(err, recepten) {
+  console.log(req.query, " + ", req.body, " + ", req.params)
+  Recipe.find({title:req.params.title},function(err, recepten) {
     if (err) {
       console.log(err, "+", req.query)
-
       return next(err);
     }
-    let recept = recepten.filter(recept => recept.title = req.query.test)
     res.json(recept)
     });
 });
@@ -54,7 +51,7 @@ router.post("/recipes", function(req, res, next) {
 });
 
 router.delete("/recipes/:title", function(req, res, next){
-  Recipe.deleteOne({
+  Recipe.remove({
     title: req.params.tile
   }, function(err, recipe){
     if(err){

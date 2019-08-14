@@ -76,9 +76,9 @@ class ProfileFragment : Fragment() {
         (activity as MainActivity).showHome()
     }
 
-    private fun updateUi(view: View) {
+    /*private fun updateUi(view: View) {
 
-    }
+    }*/
 
     override fun onDetach() {
         super.onDetach()
