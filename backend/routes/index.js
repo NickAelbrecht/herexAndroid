@@ -23,19 +23,21 @@ router.get("/recipes", function(req, res) {
 
 router.get("/recipes/:title", function(req, res) {
   console.log(req.query)
-  let query = Recipe.find({title : req.query.title})
-  query.exec(function(err, recept) {
+  let query = Recipe.find()
+  query.exec(function(err, recepten) {
     if (err) {
       console.log(err, "+", req.query)
 
       return next(err);
     }
-    res.json(recept);
-  });
+    let recept = recepten.filter(recept => recept.title = req.query.test)
+    res.json(recept)
+    });
 });
 
 router.post("/recipes", function(req, res, next) {
-  console.log(req.body);
+  console.log(req.body.title);
+  let title = req.body.title
   let recipe = new Recipe({
     title: req.body.title,
     products: req.body.products,
@@ -47,7 +49,7 @@ router.post("/recipes", function(req, res, next) {
       console.log("error!!!");
       return next(err);
     }
-    res.json(recipe);
+    res.json({title : recipe});
   });
 });
 
@@ -59,6 +61,15 @@ router.delete("/recipes/:title", function(req, res, next){
       return next(err);
     }
     res.json("Deleted")
+  })
+})
+
+router.delete("/recipes", function(req, res, next){
+  Recipe.remove({}, function(err, removed){
+    if(err){
+      return next(err)
+    }
+    res.json(removed)
   })
 })
 
