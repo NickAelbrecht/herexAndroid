@@ -18,9 +18,6 @@ import com.example.nick.herexamen.services.CreateRowService
 import com.example.nick.herexamen.services.NetworkService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import java.util.ArrayList
 
 
@@ -34,8 +31,10 @@ import java.util.ArrayList
  *
  */
 class RecipeDetailFragment : Fragment() {
+    private val TAG = "RecipeDetailTag"
 
     private var listener: OnFragmentInteractionListener? = null
+
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var recipeByTitle: Recipe
     private lateinit var createRowService: CreateRowService
@@ -68,14 +67,11 @@ class RecipeDetailFragment : Fragment() {
             if (networkService.isNetworkAvailable(view.context)) {
                 recipeViewModel.getRecipeByTitleApi(receptTitle).process { recipe, throwable ->
                     if (throwable != null) {
-                        Toast.makeText(requireContext(), throwable.localizedMessage, Toast.LENGTH_LONG).show()
+                        Log.d(TAG, throwable.localizedMessage)
                     } else {
-                        if (recipe == null) Toast.makeText(
-                            requireContext(),
-                            "No result returned",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        else recipeByTitle = recipe
+                        if (recipe == null) {
+                            Log.d(TAG, "No result returned(recept")
+                        } else recipeByTitle = recipe
                     }
                 }
             } else {
@@ -83,7 +79,6 @@ class RecipeDetailFragment : Fragment() {
             }
             view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
         }
-
         return view
     }
 
@@ -149,7 +144,21 @@ class RecipeDetailFragment : Fragment() {
         val producten = arguments!!.getStringArrayList("producten")
         if (!producten.isNullOrEmpty()) {
             recipe.products = producten
-            recipeViewModel.updateRecipe(recipe)
+            if (networkService.isNetworkAvailable(requireContext())) {
+                recipeViewModel.updateRecipeApi(recipe).process { recipe, throwable ->
+                    if (throwable != null) {
+                        Log.d(TAG, throwable.localizedMessage)
+                    } else {
+                        if (recipe == null) {
+                            Log.d(TAG, "No result returned(update)")
+                        } else {
+                            Log.d(TAG, "Succes update: $recipe")
+                        }
+                    }
+                }
+            } else {
+                recipeViewModel.updateRecipe(recipe)
+            }
         }
     }
 
@@ -157,9 +166,9 @@ class RecipeDetailFragment : Fragment() {
         if (networkService.isNetworkAvailable(requireContext())) {
             recipeViewModel.deleteRecipeByTitleApi(title).process { response, throwable ->
                 if (throwable != null) {
-                    Toast.makeText(requireContext(), throwable.localizedMessage, Toast.LENGTH_LONG).show()
+                    Log.d(TAG, throwable.localizedMessage)
                 } else if (!response.isNullOrEmpty()) {
-                    Log.d("DELETEAPI", response)
+                    Log.d(TAG, response)
                 }
             }
         } else {

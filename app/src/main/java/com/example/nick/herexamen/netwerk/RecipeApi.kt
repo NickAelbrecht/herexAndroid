@@ -12,13 +12,13 @@ interface RecipeApi {
     fun getAllRecipes(): Observable<List<Recipe>>
 
     @POST("recipes")
-    fun insertRecipe(@Body recipe:Recipe) : Simple<Recipe>
+    fun insertRecipe(@Body recipe: Recipe): Simple<Recipe>
 
     @GET("recipes/{title}")
     fun getRecipeByTitle(@Path("title") title: String): Simple<Recipe>
 
     @PUT("recipes")
-    fun updateRecipe(@Body recipe: Recipe)
+    fun updateRecipe(@Body recipe: Recipe): Simple<Recipe>
 
     @DELETE("recipes/{title}")
     fun deleteByTitle(@Path("title") title: String): Simple<String>

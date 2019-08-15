@@ -51,6 +51,28 @@ router.post("/recipes", function(req, res, next) {
   });
 });
 
+router.put("/recipes", function(req, res, next) {
+  let recipe = new Recipe({
+    title: req.body.title,
+    products: req.body.products,
+    allergies: req.body.allergies,
+    kind: req.body.kind
+  });
+  Recipe.remove({title: req.body.title},
+    function(err, recipe) {
+      if (err) {
+        return next(err);
+      }
+  })
+  recipe.save(function(err) {
+    if (err) {
+      console.log("error!!!");
+      return next(err);
+    }
+    res.json({ recept: recipe });
+  });
+})
+
 
 //DELETE RECIPE BY TITLE
 router.delete("/recipes/:title", function(req, res, next) {

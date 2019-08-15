@@ -35,7 +35,10 @@ import java.lang.Exception
  *
  */
 class NewRecipeFragment : Fragment() {
+    private val TAG = "NewRecipeTag"
+
     private var listener: OnFragmentInteractionListener? = null
+
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var addRecipeService: AddRecipeService
     private lateinit var createRowService: CreateRowService
@@ -92,25 +95,20 @@ class NewRecipeFragment : Fragment() {
             }
             val newRecipe = Recipe(recipeTitle, producten, allergieen, recipeSoort)
 
-            recipeViewModel.insert(newRecipe)
-
             if (networkService.isNetworkAvailable(requireContext())) {
                 recipeViewModel.insertRecipeApi(newRecipe).process { recipe, throwable ->
                     if (throwable != null) {
-                        Toast.makeText(requireContext(), throwable.localizedMessage, Toast.LENGTH_LONG).show()
+                        Log.d(TAG, throwable.localizedMessage)
                     } else {
-                        if (recipe == null) Toast.makeText(
-                            requireContext(),
-                            "No result returned",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        else Toast.makeText(
-                            requireContext(),
-                            recipe.toString(),
-                            Toast.LENGTH_LONG
-                        ).show()
+                        if (recipe == null) {
+                            Log.d(TAG, "No results returned (create)")
+                        } else {
+                            Log.d(TAG, "$recipe")
+                        }
                     }
                 }
+            } else {
+                recipeViewModel.insert(newRecipe)
             }
 
             showShoppingCart()
@@ -184,7 +182,6 @@ class NewRecipeFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment
-         *
          * @return A new instance of fragment NewRecipeFragment.
          */
         @JvmStatic

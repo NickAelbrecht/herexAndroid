@@ -12,13 +12,12 @@ import com.example.nick.herexamen.netwerk.RecipeApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import retrofit2.Call
 import javax.inject.Inject
 
 
 class RecipeViewModel : ViewModel() {
 
-    private val recipesFromApi = MutableLiveData<List<Recipe>>()
+    val recipesFromApi = MutableLiveData<List<Recipe>>()
 
     @Inject
     lateinit var recipeRepository: RecipeRepository
@@ -69,6 +68,12 @@ class RecipeViewModel : ViewModel() {
         recipeRepository.updateRecipe(recipe)
     }
 
+
+    /***********************/
+    //      API CALLS      //
+    /***********************/
+
+
     private fun onRetrieveRecipesStart() {
         Log.i("VIEWMODEL", "Start retrieving")
         loadingVisibility.value = true
@@ -88,15 +93,13 @@ class RecipeViewModel : ViewModel() {
         Log.e("VIEWMODEL", error.message!!)
     }
 
-    /***********************/
-    //      API CALLS      //
-    /***********************/
     override fun onCleared() {
         super.onCleared()
         subscription.dispose()
     }
 
-    fun getRecipesFromApi(): MutableLiveData<List<Recipe>> {
+
+    fun getRecipesFromApi(): LiveData<List<Recipe>> {
         return recipesFromApi
     }
 
@@ -110,5 +113,9 @@ class RecipeViewModel : ViewModel() {
 
     fun deleteRecipeByTitleApi(title: String): Simple<String> {
         return recipeApi.deleteByTitle(title)
+    }
+
+    fun updateRecipeApi(recipe: Recipe): Simple<Recipe> {
+        return recipeApi.updateRecipe(recipe)
     }
 }
