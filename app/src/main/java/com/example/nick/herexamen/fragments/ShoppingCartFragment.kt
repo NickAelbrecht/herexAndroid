@@ -43,8 +43,6 @@ class ShoppingCartFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "OnCreate")
-        arguments?.let {
-        }
         recipeViewModel = ViewModelProviders.of(activity!!).get(RecipeViewModel::class.java)
 
     }
@@ -54,6 +52,8 @@ class ShoppingCartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
         val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
 
         myCartAdapter = MyCartAdapter(requireContext(), this)
@@ -95,6 +95,10 @@ class ShoppingCartFragment : Fragment() {
         listener = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -113,10 +117,6 @@ class ShoppingCartFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() =
-            ShoppingCartFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = ShoppingCartFragment()
     }
 }

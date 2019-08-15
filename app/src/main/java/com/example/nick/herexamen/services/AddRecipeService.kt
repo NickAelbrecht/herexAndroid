@@ -1,4 +1,4 @@
-package com.example.nick.herexamen.database.services
+package com.example.nick.herexamen.services
 
 import android.text.TextUtils
 import android.widget.TextView

@@ -4,15 +4,15 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.TextView
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
-import com.example.nick.herexamen.authentication.AuthenticationService
+import com.example.nick.herexamen.services.AuthenticationService
 import kotlinx.android.synthetic.main.fragment_register.view.*
 
 
@@ -41,8 +41,11 @@ class RegisterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
         val view = inflater.inflate(R.layout.fragment_register, container, false)
         view.button_register_complete.setOnClickListener { registerUser() }
+
         return view
     }
 
@@ -62,11 +65,11 @@ class RegisterFragment : Fragment() {
 
 
     private fun registerUser() {
-        val naam:String = view!!.findViewById<EditText>(R.id.register_naam).text.toString()
+        val naam: String = view!!.findViewById<EditText>(R.id.register_naam).text.toString()
         val email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
         val paswoord: String = view!!.findViewById<EditText>(R.id.register_password).text.toString()
         val confirmPaswoord: String = view!!.findViewById<EditText>(R.id.register_password_confirm).text.toString()
-        authenticationService.createUser(naam,email, paswoord, confirmPaswoord, this)
+        authenticationService.createUser(naam, email, paswoord, confirmPaswoord, this)
     }
 
     override fun onDetach() {

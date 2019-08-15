@@ -8,15 +8,13 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
-import com.example.nick.herexamen.database.services.AddRecipeService
+import com.example.nick.herexamen.services.AddRecipeService
 import com.example.nick.herexamen.model.Recipe
+import com.example.nick.herexamen.services.CreateRowService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_new_recipe.view.*
 
@@ -34,6 +32,7 @@ class NewRecipeFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var addRecipeService: AddRecipeService
+    private lateinit var createRowService: CreateRowService
     private var productenLijst: ArrayList<String> = ArrayList()
     private var allergieLijst: ArrayList<String> = ArrayList()
 
@@ -51,6 +50,7 @@ class NewRecipeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_new_recipe, container, false)
+        createRowService = CreateRowService(requireContext())
         view.findViewById<Button>(R.id.newrecipe_btn_add).setOnClickListener { addRecipe() }
         view.newrecipe_add_product.setOnClickListener { addProductToList() }
         view.newrecipe_add_allergie.setOnClickListener { addAllergieToList() }
@@ -58,7 +58,6 @@ class NewRecipeFragment : Fragment() {
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
@@ -74,22 +73,17 @@ class NewRecipeFragment : Fragment() {
 
     private fun addRecipe() {
         val recipeTitle = view!!.findViewById<EditText>(R.id.newrecipe_title).text.toString()
-        //val producten = view!!.findViewById<EditText>(R.id.newrecipe_producten).text.toString()
         val producten = productenLijst
-        //val allergieen = view!!.findViewById<EditText>(R.id.newrecipe_allergieen).text.toString()
         val allergieen = allergieLijst
         val recipeSoort = view!!.findViewById<EditText>(R.id.newrecipe_soort).text.toString()
 
         if (addRecipeService.validateForm(recipeTitle, producten, allergieen, recipeSoort)) {
-            if(allergieen.isEmpty()) {
+            if (allergieen.isEmpty()) {
                 allergieen.add("Geen")
             }
             val newRecipe = Recipe(recipeTitle, producten, allergieen, recipeSoort)
 
-            //Log.d("RECIPES1", newRecipe.toString())
-
             recipeViewModel.insert(newRecipe)
-            //Log.d("RECIPES1VWM", recipeViewModel.allRecipes.value.toString())
             showShoppingCart()
         }
     }
@@ -101,14 +95,18 @@ class NewRecipeFragment : Fragment() {
         }
         productenLijst.add(product)
 
-        val textView = TextView(requireContext())
-        textView.setPadding(16, 8, 8, 8)
-        textView.textSize = 18f
-        val prodLayout = view!!.findViewById<LinearLayout>(R.id.newrecipe_producten_linear)
+        val tableRow = createRowService.createRow(product)
+        val deleteButton = tableRow.getChildAt(1)
 
-        textView.text = product
-        prodLayout.addView(textView)
+        val prodLayout = view!!.findViewById<TableLayout>(R.id.newrecipe_producten_linear)
+        prodLayout.addView(tableRow)
+
         view!!.findViewById<EditText>(R.id.newrecipe_producten).text.clear()
+
+        deleteButton.setOnClickListener {
+            prodLayout.removeView(tableRow)
+            productenLijst.remove(product)
+        }
 
     }
 
@@ -119,14 +117,18 @@ class NewRecipeFragment : Fragment() {
         }
         allergieLijst.add(allergie)
 
-        val textView = TextView(requireContext())
-        textView.setPadding(16, 8, 8, 8)
-        textView.textSize = 18f
-        val allergieLayout = view!!.findViewById<LinearLayout>(R.id.newrecipe_allergieen_linear)
+        val tableRow = createRowService.createRow(allergie)
+        val deleteButton = tableRow.getChildAt(1)
 
-        textView.text = allergie
-        allergieLayout.addView(textView)
+        val allergieLayout = view!!.findViewById<TableLayout>(R.id.newrecipe_allergieen_linear)
+        allergieLayout.addView(tableRow)
+
         view!!.findViewById<EditText>(R.id.newrecipe_allergieen).text.clear()
+
+        deleteButton.setOnClickListener {
+            allergieLayout.removeView(tableRow)
+            allergieLijst.remove(allergie)
+        }
     }
 
     private fun showShoppingCart() {
@@ -152,12 +154,11 @@ class NewRecipeFragment : Fragment() {
     companion object {
         /**
          * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
+         * this fragment
          *
          * @return A new instance of fragment NewRecipeFragment.
          */
         @JvmStatic
-        fun newInstance() =
-            NewRecipeFragment()
+        fun newInstance() = NewRecipeFragment()
     }
 }

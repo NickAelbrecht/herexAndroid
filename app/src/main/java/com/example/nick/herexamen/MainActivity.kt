@@ -6,7 +6,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.example.nick.herexamen.authentication.AuthenticationService
+import com.example.nick.herexamen.services.AuthenticationService
 import com.example.nick.herexamen.fragments.*
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,12 +45,21 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        try {
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+            super.onCreate(savedInstanceState)
 
-        authenticationService = AuthenticationService(this)
+            if (savedInstanceState == null) {
+                showHome()
+            }
+            setContentView(R.layout.activity_main)
+            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+
+            authenticationService = AuthenticationService(this)
+        }catch (exec:Exception) {
+            Log.e(TAG, "error oncreate: ${exec.message}", exec)
+            throw exec
+        }
     }
 
     override fun onFragmentInteraction(uri: Uri) {

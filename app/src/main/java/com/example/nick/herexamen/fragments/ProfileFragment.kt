@@ -4,15 +4,15 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
-import com.example.nick.herexamen.authentication.AuthenticationService
+import com.example.nick.herexamen.services.AuthenticationService
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,8 +37,7 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
+
         authenticationService = AuthenticationService(activity as MainActivity)
     }
 
@@ -47,9 +46,14 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var view = inflater.inflate(R.layout.fragment_profile, container, false)
+        super.onCreateView(inflater, container, savedInstanceState)
+        retainInstance = true
+        val view = inflater.inflate(R.layout.fragment_profile, container, false)
         view.profiel_btn_logout.setOnClickListener { logUserOut() }
-        updateUi(view)
+
+        view.findViewById<TextView>(R.id.profiel_email).text = authenticationService.getAuth().currentUser?.email
+        view.findViewById<TextView>(R.id.profiel_naam).text = authenticationService.getAuth().currentUser?.displayName
+
         return view
     }
 
@@ -73,8 +77,6 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateUi(view: View) {
-        view.findViewById<TextView>(R.id.profiel_email).text = authenticationService.getAuth().currentUser?.email
-        view.findViewById<TextView>(R.id.profiel_naam).text = authenticationService.getAuth().currentUser?.displayName
 
     }
 
@@ -102,16 +104,9 @@ class ProfileFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment ProfileFragment.
          */
         @JvmStatic
-        fun newInstance() =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = ProfileFragment()
     }
 }
