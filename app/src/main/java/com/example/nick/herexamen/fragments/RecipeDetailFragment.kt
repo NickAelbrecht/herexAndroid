@@ -15,8 +15,12 @@ import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.services.CreateRowService
+import com.example.nick.herexamen.services.NetworkService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.ArrayList
 
 
@@ -35,11 +39,13 @@ class RecipeDetailFragment : Fragment() {
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var recipeByTitle: Recipe
     private lateinit var createRowService: CreateRowService
+    private lateinit var networkService: NetworkService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        networkService = NetworkService()
     }
 
     override fun onCreateView(
@@ -59,7 +65,22 @@ class RecipeDetailFragment : Fragment() {
         addAllergies(view)
         val receptTitle = arguments!!.getString("title")
         if (!receptTitle.isNullOrEmpty()) {
-            recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+            if (networkService.isNetworkAvailable(view.context)) {
+                recipeViewModel.getRecipeByTitleApi(receptTitle).process { recipe, throwable ->
+                    if (throwable != null) {
+                        Toast.makeText(requireContext(), throwable.localizedMessage, Toast.LENGTH_LONG).show()
+                    } else {
+                        if (recipe == null) Toast.makeText(
+                            requireContext(),
+                            "No result returned",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        else recipeByTitle = recipe
+                    }
+                }
+            } else {
+                recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+            }
             view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
         }
 
@@ -133,10 +154,19 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun deleteRecipe(title: String) {
-        recipeViewModel.deleteByTitle(title)
+        if (networkService.isNetworkAvailable(requireContext())) {
+            recipeViewModel.deleteRecipeByTitleApi(title).process { response, throwable ->
+                if (throwable != null) {
+                    Toast.makeText(requireContext(), throwable.localizedMessage, Toast.LENGTH_LONG).show()
+                } else if (!response.isNullOrEmpty()) {
+                    Log.d("DELETEAPI", response)
+                }
+            }
+        } else {
+            recipeViewModel.deleteByTitle(title)
+        }
         (activity as MainActivity).showCart()
     }
-
 
     override fun onDetach() {
         super.onDetach()

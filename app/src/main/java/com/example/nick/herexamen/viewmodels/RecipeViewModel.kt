@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.util.Log
+import com.example.nick.herexamen.adapters.Simple
 import com.example.nick.herexamen.database.App
 import com.example.nick.herexamen.model.RecipeRepository
 import com.example.nick.herexamen.model.Recipe
@@ -47,7 +48,9 @@ class RecipeViewModel : ViewModel() {
                 { error -> onRetrieveRecipesError(error) }
             )
     }
-
+    /***********************/
+    //      LOCAL CALLS    //
+    /***********************/
     val allRecipes: LiveData<List<Recipe>> = recipeRepository.allRecipes
 
     fun insert(recipe: Recipe) {
@@ -85,6 +88,9 @@ class RecipeViewModel : ViewModel() {
         Log.e("VIEWMODEL", error.message!!)
     }
 
+    /***********************/
+    //      API CALLS      //
+    /***********************/
     override fun onCleared() {
         super.onCleared()
         subscription.dispose()
@@ -94,7 +100,15 @@ class RecipeViewModel : ViewModel() {
         return recipesFromApi
     }
 
-    fun insertRecipeApi(recipe: Recipe) : Call<Recipe> {
+    fun insertRecipeApi(recipe: Recipe): Simple<Recipe> {
         return recipeApi.insertRecipe(recipe)
+    }
+
+    fun getRecipeByTitleApi(title: String): Simple<Recipe> {
+        return recipeApi.getRecipeByTitle(title)
+    }
+
+    fun deleteRecipeByTitleApi(title: String): Simple<String> {
+        return recipeApi.deleteByTitle(title)
     }
 }

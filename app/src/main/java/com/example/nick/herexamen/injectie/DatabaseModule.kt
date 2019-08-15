@@ -2,6 +2,7 @@ package com.example.nick.herexamen.injectie
 
 import android.app.Application
 import android.content.Context
+import com.example.nick.herexamen.adapters.SimpleCallAdapterFactory
 import com.example.nick.herexamen.database.RecipeDao
 import com.example.nick.herexamen.model.RecipeRepository
 import com.example.nick.herexamen.database.ShoppingAppDatabase
@@ -28,6 +29,7 @@ class DatabaseModule(private val application: Application) {
             .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+            .addCallAdapterFactory(SimpleCallAdapterFactory.create())
             .build()
     }
 

@@ -16,6 +16,7 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.services.AddRecipeService
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.services.CreateRowService
+import com.example.nick.herexamen.services.NetworkService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_new_recipe.view.*
 import retrofit2.Call
@@ -38,6 +39,8 @@ class NewRecipeFragment : Fragment() {
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var addRecipeService: AddRecipeService
     private lateinit var createRowService: CreateRowService
+    private lateinit var networkService: NetworkService
+
     private var productenLijst: ArrayList<String> = ArrayList()
     private var allergieLijst: ArrayList<String> = ArrayList()
 
@@ -46,6 +49,7 @@ class NewRecipeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        networkService = NetworkService()
         addRecipeService = AddRecipeService(activity as MainActivity)
     }
 
@@ -90,20 +94,23 @@ class NewRecipeFragment : Fragment() {
 
             recipeViewModel.insert(newRecipe)
 
-            try {
-                val call = recipeViewModel.insertRecipeApi(newRecipe)
-                call.enqueue(object : Callback<Recipe> {
-                    override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
-                        Log.d("Output", response.toString())
+            if (networkService.isNetworkAvailable(requireContext())) {
+                recipeViewModel.insertRecipeApi(newRecipe).process { recipe, throwable ->
+                    if (throwable != null) {
+                        Toast.makeText(requireContext(), throwable.localizedMessage, Toast.LENGTH_LONG).show()
+                    } else {
+                        if (recipe == null) Toast.makeText(
+                            requireContext(),
+                            "No result returned",
+                            Toast.LENGTH_LONG
+                        ).show()
+                        else Toast.makeText(
+                            requireContext(),
+                            recipe.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
-
-                    override fun onFailure(call: Call<Recipe>, t: Throwable) {
-                        Log.d("Output", t.toString())
-                    }
-
-                })
-            } catch (ex: Exception) {
-                Log.e("NEWREC", "${ex.message}")
+                }
             }
 
             showShoppingCart()

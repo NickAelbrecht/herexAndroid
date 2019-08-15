@@ -30,7 +30,7 @@ router.get("/recipes/:title", function(req, res) {
     }
     let recept = recepten
       .find(rec => rec.title === req.params.title);
-    res.send(recept);
+    res.json(recept);
   });
 });
 
@@ -62,7 +62,7 @@ router.delete("/recipes/:title", function(req, res, next) {
       if (err) {
         return next(err);
       }
-      res.json("Deleted");
+      res.json(recipe);
     }
   );
 });
