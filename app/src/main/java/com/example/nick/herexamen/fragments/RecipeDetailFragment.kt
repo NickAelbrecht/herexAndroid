@@ -15,6 +15,7 @@ import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.services.CreateRowService
+import com.example.nick.herexamen.services.NetworkService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_detail.view.*
 import java.util.ArrayList
@@ -30,16 +31,20 @@ import java.util.ArrayList
  *
  */
 class RecipeDetailFragment : Fragment() {
+    private val TAG = "RecipeDetailTag"
 
     private var listener: OnFragmentInteractionListener? = null
+
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var recipeByTitle: Recipe
     private lateinit var createRowService: CreateRowService
+    private lateinit var networkService: NetworkService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        networkService = NetworkService()
     }
 
     override fun onCreateView(
@@ -58,9 +63,22 @@ class RecipeDetailFragment : Fragment() {
         addProducts(view)
         addAllergies(view)
         val receptTitle = arguments!!.getString("title")
-        recipeByTitle = recipeViewModel.findByTitle(receptTitle)
-        view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
-
+        if (!receptTitle.isNullOrEmpty()) {
+            if (networkService.isNetworkAvailable(view.context)) {
+                recipeViewModel.getRecipeByTitleApi(receptTitle).process { recipe, throwable ->
+                    if (throwable != null) {
+                        Log.d(TAG, throwable.localizedMessage)
+                    } else {
+                        if (recipe == null) {
+                            Log.d(TAG, "No result returned(recept")
+                        } else recipeByTitle = recipe
+                    }
+                }
+            } else {
+                recipeByTitle = recipeViewModel.findByTitle(receptTitle)
+            }
+            view.findViewById<Button>(R.id.recipe_detail_delete).setOnClickListener { deleteRecipe(receptTitle) }
+        }
         return view
     }
 
@@ -79,33 +97,35 @@ class RecipeDetailFragment : Fragment() {
 
     private fun addAllergies(view: View) {
         val allergieen = arguments!!.getStringArrayList("allergieen")
+        if (!allergieen.isNullOrEmpty()) {
+            for (allergie in allergieen) {
+                val allerLayout = view.findViewById<TableLayout>(R.id.recipe_detail_aller_layout)
 
-        for (allergie in allergieen) {
-            val allerLayout = view.findViewById<TableLayout>(R.id.recipe_detail_aller_layout)
+                val tableRow = createRowService.createRow(allergie)
+                val deleteButton = tableRow.getChildAt(1)
+                allerLayout.addView(tableRow)
 
-            val tableRow = createRowService.createRow(allergie)
-            val deleteButton = tableRow.getChildAt(1)
-            allerLayout.addView(tableRow)
-
-            deleteButton.setOnClickListener {
-                allerLayout.removeView(tableRow)
+                deleteButton.setOnClickListener {
+                    allerLayout.removeView(tableRow)
+                }
             }
         }
     }
 
     private fun addProducts(view: View) {
         val producten = arguments!!.getStringArrayList("producten")
+        if (!producten.isNullOrEmpty()) {
+            for (product in producten) {
+                val prodLayout = view.findViewById<TableLayout>(R.id.recipe_detail_prod_layout)
 
-        for (product in producten) {
-            val prodLayout = view.findViewById<TableLayout>(R.id.recipe_detail_prod_layout)
+                val tableRow = createRowService.createRow(product)
+                val deleteButton = tableRow.getChildAt(1)
+                prodLayout.addView(tableRow)
 
-            val tableRow = createRowService.createRow(product)
-            val deleteButton = tableRow.getChildAt(1)
-            prodLayout.addView(tableRow)
-
-            deleteButton.setOnClickListener {
-                prodLayout.removeView(tableRow)
-                deleteProductFromRecipe(tableRow, producten)
+                deleteButton.setOnClickListener {
+                    prodLayout.removeView(tableRow)
+                    deleteProductFromRecipe(tableRow, producten)
+                }
             }
         }
     }
@@ -122,15 +142,40 @@ class RecipeDetailFragment : Fragment() {
 
     private fun updateRecipe(recipe: Recipe) {
         val producten = arguments!!.getStringArrayList("producten")
-        recipe.products = producten
-        recipeViewModel.updateRecipe(recipe)
+        if (!producten.isNullOrEmpty()) {
+            recipe.products = producten
+            if (networkService.isNetworkAvailable(requireContext())) {
+                recipeViewModel.updateRecipeApi(recipe).process { recipe, throwable ->
+                    if (throwable != null) {
+                        Log.d(TAG, throwable.localizedMessage)
+                    } else {
+                        if (recipe == null) {
+                            Log.d(TAG, "No result returned(update)")
+                        } else {
+                            Log.d(TAG, "Succes update: $recipe")
+                        }
+                    }
+                }
+            } else {
+                recipeViewModel.updateRecipe(recipe)
+            }
+        }
     }
 
     private fun deleteRecipe(title: String) {
-        recipeViewModel.deleteByTitle(title)
+        if (networkService.isNetworkAvailable(requireContext())) {
+            recipeViewModel.deleteRecipeByTitleApi(title).process { response, throwable ->
+                if (throwable != null) {
+                    Log.d(TAG, throwable.localizedMessage)
+                } else if (!response.isNullOrEmpty()) {
+                    Log.d(TAG, response)
+                }
+            }
+        } else {
+            recipeViewModel.deleteByTitle(title)
+        }
         (activity as MainActivity).showCart()
     }
-
 
     override fun onDetach() {
         super.onDetach()

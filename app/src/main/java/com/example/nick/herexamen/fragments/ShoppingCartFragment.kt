@@ -16,6 +16,7 @@ import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.adapters.MyCartAdapter
+import com.example.nick.herexamen.services.NetworkService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_shopping_cart.view.*
 
@@ -35,6 +36,7 @@ class ShoppingCartFragment : Fragment() {
     private val TAG = "ShoppingCartFragment"
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var myCartAdapter: MyCartAdapter
+    private lateinit var networkService: NetworkService
 
 
     //private var recipes: List<Recipe>? = null
@@ -44,7 +46,7 @@ class ShoppingCartFragment : Fragment() {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "OnCreate")
         recipeViewModel = ViewModelProviders.of(activity!!).get(RecipeViewModel::class.java)
-
+        networkService = NetworkService()
     }
 
     override fun onCreateView(
@@ -66,9 +68,15 @@ class ShoppingCartFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        recipeViewModel.allRecipes.observe(this, Observer { recepten ->
-            recepten?.let { myCartAdapter.setRecipes(it) }
-        })
+        if (networkService.isNetworkAvailable(requireContext())) {
+            recipeViewModel.getRecipesFromApi().observe(this, Observer { recepten ->
+                recepten?.let { myCartAdapter.setRecipes(it) }
+            })
+        } else {
+            recipeViewModel.allRecipes.observe(this, Observer { recepten ->
+                recepten?.let { myCartAdapter.setRecipes(it) }
+            })
+        }
 
     }
 

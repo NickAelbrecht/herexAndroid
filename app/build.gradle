@@ -105,6 +105,10 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:$versions.rx"
+    implementation "io.reactivex.rxjava2:rxandroid:$versions.rxandroid"
+
     //Error dat ik tegenkwam :
     // https://stackoverflow.com/questions/48249633/errorcannot-fit-requested-classes-in-a-single-dex-file-try-supplying-a-main-dex 
     // https://developer.android.com/studio/build/multidex#mdex-gradle

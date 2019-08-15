@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,8 +16,13 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.services.AddRecipeService
 import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.services.CreateRowService
+import com.example.nick.herexamen.services.NetworkService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_new_recipe.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.Exception
 
 
 /**
@@ -29,10 +35,15 @@ import kotlinx.android.synthetic.main.fragment_new_recipe.view.*
  *
  */
 class NewRecipeFragment : Fragment() {
+    private val TAG = "NewRecipeTag"
+
     private var listener: OnFragmentInteractionListener? = null
+
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var addRecipeService: AddRecipeService
     private lateinit var createRowService: CreateRowService
+    private lateinit var networkService: NetworkService
+
     private var productenLijst: ArrayList<String> = ArrayList()
     private var allergieLijst: ArrayList<String> = ArrayList()
 
@@ -41,6 +52,7 @@ class NewRecipeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         recipeViewModel = ViewModelProviders.of(this).get(RecipeViewModel::class.java)
+        networkService = NetworkService()
         addRecipeService = AddRecipeService(activity as MainActivity)
     }
 
@@ -83,7 +95,22 @@ class NewRecipeFragment : Fragment() {
             }
             val newRecipe = Recipe(recipeTitle, producten, allergieen, recipeSoort)
 
-            recipeViewModel.insert(newRecipe)
+            if (networkService.isNetworkAvailable(requireContext())) {
+                recipeViewModel.insertRecipeApi(newRecipe).process { recipe, throwable ->
+                    if (throwable != null) {
+                        Log.d(TAG, throwable.localizedMessage)
+                    } else {
+                        if (recipe == null) {
+                            Log.d(TAG, "No results returned (create)")
+                        } else {
+                            Log.d(TAG, "$recipe")
+                        }
+                    }
+                }
+            } else {
+                recipeViewModel.insert(newRecipe)
+            }
+
             showShoppingCart()
         }
     }
@@ -155,7 +182,6 @@ class NewRecipeFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment
-         *
          * @return A new instance of fragment NewRecipeFragment.
          */
         @JvmStatic
