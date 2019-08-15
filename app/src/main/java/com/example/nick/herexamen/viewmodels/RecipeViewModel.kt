@@ -11,6 +11,7 @@ import com.example.nick.herexamen.netwerk.RecipeApi
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import retrofit2.Call
 import javax.inject.Inject
 
 
@@ -76,7 +77,7 @@ class RecipeViewModel : ViewModel() {
     }
 
     private fun onRetrieveRecipesSucces(result: List<Recipe>) {
-        Log.d("VIEWMODEL", result.toString())
+        Log.i("VIEWMODEL", result.toString())
         recipesFromApi.value = result
     }
 
@@ -91,5 +92,9 @@ class RecipeViewModel : ViewModel() {
 
     fun getRecipesFromApi(): MutableLiveData<List<Recipe>> {
         return recipesFromApi
+    }
+
+    fun insertRecipeApi(recipe: Recipe) : Call<Recipe> {
+        return recipeApi.insertRecipe(recipe)
     }
 }

@@ -11,6 +11,7 @@ router.get("/", function(req, res, next) {
   res.json({ test: "server works" });
 });
 
+//GET ALL RECIPES
 router.get("/recipes", function(req, res) {
   let query = Recipe.find();
   query.exec(function(err, recipes) {
@@ -21,6 +22,7 @@ router.get("/recipes", function(req, res) {
   });
 });
 
+//GET RECIPES BY TITLE
 router.get("/recipes/:title", function(req, res) {
   Recipe.find(function(err, recepten) {
     if (err) {
@@ -32,6 +34,7 @@ router.get("/recipes/:title", function(req, res) {
   });
 });
 
+//ADD RECIPE
 router.post("/recipes", function(req, res, next) {
   let recipe = new Recipe({
     title: req.body.title,
@@ -48,6 +51,8 @@ router.post("/recipes", function(req, res, next) {
   });
 });
 
+
+//DELETE RECIPE BY TITLE
 router.delete("/recipes/:title", function(req, res, next) {
   Recipe.remove(
     {
@@ -62,6 +67,7 @@ router.delete("/recipes/:title", function(req, res, next) {
   );
 });
 
+//DELETE ALL RECIPES
 router.delete("/recipes", function(req, res, next) {
   Recipe.remove({}, function(err, removed) {
     if (err) {
@@ -70,5 +76,7 @@ router.delete("/recipes", function(req, res, next) {
     res.json(removed);
   });
 });
+
+
 
 module.exports = router;

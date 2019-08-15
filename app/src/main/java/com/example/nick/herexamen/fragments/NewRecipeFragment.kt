@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,10 @@ import com.example.nick.herexamen.model.Recipe
 import com.example.nick.herexamen.services.CreateRowService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_new_recipe.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.lang.Exception
 
 
 /**
@@ -84,6 +89,23 @@ class NewRecipeFragment : Fragment() {
             val newRecipe = Recipe(recipeTitle, producten, allergieen, recipeSoort)
 
             recipeViewModel.insert(newRecipe)
+
+            try {
+                val call = recipeViewModel.insertRecipeApi(newRecipe)
+                call.enqueue(object : Callback<Recipe> {
+                    override fun onResponse(call: Call<Recipe>, response: Response<Recipe>) {
+                        Log.d("Output", response.toString())
+                    }
+
+                    override fun onFailure(call: Call<Recipe>, t: Throwable) {
+                        Log.d("Output", t.toString())
+                    }
+
+                })
+            } catch (ex: Exception) {
+                Log.e("NEWREC", "${ex.message}")
+            }
+
             showShoppingCart()
         }
     }

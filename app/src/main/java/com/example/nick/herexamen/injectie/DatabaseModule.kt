@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @Module
 class DatabaseModule(private val application: Application) {
 
-    val BASE_URL = "http://localhost:3000/"
+    val BASE_URL = "http://10.0.2.2:3000/"
 
     @Provides
     internal fun provideRetrofitInterface(okHttpClient: OkHttpClient): Retrofit {
