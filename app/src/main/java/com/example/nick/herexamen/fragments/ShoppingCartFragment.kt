@@ -101,13 +101,13 @@ class ShoppingCartFragment : Fragment() {
         Log.d(TAG, "OnStart")
 
         if (networkService.isNetworkAvailable(requireContext())) {
+            Log.d(TAG, "API recipes")
             recipeViewModel.getRecipesFromApi().observe(this, Observer { recepten ->
-                Log.d(TAG, "API: $recepten")
                 recepten?.let { myCartAdapter.setRecipes(it) }
             })
         } else {
+            Log.d(TAG, "lokale recipes")
             recipeViewModel.allRecipes.observe(this, Observer { recepten ->
-                Log.d(TAG, "Room: $recepten")
                 recepten?.let { myCartAdapter.setRecipes(it) }
             })
         }
