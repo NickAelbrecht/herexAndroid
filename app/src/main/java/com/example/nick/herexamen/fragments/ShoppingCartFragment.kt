@@ -12,10 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.adapters.MyCartAdapter
+import com.example.nick.herexamen.services.AuthenticationService
 import com.example.nick.herexamen.services.NetworkService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
 import kotlinx.android.synthetic.main.fragment_shopping_cart.view.*
@@ -37,6 +39,7 @@ class ShoppingCartFragment : Fragment() {
     private lateinit var recipeViewModel: RecipeViewModel
     private lateinit var myCartAdapter: MyCartAdapter
     private lateinit var networkService: NetworkService
+    private lateinit var authenticationService: AuthenticationService
 
 
     //private var recipes: List<Recipe>? = null
@@ -47,6 +50,7 @@ class ShoppingCartFragment : Fragment() {
         Log.d(TAG, "OnCreate")
         recipeViewModel = ViewModelProviders.of(activity!!).get(RecipeViewModel::class.java)
         networkService = NetworkService()
+        authenticationService = AuthenticationService(MainActivity())
     }
 
     override fun onCreateView(
@@ -55,6 +59,7 @@ class ShoppingCartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         super.onCreateView(inflater, container, savedInstanceState)
+        Log.d(TAG, "OnCreateView")
         retainInstance = true
         val view = inflater.inflate(R.layout.fragment_shopping_cart, container, false)
 
@@ -68,12 +73,16 @@ class ShoppingCartFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        Log.d(TAG, "OnStart")
+
         if (networkService.isNetworkAvailable(requireContext())) {
             recipeViewModel.getRecipesFromApi().observe(this, Observer { recepten ->
+                Log.d(TAG, "API: $recepten")
                 recepten?.let { myCartAdapter.setRecipes(it) }
             })
         } else {
             recipeViewModel.allRecipes.observe(this, Observer { recepten ->
+                Log.d(TAG, "Room: $recepten")
                 recepten?.let { myCartAdapter.setRecipes(it) }
             })
         }
@@ -86,6 +95,8 @@ class ShoppingCartFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        Log.d(TAG, "OnAttach")
+
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
@@ -95,7 +106,12 @@ class ShoppingCartFragment : Fragment() {
 
 
     private fun addNewRecipe() {
-        (activity as MainActivity).showAddNewRecipe()
+        if(!authenticationService.checkSignedIn() && networkService.isNetworkAvailable(requireContext())) {
+            Toast.makeText(context, "Gelieve in te loggen om iets toe te voegen", Toast.LENGTH_LONG)
+                .show()
+        } else {
+            (activity as MainActivity).showAddNewRecipe()
+        }
     }
 
     override fun onDetach() {

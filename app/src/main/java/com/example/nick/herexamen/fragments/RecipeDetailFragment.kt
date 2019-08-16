@@ -14,6 +14,7 @@ import com.example.nick.herexamen.MainActivity
 
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.model.Recipe
+import com.example.nick.herexamen.services.AuthenticationService
 import com.example.nick.herexamen.services.CreateRowService
 import com.example.nick.herexamen.services.NetworkService
 import com.example.nick.herexamen.viewmodels.RecipeViewModel
@@ -39,6 +40,7 @@ class RecipeDetailFragment : Fragment() {
     private lateinit var recipeByTitle: Recipe
     private lateinit var createRowService: CreateRowService
     private lateinit var networkService: NetworkService
+    private lateinit var authenticationService: AuthenticationService
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +61,7 @@ class RecipeDetailFragment : Fragment() {
         view.recipe_detail_soort.text = arguments!!.getString("soort")
 
         createRowService = CreateRowService(requireContext())
+        authenticationService = AuthenticationService(MainActivity())
 
         addProducts(view)
         addAllergies(view)
@@ -106,7 +109,17 @@ class RecipeDetailFragment : Fragment() {
                 allerLayout.addView(tableRow)
 
                 deleteButton.setOnClickListener {
-                    allerLayout.removeView(tableRow)
+
+                    when {
+                        (!authenticationService.checkSignedIn() && networkService.isNetworkAvailable(requireContext())) -> {
+                            Toast.makeText(context, "Gelieve in te loggen voor deze allergie te verwijderen", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                        else -> {
+                            allerLayout.removeView(tableRow)
+                            deleteAllergieFromRecipe(tableRow, allergieen)
+                        }
+                    }
                 }
             }
         }
@@ -123,8 +136,20 @@ class RecipeDetailFragment : Fragment() {
                 prodLayout.addView(tableRow)
 
                 deleteButton.setOnClickListener {
-                    prodLayout.removeView(tableRow)
-                    deleteProductFromRecipe(tableRow, producten)
+                    when {
+                        (!authenticationService.checkSignedIn() && networkService.isNetworkAvailable(requireContext())) -> {
+                            Toast.makeText(context, "Gelieve in te loggen voor dit product te verwijderen", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                        producten.size < 2 -> {
+                            Toast.makeText(context, "Recept moet minstens 1 product hebben", Toast.LENGTH_LONG).show()
+                        }
+                        else -> {
+                            prodLayout.removeView(tableRow)
+                            deleteProductFromRecipe(tableRow, producten)
+                        }
+                    }
+
                 }
             }
         }
@@ -135,6 +160,13 @@ class RecipeDetailFragment : Fragment() {
         producten.remove(title)
         arguments!!.putStringArrayList("producten", producten)
 
+        updateRecipe(recipeByTitle)
+    }
+
+    private fun deleteAllergieFromRecipe(tableRow: TableRow, allergieen: ArrayList<String>) {
+        val title = (tableRow.getChildAt(0) as TextView).text
+        allergieen.remove(title)
+        arguments!!.putStringArrayList("allergieen", allergieen)
 
         updateRecipe(recipeByTitle)
     }
@@ -142,8 +174,10 @@ class RecipeDetailFragment : Fragment() {
 
     private fun updateRecipe(recipe: Recipe) {
         val producten = arguments!!.getStringArrayList("producten")
+        val allergieen = arguments!!.getStringArrayList("allergieen")
         if (!producten.isNullOrEmpty()) {
             recipe.products = producten
+            recipe.allergies = allergieen
             if (networkService.isNetworkAvailable(requireContext())) {
                 recipeViewModel.updateRecipeApi(recipe).process { recipe, throwable ->
                     if (throwable != null) {
@@ -163,7 +197,10 @@ class RecipeDetailFragment : Fragment() {
     }
 
     private fun deleteRecipe(title: String) {
-        if (networkService.isNetworkAvailable(requireContext())) {
+        if (!authenticationService.checkSignedIn() && networkService.isNetworkAvailable(requireContext())) {
+            Toast.makeText(context, "Gelieve in te loggen voor dit recept verwijderen", Toast.LENGTH_LONG)
+                .show()
+        } else if (networkService.isNetworkAvailable(requireContext())) {
             recipeViewModel.deleteRecipeByTitleApi(title).process { response, throwable ->
                 if (throwable != null) {
                     Log.d(TAG, throwable.localizedMessage)

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.fragments.RecipeDetailFragment
@@ -16,6 +17,8 @@ import kotlinx.android.synthetic.main.cart_item.view.*
 
 class MyCartAdapter(context: Context, private val fragment: Fragment) :
     RecyclerView.Adapter<MyCartAdapter.ViewHolder>() {
+
+    private val TAG = "CartAdapterTag"
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var recepten = emptyList<Recipe>()
@@ -35,7 +38,6 @@ class MyCartAdapter(context: Context, private val fragment: Fragment) :
             setOnClickListener {
                 val frag = RecipeDetailFragment.newInstance(item.title, item.products, item.allergies, item.kind)
                 (fragment.activity as MainActivity).showRecipeDetailFragment(frag)
-                //Log.d("ADAPTER", "$frag")
             }
         }
 

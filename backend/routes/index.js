@@ -51,6 +51,7 @@ router.post("/recipes", function(req, res, next) {
   });
 });
 
+//Update recipe
 router.put("/recipes", function(req, res, next) {
   let recipe = new Recipe({
     title: req.body.title,

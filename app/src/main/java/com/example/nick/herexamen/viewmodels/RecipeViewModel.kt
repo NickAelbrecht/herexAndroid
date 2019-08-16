@@ -100,6 +100,17 @@ class RecipeViewModel : ViewModel() {
 
 
     fun getRecipesFromApi(): LiveData<List<Recipe>> {
+        subscription = recipeApi.getAllRecipes()
+            //we tell it to fetch the data on background by
+            .subscribeOn(Schedulers.io())
+            //we like the fetched data to be displayed on the MainTread (UI)
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onRetrieveRecipesStart() }
+            .doOnTerminate { onRetrieveRecipesFinish() }
+            .subscribe(
+                { result -> onRetrieveRecipesSucces(result) },
+                { error -> onRetrieveRecipesError(error) }
+            )
         return recipesFromApi
     }
 

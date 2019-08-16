@@ -113,11 +113,16 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     }
 
     fun showCart() {
-        switchFragment(ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
+        //switchFragment(ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
+            .addToBackStack("RecipeDetailFragment")
+            .setTransition(1)
+            .commit()
     }
 
     fun showRecipeDetailFragment(fragment:RecipeDetailFragment) {
-        //Enkel voor detail verplicht nieuw fragment gebruiken, anders worden de variabelen daar niet aangepast door de newInstance
+        //Voor detail verplicht nieuw fragment gebruiken, anders worden de variabelen daar niet aangepast door de newInstance
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment, "RecipeDetailFragment")
             .addToBackStack("RecipeDetailFragment")
