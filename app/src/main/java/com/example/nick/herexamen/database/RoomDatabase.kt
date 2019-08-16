@@ -9,12 +9,6 @@ import android.content.Context
 import com.example.nick.herexamen.database.converter.Converter
 import com.example.nick.herexamen.model.Recipe
 
-<<<<<<< HEAD
-=======
-import org.jetbrains.anko.doAsync
-
->>>>>>> master
-
 //import org.jetbrains.anko.doAsync
 
 @Database(entities = [Recipe::class], version = 1)

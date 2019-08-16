@@ -267,12 +267,13 @@ class RecipeDetailFragment : Fragment() {
                     Log.d(TAG, throwable.localizedMessage)
                 } else if (!response.isNullOrEmpty()) {
                     Log.d(TAG, response)
+                    (activity as MainActivity).showCart()
                 }
             }
         } else {
             recipeViewModel.deleteByTitle(title)
+            (activity as MainActivity).showCart()
         }
-        (activity as MainActivity).showCart()
     }
 
     /**
