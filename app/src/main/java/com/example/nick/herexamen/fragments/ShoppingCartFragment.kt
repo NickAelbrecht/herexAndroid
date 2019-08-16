@@ -36,15 +36,28 @@ class ShoppingCartFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
     private val TAG = "ShoppingCartFragment"
+    /**
+     * [recipeViewModel] Het viewmodel dat wordt gebruikt voor de weergave van de verschillende recepten
+     */
     private lateinit var recipeViewModel: RecipeViewModel
+    /**
+     * [myCartAdapter] De adapter die ervoor zorgt dat alle items correct worden weergegeven in de recyclerview
+     */
     private lateinit var myCartAdapter: MyCartAdapter
+    /**
+     * [networkService] Controleert of er al dan niet netwerk aanwezig is
+     */
     private lateinit var networkService: NetworkService
+    /**
+     * [authenticationService] Controleert of een gebruiker is ingelogd of niet
+     */
     private lateinit var authenticationService: AuthenticationService
 
 
-    //private var recipes: List<Recipe>? = null
-
-
+    /**
+     *[onCreate] Wanneer het fragment voor de eerste keer wordt gecreëerd.
+     * @param savedInstanceState: Het fragment zijn vorige opgeslagen state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "OnCreate")
@@ -53,6 +66,13 @@ class ShoppingCartFragment : Fragment() {
         authenticationService = AuthenticationService(MainActivity())
     }
 
+    /**
+     * [onCreateView] Wanneer de UI van het fragment voor de eerste keer wordt getekend
+     * @param inflater: De inflater die de layout 'inflate'
+     * @param container: De container waar de layout moet in terechtkomen
+     * @param savedInstanceState: De vorige opgeslagen toestand
+     * @return een [View]
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,6 +91,9 @@ class ShoppingCartFragment : Fragment() {
         return view
     }
 
+    /**
+     * [onStart] Wordt opgeroepen als het fragment zichtbaar is geworden
+     */
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "OnStart")
@@ -93,6 +116,10 @@ class ShoppingCartFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
+    /**
+     * [onAttach] De allereerste methode die wordt opgeroepen. Laat weten dat we aan een activity vasthangen
+     * @param context: De activity
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         Log.d(TAG, "OnAttach")
@@ -104,9 +131,12 @@ class ShoppingCartFragment : Fragment() {
         }
     }
 
-
+    /**
+     * [addNewRecipe] Leidt de gebruiker naar het [NewRecipeFragment] waar deze een nieuw recept kan toevoegen.
+     * Dit op voorwaarde dat als er netwerk beschikbaar is, dat de gebruiker ook ingelogd is
+     */
     private fun addNewRecipe() {
-        if(!authenticationService.checkSignedIn() && networkService.isNetworkAvailable(requireContext())) {
+        if (!authenticationService.checkSignedIn() && networkService.isNetworkAvailable(requireContext())) {
             Toast.makeText(context, "Gelieve in te loggen om iets toe te voegen", Toast.LENGTH_LONG)
                 .show()
         } else {
@@ -114,14 +144,14 @@ class ShoppingCartFragment : Fragment() {
         }
     }
 
+    /**
+     * [onDetach] Is de laatste methode die wordt opgeroepen, nog na [onDestroy]. Het laat weten dat het fragment niet meer aan de activity hangt
+     */
     override fun onDetach() {
         super.onDetach()
         listener = null
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 
     /**
      * This interface must be implemented by activities that contain this
@@ -135,7 +165,6 @@ class ShoppingCartFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 

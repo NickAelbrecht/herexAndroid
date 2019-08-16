@@ -27,13 +27,21 @@ class UserFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
     private var TAG = "LoginFragment"
-
+    /**
+     *[onCreate] Wanneer het fragment voor de eerste keer wordt gecreëerd.
+     * @param savedInstanceState: Het fragment zijn vorige opgeslagen state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
 
+    }
+    /**
+     * [onCreateView] Wanneer de UI van het fragment voor de eerste keer wordt getekend
+     * @param inflater: De inflater die de layout 'inflate'
+     * @param container: De container waar de layout moet in terechtkomen
+     * @param savedInstanceState: De vorige opgeslagen toestand
+     * @return een [View]
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,7 +55,10 @@ class UserFragment : Fragment() {
         view.btn_register.setOnClickListener { showRegister() }
         return view
     }
-
+    /**
+     * [onAttach] De allereerste methode die wordt opgeroepen. Laat weten dat we aan een activity vasthangen
+     * @param context: De activity
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -56,17 +67,25 @@ class UserFragment : Fragment() {
             throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
-
+    /**
+     * [onDetach] Is de laatste methode die wordt opgeroepen, nog na [onDestroy]. Het laat weten dat het fragment niet meer aan de activity hangt
+     */
     override fun onDetach() {
         super.onDetach()
         listener = null
     }
 
+    /**
+     * [showLogin] Leidt de gebruiker naar de inlogpagina [LoginFragment]
+     */
     private fun showLogin() {
         Log.d(TAG, "login clicked")
         (activity as MainActivity).showLogin()
     }
 
+    /**
+     * [showRegister] Leidt de gebruiker naar de registratiepagina [RegisterFragment]
+     */
     private fun showRegister() {
         Log.d(TAG, "register clicked")
         (activity as MainActivity).showRegister()
@@ -84,7 +103,6 @@ class UserFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 
@@ -93,16 +111,9 @@ class UserFragment : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment UserFragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance() =
-            UserFragment().apply {
-                arguments = Bundle().apply {
-                }
-            }
+        fun newInstance() = UserFragment()
     }
 }

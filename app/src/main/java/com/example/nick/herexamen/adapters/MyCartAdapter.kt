@@ -15,6 +15,9 @@ import com.example.nick.herexamen.fragments.RecipeDetailFragment
 import com.example.nick.herexamen.model.Recipe
 import kotlinx.android.synthetic.main.cart_item.view.*
 
+/**
+ * De [MyCartAdapter] klasse zorgt voor de correcte weergave van de items in de recyclerview
+ */
 class MyCartAdapter(context: Context, private val fragment: Fragment) :
     RecyclerView.Adapter<MyCartAdapter.ViewHolder>() {
 
@@ -23,10 +26,12 @@ class MyCartAdapter(context: Context, private val fragment: Fragment) :
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var recepten = emptyList<Recipe>()
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = inflater.inflate(R.layout.cart_item, parent, false)
         return ViewHolder(view)
     }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recepten[position]
@@ -50,6 +55,9 @@ class MyCartAdapter(context: Context, private val fragment: Fragment) :
         }
     }
 
+    /**
+     * @param recipes : De lijst met recepten die in de recyclerview moeten komen
+     */
     internal fun setRecipes(recipes: List<Recipe>) {
         this.recepten = recipes
         notifyDataSetChanged()

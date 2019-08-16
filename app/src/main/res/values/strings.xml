@@ -23,4 +23,7 @@
     <string name="producten_dp">Producten :</string>
     <string name="allergieen_dp">Allergieën :</string>
     <string name="soort_dp">Soort :</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

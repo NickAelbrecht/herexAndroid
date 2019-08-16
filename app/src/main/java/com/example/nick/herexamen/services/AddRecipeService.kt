@@ -5,13 +5,22 @@ import android.widget.TextView
 import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
 
+/**
+ * [AddRecipeService] Controleert of alle velden ingevuld zijn
+ * @param activity: De activity wordt gebruikt om de juiste views te kunnen vinden
+ */
 class AddRecipeService(private var activity: MainActivity) {
 
-    fun validateForm(titel: String, producten: List<String>, allergieen: List<String>?, soort: String): Boolean {
+    /**
+     * [validateForm] De functie dat het formulier valideert
+     * @param titel: De titel van het recept
+     * @param producten: De producten van het recept
+     * @param soort: De soort van het recept
+     */
+    fun validateForm(titel: String, producten: List<String>, soort: String): Boolean {
         var valid = true
         val fieldTitel: TextView = activity.findViewById(R.id.newrecipe_title)
         val fieldProducten: TextView = activity.findViewById(R.id.newrecipe_producten)
-//        val fieldAllergieen: TextView? = activity.findViewById(R.id.newrecipe_allergieen)
         val fieldSoort: TextView = activity.findViewById(R.id.newrecipe_soort)
 
         if (TextUtils.isEmpty(titel)) {

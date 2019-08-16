@@ -1,38 +1,223 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Nick">
     <words>
+      <w>aangemaakt</w>
+      <w>aanmaak</w>
+      <w>aanmaken</w>
+      <w>aanpassingen</w>
       <w>aantal</w>
+      <w>aanwezig</w>
+      <w>adhv</w>
+      <w>afhankelijk</w>
+      <w>alle</w>
       <w>aller</w>
+      <w>allereerste</w>
       <w>allergie</w>
       <w>allergieen</w>
       <w>allergieën</w>
+      <w>alsook</w>
+      <w>ander</w>
       <w>benodigdheden</w>
+      <w>bepaald</w>
+      <w>bepaalde</w>
+      <w>beschikbaar</w>
+      <w>bevat</w>
+      <w>bevestig</w>
+      <w>bijhorende</w>
       <w>boodschap</w>
       <w>boodschappen</w>
+      <w>cijfer</w>
+      <w>communicatie</w>
+      <w>controle</w>
+      <w>controleert</w>
+      <w>controleren</w>
+      <w>creeëren</w>
+      <w>creëert</w>
+      <w>daarna</w>
+      <w>datanetwerk</w>
+      <w>dataverbinding</w>
+      <w>daten</w>
+      <w>detailpagina</w>
+      <w>deze</w>
+      <w>doen</w>
+      <w>drukt</w>
+      <w>dynamisch</w>
+      <w>dynamische</w>
+      <w>eerst</w>
+      <w>eerste</w>
+      <w>emailadres</w>
       <w>emailfield</w>
       <w>emailformaat</w>
+      <w>enkel</w>
+      <w>ervoor</w>
+      <w>firebase</w>
+      <w>formulier</w>
+      <w>forumulier</w>
+      <w>fouten</w>
+      <w>functie</w>
       <w>gebruiker</w>
+      <w>gebruikers</w>
+      <w>gebruikt</w>
+      <w>geconnecteerd</w>
+      <w>gecontroleerd</w>
+      <w>gecreëerd</w>
+      <w>gedaan</w>
+      <w>geeft</w>
       <w>geen</w>
+      <w>gegevens</w>
+      <w>geinjecteerd</w>
+      <w>gekeerd</w>
+      <w>geklikt</w>
       <w>geldig</w>
+      <w>gelieve</w>
+      <w>getekend</w>
+      <w>geupdate</w>
+      <w>geven</w>
+      <w>gevraagd</w>
+      <w>gewerkt</w>
+      <w>geworden</w>
+      <w>haalt</w>
+      <w>halen</w>
+      <w>hangt</w>
+      <w>heeft</w>
+      <w>hele</w>
+      <w>hetzelfde</w>
+      <w>homescherm</w>
+      <w>hoofdentiteit</w>
+      <w>iets</w>
       <w>ingegeven</w>
+      <w>ingelogd</w>
+      <w>ingelogde</w>
+      <w>ingevuld</w>
+      <w>ingevulde</w>
+      <w>inloggen</w>
+      <w>inlogpagina</w>
+      <w>instaat</w>
+      <w>juiste</w>
+      <w>keer</w>
+      <w>keert</w>
+      <w>klasse</w>
       <w>klik</w>
+      <w>klikt</w>
+      <w>knop</w>
+      <w>komt</w>
+      <w>kunnen</w>
+      <w>laat</w>
+      <w>laatste</w>
+      <w>leidt</w>
       <w>lijst</w>
       <w>livedata</w>
+      <w>loggen</w>
+      <w>logt</w>
+      <w>lokaal</w>
+      <w>lokale</w>
+      <w>maakt</w>
+      <w>makkelijke</w>
+      <w>meegegeven</w>
+      <w>meer</w>
+      <w>methode</w>
+      <w>moet</w>
       <w>naam</w>
+      <w>naar</w>
+      <w>netwerk</w>
+      <w>netwerken</w>
+      <w>netwerkstatus</w>
+      <w>netwerkverbinding</w>
       <w>newrecipe</w>
+      <w>niet</w>
+      <w>nieuw</w>
+      <w>nieuwe</w>
+      <w>nodig</w>
+      <w>nodige</w>
+      <w>onclicklistener</w>
+      <w>onclicklisteners</w>
+      <w>oncomplete</w>
+      <w>opgehaalde</w>
+      <w>opgeroepen</w>
+      <w>opgeslaan</w>
+      <w>opgeslagen</w>
+      <w>ophalen</w>
       <w>paswfield</w>
       <w>paswoord</w>
       <w>producten</w>
       <w>recept</w>
       <w>recepten</w>
+      <w>recyclerview</w>
+      <w>refreshen</w>
+      <w>registratie</w>
+      <w>registratiepagina</w>
+      <w>registreert</w>
+      <w>registreren</w>
+      <w>resultaat</w>
+      <w>rijen</w>
+      <w>roomdatabase</w>
       <w>shoppingcart</w>
       <w>soort</w>
       <w>succes</w>
+      <w>succesvol</w>
+      <w>succesvolle</w>
+      <w>systeemservices</w>
+      <w>tablerow</w>
+      <w>tekst</w>
+      <w>terechtkomen</w>
+      <w>terug</w>
+      <w>teruggekeerd</w>
+      <w>textview</w>
       <w>titel</w>
+      <w>toegevoegd</w>
+      <w>toegevoegde</w>
+      <w>toegewezen</w>
+      <w>toestand</w>
+      <w>toevoegen</w>
+      <w>tussen</w>
+      <w>tussenlaag</w>
+      <w>uiteindelijk</w>
+      <w>uitgevoerd</w>
+      <w>upgedate</w>
+      <w>valideert</w>
+      <w>vasthangen</w>
+      <w>velden</w>
       <w>vereist</w>
+      <w>vermijden</w>
+      <w>verschillende</w>
       <w>verwijder</w>
+      <w>verwijderd</w>
+      <w>verwijderen</w>
+      <w>verwijdert</w>
       <w>viewmodel</w>
+      <w>vinden</w>
       <w>voegen</w>
+      <w>voegt</w>
+      <w>voeren</w>
+      <w>voldaan</w>
+      <w>voltooien</w>
+      <w>voor</w>
+      <w>voorwaarde</w>
+      <w>voorwaarden</w>
+      <w>voorzien</w>
+      <w>voorziet</w>
+      <w>vorige</w>
+      <w>vuilbak</w>
+      <w>vuilbakje</w>
+      <w>vult</w>
+      <w>waar</w>
+      <w>waarmee</w>
+      <w>waarvoor</w>
+      <w>wachtwoord</w>
+      <w>wachtwoorden</w>
+      <w>wanneer</w>
+      <w>weergave</w>
+      <w>weergegeven</w>
+      <w>werd</w>
+      <w>weten</w>
+      <w>wordt</w>
+      <w>zichtbaar</w>
+      <w>zijn</w>
+      <w>zodat</w>
+      <w>zoeken</w>
+      <w>zoekt</w>
+      <w>zorgt</w>
+      <w>zowel</w>
     </words>
   </dictionary>
 </component>

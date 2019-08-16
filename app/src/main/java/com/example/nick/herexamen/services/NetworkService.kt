@@ -5,8 +5,16 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
+/**
+ * [NetworkService] Controleert of er een WiFi- of dataverbinding geconnecteerd is
+ */
 class NetworkService {
 
+    /**
+     * [isNetworkAvailable] Geeft terug of er netwerk beschikbaar is
+     * @param context: Voor de systeemservices op te halen
+     * @return een boolean, true als er netwerken beschikbaar zijn, anders false
+     */
     fun isNetworkAvailable(context: Context): Boolean {
         var result = false
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?

@@ -15,10 +15,7 @@ import com.example.nick.herexamen.R
 import com.example.nick.herexamen.services.AuthenticationService
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -32,15 +29,26 @@ private const val ARG_PARAM2 = "param2"
 class ProfileFragment : Fragment() {
 
     private var listener: OnFragmentInteractionListener? = null
+    /**
+     * [authenticationService] Wordt gebruikt om de ingelogde gebruiker op te halen en later ook uit te loggen
+     */
     private lateinit var authenticationService: AuthenticationService
 
-
+    /**
+     *[onCreate] Wanneer het fragment voor de eerste keer wordt gecreëerd.
+     * @param savedInstanceState: Het fragment zijn vorige opgeslagen state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         authenticationService = AuthenticationService(activity as MainActivity)
     }
-
+    /**
+     * [onCreateView] Wanneer de UI van het fragment voor de eerste keer wordt getekend
+     * @param inflater: De inflater die de layout 'inflate'
+     * @param container: De container waar de layout moet in terechtkomen
+     * @param savedInstanceState: De vorige opgeslagen toestand
+     * @return een [View]
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,11 +65,13 @@ class ProfileFragment : Fragment() {
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
-
+    /**
+     * [onAttach] De allereerste methode die wordt opgeroepen. Laat weten dat we aan een activity vasthangen
+     * @param context: De activity
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -71,15 +81,17 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    /**
+     * [logUserOut] logt de gebruiker uit en keert terug naar het homescherm [HomeFragment]
+     */
     private fun logUserOut() {
         authenticationService.logUserOut()
         (activity as MainActivity).showHome()
     }
 
-    /*private fun updateUi(view: View) {
-
-    }*/
-
+    /**
+     * [onDetach] Is de laatste methode die wordt opgeroepen, nog na [onDestroy]. Het laat weten dat het fragment niet meer aan de activity hangt
+     */
     override fun onDetach() {
         super.onDetach()
         listener = null

@@ -27,15 +27,29 @@ import kotlinx.android.synthetic.main.fragment_register.view.*
  */
 class RegisterFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
+    /**
+     * [authenticationService] Wordt gebruikt voor de gebruiker te kunnen registreren
+     * alsook controle of alle ingevulde gegevens correct zijn
+     */
     private lateinit var authenticationService: AuthenticationService
 
-
+    /**
+     *[onCreate] Wanneer het fragment voor de eerste keer wordt gecreëerd.
+     * @param savedInstanceState: Het fragment zijn vorige opgeslagen state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         authenticationService = AuthenticationService(activity as MainActivity)
 
     }
 
+    /**
+     * [onCreateView] Wanneer de UI van het fragment voor de eerste keer wordt getekend
+     * @param inflater: De inflater die de layout 'inflate'
+     * @param container: De container waar de layout moet in terechtkomen
+     * @param savedInstanceState: De vorige opgeslagen toestand
+     * @return een [View]
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,11 +63,14 @@ class RegisterFragment : Fragment() {
         return view
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
+    /**
+     * [onAttach] De allereerste methode die wordt opgeroepen. Laat weten dat we aan een activity vasthangen
+     * @param context: De activity
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -63,7 +80,9 @@ class RegisterFragment : Fragment() {
         }
     }
 
-
+    /**
+     * [registerUser] Registreert een gebruiker met de ingevulde gegevens, na controle of alle gegevens correct zijn ingevuld
+     */
     private fun registerUser() {
         val naam: String = view!!.findViewById<EditText>(R.id.register_naam).text.toString()
         val email: String = view!!.findViewById<EditText>(R.id.register_email).text.toString()
@@ -72,6 +91,9 @@ class RegisterFragment : Fragment() {
         authenticationService.createUser(naam, email, paswoord, confirmPaswoord, this)
     }
 
+    /**
+     * [onDetach] Is de laatste methode die wordt opgeroepen, nog na [onDestroy]. Het laat weten dat het fragment niet meer aan de activity hangt
+     */
     override fun onDetach() {
         super.onDetach()
         listener = null
@@ -89,7 +111,6 @@ class RegisterFragment : Fragment() {
      * for more information.
      */
     interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onFragmentInteraction(uri: Uri)
     }
 

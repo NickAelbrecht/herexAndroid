@@ -17,6 +17,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
+/**
+ * De module die de verschillende, nodige interfaces voorziet voor communicatie met de backend.
+ */
 @Module
 class DatabaseModule(private val application: Application) {
 
@@ -33,6 +36,9 @@ class DatabaseModule(private val application: Application) {
             .build()
     }
 
+    /**
+     * @return De [RecipeApi]
+     */
     @Provides
     internal fun provideRecipeApi(retrofit: Retrofit): RecipeApi {
         return retrofit.create(RecipeApi::class.java)
@@ -52,19 +58,27 @@ class DatabaseModule(private val application: Application) {
         }.build()
     }
 
-
+    /**
+     * @return [RecipeRepository]
+     */
     @Provides
     @Singleton
     internal fun provideRecipeRepository(recipeDao: RecipeDao): RecipeRepository {
         return RecipeRepository(recipeDao)
     }
 
+    /**
+     * @return [RecipeDao]
+     */
     @Provides
     @Singleton
     internal fun provideRecipeDao(shoppingAppDatabase: ShoppingAppDatabase): RecipeDao {
         return shoppingAppDatabase.recipeDao()
     }
 
+    /**
+     * @return [ShoppingAppDatabase]
+     */
     @Provides
     @Singleton
     internal fun provideshoppingAppDatabase(context: Context): ShoppingAppDatabase {
