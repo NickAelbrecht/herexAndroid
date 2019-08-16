@@ -7,8 +7,17 @@ import android.widget.TableRow
 import android.widget.TextView
 import com.example.nick.herexamen.R
 
+/**
+ * [CreateRowService] Creëert dynamisch rijen met een [TextView] en een [Button]
+ * @param context: Nodig voor het aanmaken van de TextViews en Button
+ */
 class CreateRowService(private val context:Context) {
 
+    /**
+     * [createTextView] Maakt een textView aan met de tekst
+     * @param text: De tekst dat in de textView moet komen
+     * @return [TextView]
+     */
     private fun createTextView(text:String): TextView {
         val textView = TextView(context)
         textView.setPadding(16, 8, 8, 8)
@@ -16,7 +25,10 @@ class CreateRowService(private val context:Context) {
         textView.text = text
         return textView
     }
-
+    /**
+     * [createButton] Maakt een Button
+     * @return [Button]
+     */
     private fun createButton(): Button {
         val deleteButton = Button(context)
         deleteButton.layoutParams = TableRow.LayoutParams(48, 48)
@@ -28,6 +40,11 @@ class CreateRowService(private val context:Context) {
         return deleteButton
     }
 
+    /**
+     * [createRow] Maakt een hele rij aan met textView en button
+     * @param text: De tekst dat in de textview komt
+     * @return [TableRow]
+     */
     fun createRow(text:String):TableRow {
         val tableRow = TableRow(context)
         val textView = createTextView(text)

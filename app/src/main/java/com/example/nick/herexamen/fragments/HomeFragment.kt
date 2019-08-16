@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.nick.herexamen.R
-import java.lang.Exception
 
 
 /**
@@ -26,11 +25,22 @@ class HomeFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private val TAG = "HomeFragment"
 
+    /**
+     *[onCreate] Wanneer het fragment voor de eerste keer wordt gecreëerd.
+     * @param savedInstanceState: Het fragment zijn vorige opgeslagen state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "OnCreate")
     }
 
+    /**
+     * [onCreateView] Wanneer de UI van het fragment voor de eerste keer wordt getekend
+     * @param inflater: De inflater die de layout 'inflate'
+     * @param container: De container waar de layout moet in terechtkomen
+     * @param savedInstanceState: De vorige opgeslagen toestand
+     * @return een [View]
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +55,10 @@ class HomeFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
+    /**
+     * [onAttach] De allereerste methode die wordt opgeroepen, nog voor [onCreate]. Laat weten dat we aan een activity vasthangen
+     * @param context: De activity
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -54,6 +68,9 @@ class HomeFragment : Fragment() {
         }
     }
 
+    /**
+     * [onDetach] Is de laatste methode die wordt opgeroepen, nog na [onDestroy]. Het laat weten dat het fragment niet meer aan de activity hangt
+     */
     override fun onDetach() {
         super.onDetach()
         listener = null

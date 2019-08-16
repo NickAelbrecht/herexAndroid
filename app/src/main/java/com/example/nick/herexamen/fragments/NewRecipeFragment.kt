@@ -38,16 +38,35 @@ class NewRecipeFragment : Fragment() {
     private val TAG = "NewRecipeTag"
 
     private var listener: OnFragmentInteractionListener? = null
-
+    /**
+     * [recipeViewModel] Het viewmodel waarmee wordt gewerkt
+     */
     private lateinit var recipeViewModel: RecipeViewModel
+    /**
+     * [addRecipeService] De service dat instaat voor controle van het forumulier voor het toe te voegen recept
+     */
     private lateinit var addRecipeService: AddRecipeService
+    /**
+     * [createRowService] De service dat instaat voor het dynamisch aanmaken van rijen voor producten en allergieen
+     */
     private lateinit var createRowService: CreateRowService
+    /**
+     * [networkService] De service dat instaat voor de controle of er WiFi of datanetwerk beschikbaar is
+     */
     private lateinit var networkService: NetworkService
-
+    /**
+     * [productenLijst] De lijst van producten voor dit nieuwe recept
+     */
     private var productenLijst: ArrayList<String> = ArrayList()
+    /**
+     * [allergieLijst] De lijst van allergieen voor dit nieuwe recept
+     */
     private var allergieLijst: ArrayList<String> = ArrayList()
 
-
+    /**
+     *[onCreate] Wanneer het fragment voor de eerste keer wordt gecreëerd.
+     * @param savedInstanceState: Het fragment zijn vorige opgeslagen state
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -56,6 +75,13 @@ class NewRecipeFragment : Fragment() {
         addRecipeService = AddRecipeService(activity as MainActivity)
     }
 
+    /**
+     * [onCreateView] Wanneer de UI van het fragment voor de eerste keer wordt getekend
+     * @param inflater: De inflater die de layout 'inflate'
+     * @param container: De container waar de layout moet in terechtkomen
+     * @param savedInstanceState: De vorige opgeslagen toestand
+     * @return een [View]
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,6 +100,10 @@ class NewRecipeFragment : Fragment() {
         listener?.onFragmentInteraction(uri)
     }
 
+    /**
+     * [onAttach] De allereerste methode die wordt opgeroepen. Laat weten dat we aan een activity vasthangen
+     * @param context: De activity
+     */
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
@@ -83,13 +113,19 @@ class NewRecipeFragment : Fragment() {
         }
     }
 
+    /**
+     * [addRecipe] wordt uitgevoerd als er op de toevoegen-knop wordt geklikt.
+     * Eerst worden alle velden gecontroleerd op fouten.
+     * Daarna wordt het recept, afhankelijk van de netwerkstatus, lokaal of op de database opgeslaan.
+     * Uiteindelijk wordt er terug gekeerd naar het [ShoppingCartFragment]
+     */
     private fun addRecipe() {
         val recipeTitle = view!!.findViewById<EditText>(R.id.newrecipe_title).text.toString()
         val producten = productenLijst
         val allergieen = allergieLijst
         val recipeSoort = view!!.findViewById<EditText>(R.id.newrecipe_soort).text.toString()
 
-        if (addRecipeService.validateForm(recipeTitle, producten, allergieen, recipeSoort)) {
+        if (addRecipeService.validateForm(recipeTitle, producten, recipeSoort)) {
             if (allergieen.isEmpty()) {
                 allergieen.add("Geen")
             }
@@ -115,6 +151,11 @@ class NewRecipeFragment : Fragment() {
         }
     }
 
+    /**
+     * [addProductToList] wordt uitgevoerd als de gebruiker een product heeft ingevuld en op de '+' knop drukt.
+     * Er wordt een row aangemaakt door de [createRowService] en toegevoegd aan de TableLayout.
+     * Er worden ook onclicklisteners toegewezen als de gebruiker op het vuilbakje klikt
+     */
     private fun addProductToList() {
         val product = view!!.findViewById<EditText>(R.id.newrecipe_producten).text.toString()
         if (product.isEmpty()) {
@@ -137,6 +178,11 @@ class NewRecipeFragment : Fragment() {
 
     }
 
+    /**
+     * [addAllergieToList] wordt uitgevoerd als de gebruiker een allergie heeft ingevuld en op de '+' knop drukt.
+     * Er wordt een row aangemaakt door de [createRowService] en toegevoegd aan de TableLayout.
+     * Er worden ook onclicklisteners toegewezen als de gebruiker op het vuilbakje klikt
+     */
     private fun addAllergieToList() {
         val allergie = view!!.findViewById<EditText>(R.id.newrecipe_allergieen).text.toString()
         if (allergie.isEmpty()) {
@@ -158,6 +204,9 @@ class NewRecipeFragment : Fragment() {
         }
     }
 
+    /**
+     * [showShoppingCart] wordt uitgevoerd na het toevoegen van het recept en de gebruiker gaat terug naar het [ShoppingCartFragment]
+     */
     private fun showShoppingCart() {
         (activity as MainActivity).showCart()
     }

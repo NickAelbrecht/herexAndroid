@@ -8,7 +8,6 @@ import android.arch.persistence.room.TypeConverters
 import android.content.Context
 import com.example.nick.herexamen.database.converter.Converter
 import com.example.nick.herexamen.model.Recipe
-import org.jetbrains.anko.doAsync
 
 //import org.jetbrains.anko.doAsync
 
@@ -34,9 +33,9 @@ abstract class ShoppingAppDatabase : RoomDatabase() {
                 ).addCallback(object : RoomDatabase.Callback() {
                     override fun onOpen(db: SupportSQLiteDatabase) {
                         super.onOpen(db)
-                        //doAsync {
-                          //  populateDatabase(INSTANCE!!.recipeDao())
-                        //}
+                        // doAsync {
+                        //   populateDatabase(INSTANCE!!.recipeDao())
+                        // }
                     }
                 })
 
@@ -46,6 +45,9 @@ abstract class ShoppingAppDatabase : RoomDatabase() {
             }
         }
 
+        /**
+         * Vult de room database op met een aantal recepten
+         */
         fun populateDatabase(recipeDao: RecipeDao) {
             var recipe = Recipe("Croques", listOf("Kaas", "Hesp", "Brood"), listOf("Gluten"), "Brood")
             recipeDao.insert(recipe)

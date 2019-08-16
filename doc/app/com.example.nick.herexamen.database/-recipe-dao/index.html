@@ -1,0 +1,70 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RecipeDao - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.nick.herexamen.database</a>&nbsp;/&nbsp;<a href="./index.html">RecipeDao</a><br/>
+<br/>
+<h1>RecipeDao</h1>
+<code><span class="keyword">interface </span><span class="identifier">RecipeDao</span></code>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="delete-all.html">deleteAll</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Verwijdert alle recepten uit de room database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="delete-by-title.html">deleteByTitle</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteByTitle</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.database.RecipeDao$deleteByTitle(kotlin.String)/title">title</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Verwijdert het recept met de titel uit de room database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="find-by-title.html">findByTitle</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">findByTitle</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.database.RecipeDao$findByTitle(kotlin.String)/title">title</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a></code>
+<p>Zoekt het recept met bijhorende titel</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-all-recipes.html">getAllRecipes</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getAllRecipes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Haalt alle recepten uit de room database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="insert.html">insert</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.database.RecipeDao$insert(com.example.nick.herexamen.model.Recipe)/recipe">recipe</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="update-recipe.html">updateRecipe</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">updateRecipe</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.database.RecipeDao$updateRecipe(com.example.nick.herexamen.model.Recipe)/recipe">recipe</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Update het meegegeven recept</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

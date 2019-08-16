@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RecipeApi - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.nick.herexamen.netwerk</a>&nbsp;/&nbsp;<a href="./index.html">RecipeApi</a><br/>
+<br/>
+<h1>RecipeApi</h1>
+<code><span class="keyword">interface </span><span class="identifier">RecipeApi</span></code>
+<p><a href="./index.html">RecipeApi</a> Is de link tussen de front- en de backend</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="delete-by-title.html">deleteByTitle</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteByTitle</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.netwerk.RecipeApi$deleteByTitle(kotlin.String)/title">title</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.example.nick.herexamen.adapters/-simple/index.html"><span class="identifier">Simple</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">&gt;</span></code>
+<p><a href="delete-by-title.html">deleteByTitle</a> Verwijdert een recept uit de database met bepaalde titel</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-all-recipes.html">getAllRecipes</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getAllRecipes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Observable</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p><a href="get-all-recipes.html">getAllRecipes</a> Geeft alle recepten van de database terug</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-recipe-by-title.html">getRecipeByTitle</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getRecipeByTitle</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.netwerk.RecipeApi$getRecipeByTitle(kotlin.String)/title">title</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.example.nick.herexamen.adapters/-simple/index.html"><span class="identifier">Simple</span></a><span class="symbol">&lt;</span><a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">&gt;</span></code>
+<p><a href="get-recipe-by-title.html">getRecipeByTitle</a> Haalt een recept met bepaalde titel op van de database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="insert-recipe.html">insertRecipe</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">insertRecipe</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.netwerk.RecipeApi$insertRecipe(com.example.nick.herexamen.model.Recipe)/recipe">recipe</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.example.nick.herexamen.adapters/-simple/index.html"><span class="identifier">Simple</span></a><span class="symbol">&lt;</span><a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">&gt;</span></code>
+<p><a href="insert-recipe.html">insertRecipe</a> Voegt een bepaald recept toe aan de database</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-recipe.html">updateRecipe</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">updateRecipe</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.netwerk.RecipeApi$updateRecipe(com.example.nick.herexamen.model.Recipe)/recipe">recipe</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.example.nick.herexamen.adapters/-simple/index.html"><span class="identifier">Simple</span></a><span class="symbol">&lt;</span><a href="../../com.example.nick.herexamen.model/-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">&gt;</span></code>
+<p><a href="update-recipe.html">updateRecipe</a> Update een bepaald recept</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

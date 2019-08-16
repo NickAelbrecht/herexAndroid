@@ -1,0 +1,13 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+com.example.nick.herexamen
+com.example.nick.herexamen.adapters
+com.example.nick.herexamen.database
+com.example.nick.herexamen.database.converter
+com.example.nick.herexamen.fragments
+com.example.nick.herexamen.injectie
+com.example.nick.herexamen.model
+com.example.nick.herexamen.netwerk
+com.example.nick.herexamen.services
+com.example.nick.herexamen.viewmodels

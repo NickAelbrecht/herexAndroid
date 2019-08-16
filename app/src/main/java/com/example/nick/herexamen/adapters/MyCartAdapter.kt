@@ -8,22 +8,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.example.nick.herexamen.MainActivity
 import com.example.nick.herexamen.R
 import com.example.nick.herexamen.fragments.RecipeDetailFragment
 import com.example.nick.herexamen.model.Recipe
 import kotlinx.android.synthetic.main.cart_item.view.*
 
+/**
+ * De [MyCartAdapter] klasse zorgt voor de correcte weergave van de items in de recyclerview
+ */
 class MyCartAdapter(context: Context, private val fragment: Fragment) :
     RecyclerView.Adapter<MyCartAdapter.ViewHolder>() {
 
+    private val TAG = "CartAdapterTag"
+
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var recepten = emptyList<Recipe>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = inflater.inflate(R.layout.cart_item, parent, false)
         return ViewHolder(view)
     }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = recepten[position]
@@ -35,7 +43,6 @@ class MyCartAdapter(context: Context, private val fragment: Fragment) :
             setOnClickListener {
                 val frag = RecipeDetailFragment.newInstance(item.title, item.products, item.allergies, item.kind)
                 (fragment.activity as MainActivity).showRecipeDetailFragment(frag)
-                //Log.d("ADAPTER", "$frag")
             }
         }
 
@@ -48,6 +55,9 @@ class MyCartAdapter(context: Context, private val fragment: Fragment) :
         }
     }
 
+    /**
+     * @param recipes : De lijst met recepten die in de recyclerview moeten komen
+     */
     internal fun setRecipes(recipes: List<Recipe>) {
         this.recepten = recipes
         notifyDataSetChanged()

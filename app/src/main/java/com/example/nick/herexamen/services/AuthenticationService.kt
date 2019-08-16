@@ -13,14 +13,34 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 
+/**
+ * [AuthenticationService] Zorgt ervoor dat de gebruikers kunnen registreren, inloggen en uit kunnen loggen
+ * @param activity: Nodig voor de oncomplete te kunnen voltooien
+ */
 class AuthenticationService(private var activity: MainActivity) {
+    /**
+     * [auth] De FirebaseAuth instance
+     */
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
     private var TAG = "AuthenticationService"
 
+    /**
+     * [checkSignedIn] Controleert of een gebruiker is ingelogd
+     * @return true als gebruiker is ingelogd, anders false
+     */
     fun checkSignedIn(): Boolean {
         return auth.currentUser != null
     }
 
+    /**
+     * [createUser] Maakt een user aan met de meegegeven parameters
+     * @param naam: De naam van de gebruiker
+     * @param email: De email van de gebruiker
+     * @param paswoord: Het wachtwoord van de gebruiker
+     * @param confirmPaswoord: Om te controleren of de wachtwoorden hetzelfde zijn
+     * @param fragment: Het fragment om te 'refreshen' na succesvolle registratie
+     * @return een FirebaseUser object
+     */
     fun createUser(
         naam: String,
         email: String,
@@ -64,7 +84,12 @@ class AuthenticationService(private var activity: MainActivity) {
 
         return gebruiker
     }
-
+    /**
+     * [logUserIn] Logt een user in met de meegegeven parameters
+     * @param email: De email van de gebruiker
+     * @param paswoord: Het wachtwoord van de gebruiker
+     * @param fragment: Het fragment om te 'refreshen' na succesvolle login
+     */
     fun logUserIn(email: String, paswoord: String, fragment: Fragment) {
         if (!validateForm(email, paswoord, null, null, 2)) {
             return
@@ -88,11 +113,22 @@ class AuthenticationService(private var activity: MainActivity) {
             }
     }
 
+    /**
+     * [logUserOut] Logt een user uit
+     */
     fun logUserOut() {
         auth.signOut()
     }
 
-
+    /**
+     * [validateForm] Valideert de gegevens van de gebruiker die wil inloggen of registreren
+     * @param email: De email, zowel voor registratie als login
+     * @param paswoord: Het wachtwoord, zowel voor registratie als login
+     * @param confirmPaswoord: Het bevestig wachtwoord, enkel voor registratie
+     * @param naam: De naam van de gebruiker, enkel voor registratie
+     * @param case: Een cijfer om aan te geven of het registratie of login is
+     * @return een boolean, true als aan alle voorwaarden voldaan zijn ander false
+     */
     private fun validateForm(
         email: String,
         paswoord: String,
@@ -166,6 +202,9 @@ class AuthenticationService(private var activity: MainActivity) {
         return valid
     }
 
+    /**
+     * [getAuth] geeft het [auth] object terug
+     */
     fun getAuth(): FirebaseAuth {
         return auth
     }
