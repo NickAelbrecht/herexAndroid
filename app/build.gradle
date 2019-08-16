@@ -113,6 +113,7 @@ dependencies {
     // https://stackoverflow.com/questions/48249633/errorcannot-fit-requested-classes-in-a-single-dex-file-try-supplying-a-main-dex 
     // https://developer.android.com/studio/build/multidex#mdex-gradle
     implementation 'com.android.support:multidex:1.0.3'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
 
 }
 

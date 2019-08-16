@@ -69,12 +69,14 @@ class ShoppingCartFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         if (networkService.isNetworkAvailable(requireContext())) {
+            Log.d(TAG, "API recipes")
             recipeViewModel.getRecipesFromApi().observe(this, Observer { recepten ->
                 recepten?.let { myCartAdapter.setRecipes(it) }
             })
         } else {
+            Log.d(TAG, "lokale recipes")
             recipeViewModel.allRecipes.observe(this, Observer { recepten ->
-                recepten?.let { myCartAdapter.setRecipes(it) }
+                recepten?.let { myCartAdapter.setRecipes(it)  }
             })
         }
 
