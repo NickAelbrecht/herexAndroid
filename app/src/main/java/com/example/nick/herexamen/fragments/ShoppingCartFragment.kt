@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.fragment_shopping_cart.view.*
  */
 class ShoppingCartFragment : Fragment() {
 
+
     private var listener: OnFragmentInteractionListener? = null
     private val TAG = "ShoppingCartFragment"
     /**
@@ -64,6 +65,7 @@ class ShoppingCartFragment : Fragment() {
         recipeViewModel = ViewModelProviders.of(activity!!).get(RecipeViewModel::class.java)
         networkService = NetworkService()
         authenticationService = AuthenticationService(MainActivity())
+
     }
 
     /**

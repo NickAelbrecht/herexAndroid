@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 
+
 /**
  * [NetworkService] Controleert of er een WiFi- of dataverbinding geconnecteerd is
  */
@@ -42,4 +43,5 @@ class NetworkService {
         }
         return result
     }
+
 }

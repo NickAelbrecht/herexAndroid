@@ -2,6 +2,7 @@
   <dictionary name="Nick">
     <words>
       <w>aangemaakt</w>
+      <w>aangeroepen</w>
       <w>aanmaak</w>
       <w>aanmaken</w>
       <w>aanpassingen</w>
@@ -37,18 +38,21 @@
       <w>datanetwerk</w>
       <w>dataverbinding</w>
       <w>daten</w>
+      <w>detacht</w>
       <w>detailpagina</w>
       <w>deze</w>
       <w>doen</w>
       <w>drukt</w>
       <w>dynamisch</w>
       <w>dynamische</w>
+      <w>eens</w>
       <w>eerst</w>
       <w>eerste</w>
       <w>emailadres</w>
       <w>emailfield</w>
       <w>emailformaat</w>
       <w>enkel</w>
+      <w>ernaar</w>
       <w>ervoor</w>
       <w>firebase</w>
       <w>formulier</w>
@@ -60,17 +64,20 @@
       <w>gebruikt</w>
       <w>geconnecteerd</w>
       <w>gecontroleerd</w>
+      <w>gecreerd</w>
       <w>gecreëerd</w>
       <w>gedaan</w>
       <w>geeft</w>
       <w>geen</w>
       <w>gegevens</w>
+      <w>gehaald</w>
       <w>geinjecteerd</w>
       <w>gekeerd</w>
       <w>geklikt</w>
       <w>geldig</w>
       <w>gelieve</w>
       <w>getekend</w>
+      <w>getoond</w>
       <w>geupdate</w>
       <w>geven</w>
       <w>gevraagd</w>
@@ -100,6 +107,7 @@
       <w>klik</w>
       <w>klikt</w>
       <w>knop</w>
+      <w>komen</w>
       <w>komt</w>
       <w>kunnen</w>
       <w>laat</w>
@@ -111,6 +119,7 @@
       <w>logt</w>
       <w>lokaal</w>
       <w>lokale</w>
+      <w>luistert</w>
       <w>maakt</w>
       <w>makkelijke</w>
       <w>meegegeven</w>
@@ -119,6 +128,7 @@
       <w>moet</w>
       <w>naam</w>
       <w>naar</w>
+      <w>navigatiebar</w>
       <w>netwerk</w>
       <w>netwerken</w>
       <w>netwerkstatus</w>
@@ -140,6 +150,7 @@
       <w>paswfield</w>
       <w>paswoord</w>
       <w>producten</w>
+      <w>profiel</w>
       <w>recept</w>
       <w>recepten</w>
       <w>recyclerview</w>
@@ -156,6 +167,8 @@
       <w>succes</w>
       <w>succesvol</w>
       <w>succesvolle</w>
+      <w>switchen</w>
+      <w>switcht</w>
       <w>systeemservices</w>
       <w>tablerow</w>
       <w>tekst</w>
@@ -192,6 +205,8 @@
       <w>voldaan</w>
       <w>voltooien</w>
       <w>voor</w>
+      <w>vooraan</w>
+      <w>voorkomt</w>
       <w>voorwaarde</w>
       <w>voorwaarden</w>
       <w>voorzien</w>
@@ -208,8 +223,10 @@
       <w>wanneer</w>
       <w>weergave</w>
       <w>weergegeven</w>
+      <w>welk</w>
       <w>werd</w>
       <w>weten</w>
+      <w>wisselt</w>
       <w>wordt</w>
       <w>zichtbaar</w>
       <w>zijn</w>

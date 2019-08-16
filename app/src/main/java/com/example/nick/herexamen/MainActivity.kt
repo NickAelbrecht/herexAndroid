@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
     private var TAG: String = "MainActivityTag"
     private lateinit var authenticationService: AuthenticationService
 
-
+    /**
+     * [mOnNavigationItemSelectedListener] Luistert naar de klik op de navigatiebar
+     */
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
@@ -66,7 +68,11 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
+    /**
+     * [switchFragment] wordt aangeroepen om een fragment te switchen. Als het al eens gecreerd is wordt het uit de stack gehaald, anders aangemaakt
+     * @param fragment: Fragment dat moet vooraan komen
+     * @param tag: tag van het fragment, voor te zoeken in de stack
+     */
     private fun switchFragment(fragment: Fragment, tag: String) {
         val fragTransaction = supportFragmentManager.beginTransaction()
         val currentFrag = supportFragmentManager.primaryNavigationFragment
@@ -91,36 +97,53 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
         }
     }
 
+    /**
+     * [checkBackStack] kijk of een tag voorkomt in de backstack
+     * @param tag: Tag van het fragment
+     * @return false als het voorkomt, anders true
+     */
     private fun checkBackStack(tag: String): Boolean {
         return supportFragmentManager.findFragmentByTag(tag) == null
     }
 
 
+    /**
+     * [showRegister] switcht het fragment naar [RegisterFragment]
+     */
     fun showRegister() {
         switchFragment(RegisterFragment.newInstance(), "RegisterFragment")
     }
-
+    /**
+     * [showLogin] switcht het fragment naar [LoginFragment]
+     */
     fun showLogin() {
         switchFragment(LoginFragment.newInstance(), "LoginFragment")
     }
-
+    /**
+     * [showHome] switcht het fragment naar [HomeFragment]
+     */
     fun showHome() {
         switchFragment(HomeFragment.newInstance(), "HomeFragment")
     }
-
+    /**
+     * [showAddNewRecipe] switcht het fragment naar [NewRecipeFragment]
+     */
     fun showAddNewRecipe() {
         switchFragment(NewRecipeFragment.newInstance(), "NewRecipeFragment")
     }
-
+    /**
+     * [showCart] Maakt nieuw [ShoppingCartFragment] aan en wisselt ernaar
+     */
     fun showCart() {
-        //switchFragment(ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, ShoppingCartFragment.newInstance(), "ShoppingCartFragment")
             .addToBackStack("RecipeDetailFragment")
             .setTransition(1)
             .commit()
     }
-
+    /**
+     * [showRecipeDetailFragment] Maakt nieuw [RecipeDetailFragment] aan en wisselt ernaar
+     */
     fun showRecipeDetailFragment(fragment:RecipeDetailFragment) {
         //Voor detail verplicht nieuw fragment gebruiken, anders worden de variabelen daar niet aangepast door de newInstance
         supportFragmentManager.beginTransaction()
@@ -129,13 +152,20 @@ class MainActivity : AppCompatActivity(), HomeFragment.OnFragmentInteractionList
             .setTransition(1)
             .commit()
     }
-
+    /**
+     * [detachFragment] detacht het fragment
+     * @param fragment: Het fragment dat moet detached worden
+     */
     private fun detachFragment(fragment: Fragment) {
         val fragTransaction = supportFragmentManager.beginTransaction()
         fragTransaction.detach(fragment).commit()
     }
 
-
+    /**
+     * [updateUi] update welk fragment moet getoond worden als er op profiel geklikt wordt
+     * @param user: FirebaseUser
+     * @param fragment: Het fragment dat nu aanwezig is
+     */
     fun updateUi(user: FirebaseUser?, fragment: Fragment) {
         if (user != null) {
             Log.d(TAG, "user: " + user.email)
