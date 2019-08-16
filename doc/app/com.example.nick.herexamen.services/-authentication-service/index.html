@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>AuthenticationService - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.nick.herexamen.services</a>&nbsp;/&nbsp;<a href="./index.html">AuthenticationService</a><br/>
+<br/>
+<h1>AuthenticationService</h1>
+<code><span class="keyword">class </span><span class="identifier">AuthenticationService</span></code>
+<p><a href="./index.html">AuthenticationService</a> Zorgt ervoor dat de gebruikers kunnen registreren, inloggen en uit kunnen loggen</p>
+<h3>Parameters</h3>
+<p><a name="activity"></a>
+<code>activity</code> - : Nodig voor de oncomplete te kunnen voltooien</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">AuthenticationService</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$<init>(com.example.nick.herexamen.MainActivity)/activity">activity</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.nick.herexamen/-main-activity/index.html"><span class="identifier">MainActivity</span></a><span class="symbol">)</span></code>
+<p><a href="./index.html">AuthenticationService</a> Zorgt ervoor dat de gebruikers kunnen registreren, inloggen en uit kunnen loggen</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="check-signed-in.html">checkSignedIn</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">checkSignedIn</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p><a href="check-signed-in.html">checkSignedIn</a> Controleert of een gebruiker is ingelogd</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="create-user.html">createUser</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">createUser</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$createUser(kotlin.String, kotlin.String, kotlin.String, kotlin.String, android.support.v4.app.Fragment)/naam">naam</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$createUser(kotlin.String, kotlin.String, kotlin.String, kotlin.String, android.support.v4.app.Fragment)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$createUser(kotlin.String, kotlin.String, kotlin.String, kotlin.String, android.support.v4.app.Fragment)/paswoord">paswoord</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$createUser(kotlin.String, kotlin.String, kotlin.String, kotlin.String, android.support.v4.app.Fragment)/confirmPaswoord">confirmPaswoord</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$createUser(kotlin.String, kotlin.String, kotlin.String, kotlin.String, android.support.v4.app.Fragment)/fragment">fragment</span><span class="symbol">:</span>&nbsp;<span class="identifier">Fragment</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">FirebaseUser</span><span class="symbol">?</span></code>
+<p><a href="create-user.html">createUser</a> Maakt een user aan met de meegegeven parameters</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-auth.html">getAuth</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getAuth</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">FirebaseAuth</span></code>
+<p><a href="get-auth.html">getAuth</a> geeft het <a href="#">auth</a> object terug</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="log-user-in.html">logUserIn</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">logUserIn</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$logUserIn(kotlin.String, kotlin.String, android.support.v4.app.Fragment)/email">email</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$logUserIn(kotlin.String, kotlin.String, android.support.v4.app.Fragment)/paswoord">paswoord</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.example.nick.herexamen.services.AuthenticationService$logUserIn(kotlin.String, kotlin.String, android.support.v4.app.Fragment)/fragment">fragment</span><span class="symbol">:</span>&nbsp;<span class="identifier">Fragment</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p><a href="log-user-in.html">logUserIn</a> Logt een user in met de meegegeven parameters</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="log-user-out.html">logUserOut</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">logUserOut</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p><a href="log-user-out.html">logUserOut</a> Logt een user uit</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,81 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RecipeRepository - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.nick.herexamen.model</a>&nbsp;/&nbsp;<a href="./index.html">RecipeRepository</a><br/>
+<br/>
+<h1>RecipeRepository</h1>
+<code><span class="keyword">class </span><span class="identifier">RecipeRepository</span></code>
+<p>De repository dat de tussenlaag is tussen de DAO en het viewmodel.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">RecipeRepository</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.model.RecipeRepository$<init>(com.example.nick.herexamen.database.RecipeDao)/recipeDao">recipeDao</span><span class="symbol">:</span>&nbsp;<a href="../../com.example.nick.herexamen.database/-recipe-dao/index.html"><span class="identifier">RecipeDao</span></a><span class="symbol">)</span></code>
+<p>De repository dat de tussenlaag is tussen de DAO en het viewmodel.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="all-recipes.html">allRecipes</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">allRecipes</span><span class="symbol">: </span><span class="identifier">LiveData</span><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="delete-by-title.html">deleteByTitle</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">deleteByTitle</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.model.RecipeRepository$deleteByTitle(kotlin.String)/title">title</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p><a href="delete-by-title.html">deleteByTitle</a> Verwijdert het recept met bepaalde titel</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="find-by-title.html">findByTitle</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">findByTitle</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.model.RecipeRepository$findByTitle(kotlin.String)/title">title</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-recipe/index.html"><span class="identifier">Recipe</span></a></code>
+<p><a href="find-by-title.html">findByTitle</a> Zoekt een recept met bepaalde titel</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="insert.html">insert</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">insert</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.model.RecipeRepository$insert(com.example.nick.herexamen.model.Recipe)/recipe">recipe</span><span class="symbol">:</span>&nbsp;<a href="../-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p><a href="insert.html">insert</a> Voegt een bepaald recept toe aan de roomdatabase</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-recipe.html">updateRecipe</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateRecipe</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.model.RecipeRepository$updateRecipe(com.example.nick.herexamen.model.Recipe)/recipe">recipe</span><span class="symbol">:</span>&nbsp;<a href="../-recipe/index.html"><span class="identifier">Recipe</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p><a href="update-recipe.html">updateRecipe</a> Update een bepaald recept</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

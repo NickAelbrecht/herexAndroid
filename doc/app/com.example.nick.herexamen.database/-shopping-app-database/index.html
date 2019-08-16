@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ShoppingAppDatabase - app</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">app</a>&nbsp;/&nbsp;<a href="../index.html">com.example.nick.herexamen.database</a>&nbsp;/&nbsp;<a href="./index.html">ShoppingAppDatabase</a><br/>
+<br/>
+<h1>ShoppingAppDatabase</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ShoppingAppDatabase</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">RoomDatabase</span></code>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">ShoppingAppDatabase</span><span class="symbol">(</span><span class="symbol">)</span></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="recipe-dao.html">recipeDao</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">recipeDao</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../-recipe-dao/index.html"><span class="identifier">RecipeDao</span></a></code></td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="get-database.html">getDatabase</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getDatabase</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.database.ShoppingAppDatabase.Companion$getDatabase(android.content.Context)/context">context</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/android/content/Context.html"><span class="identifier">Context</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="./index.html"><span class="identifier">ShoppingAppDatabase</span></a></code></td>
+</tr>
+<tr>
+<td>
+<p><a href="populate-database.html">populateDatabase</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">populateDatabase</span><span class="symbol">(</span><span class="identifier" id="com.example.nick.herexamen.database.ShoppingAppDatabase.Companion$populateDatabase(com.example.nick.herexamen.database.RecipeDao)/recipeDao">recipeDao</span><span class="symbol">:</span>&nbsp;<a href="../-recipe-dao/index.html"><span class="identifier">RecipeDao</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Vult de room database op met een aantal recepten</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
